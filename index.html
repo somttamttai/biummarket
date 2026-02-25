@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>비움마켓 BIUM MARKET — 재고원단 B2B 플랫폼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:'Noto Sans KR',sans-serif;background:#f0f0f0;color:#212121;min-height:100vh;display:flex;justify-content:center}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+input,select,textarea{font-family:inherit}
+ul{list-style:none}
+:root{
+  --P:#FF6B35;--PL:#FFF0EB;--PD:#E55A26;
+  --g50:#FAFAFA;--g100:#F5F5F5;--g200:#EEEEEE;--g300:#E0E0E0;
+  --g500:#9E9E9E;--g700:#616161;--g900:#212121;
+  --r:12px;--rs:8px;
+}
+#app{width:100%;max-width:480px;background:#fff;min-height:100vh;position:relative;overflow-x:hidden;box-shadow:0 0 32px rgba(0,0,0,.1)}
+
+/* VIEWS */
+.view{display:none;flex-direction:column;min-height:100vh}
+.view.active{display:flex}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--g200);padding:0 14px;height:52px;display:flex;align-items:center;gap:8px}
+.hdr-logo{font-size:18px;font-weight:700;color:var(--P);flex:1}
+.hdr-logo small{font-size:10px;font-weight:400;color:var(--g500);margin-left:4px}
+.hdr-btn{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--g700);transition:background .15s}
+.hdr-btn:hover{background:var(--g100)}
+.hdr-back{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--g900)}
+.hdr-title{font-size:16px;font-weight:700;flex:1;text-align:center}
+.hdr-loc{display:flex;align-items:center;gap:3px;font-size:13px;font-weight:600;padding:5px 10px;border-radius:20px;background:var(--g100)}
+
+/* TAB BAR */
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:60px;background:#fff;border-top:1px solid var(--g200);display:flex;align-items:center;justify-content:space-around;z-index:200}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;color:var(--g500);font-size:10px;font-weight:500}
+.tab .ti{font-size:20px;line-height:1}
+.tab.on{color:var(--P)}
+.tab-fab{width:46px;height:46px;border-radius:50%;background:var(--P);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(255,107,53,.4)}
+
+/* SEARCH */
+.srch-wrap{padding:10px 14px 6px;background:#fff;border-bottom:1px solid var(--g200)}
+.srch-bar{display:flex;align-items:center;gap:8px;background:var(--g100);border-radius:22px;padding:9px 14px;margin-bottom:8px}
+.srch-bar input{flex:1;border:none;background:transparent;font-size:14px;outline:none;color:var(--g900)}
+.srch-bar input::placeholder{color:var(--g500)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;border:1.5px solid var(--g300);color:var(--g700);background:#fff}
+.chip.on{border-color:var(--P);color:var(--P);background:var(--PL)}
+
+/* PRODUCT LIST */
+.plist{flex:1;padding:10px 10px 72px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pcard{border-radius:var(--r);overflow:hidden;background:#fff;border:1px solid var(--g200);cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative}
+.pcard:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.pthumb{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.pthumb::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12) 0%,transparent 60%)}
+.fabric-badge{position:relative;z-index:1;background:rgba(0,0,0,.25);padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;color:rgba(255,255,255,.9)}
+.card-heart{position:absolute;top:7px;right:7px;z-index:2;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.88);display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.pinfo{padding:9px 9px 7px}
+.pname{font-size:12px;font-weight:600;line-height:1.4;margin-bottom:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.pmeta{font-size:11px;color:var(--g500);margin-bottom:5px}
+.pprice{font-size:13px;font-weight:700}
+.pprice .pu{font-size:10px;font-weight:400;color:var(--g500)}
+.pfoot{display:flex;justify-content:space-between;align-items:center;margin-top:5px;padding-top:5px;border-top:1px solid var(--g100)}
+.ploc{font-size:10px;color:var(--g500);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pcnt{display:flex;gap:5px;font-size:10px;color:var(--g500);flex-shrink:0}
+.badge-new{position:absolute;top:7px;left:7px;z-index:2;background:var(--P);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px}
+
+/* EMPTY */
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--g500);padding:40px;text-align:center}
+.empty .ei{font-size:44px}
+
+/* LOGIN */
+#view-login{background:#fff;align-items:center;justify-content:center;padding:32px 24px}
+.login-logo{font-size:32px;font-weight:700;color:var(--P);margin-bottom:4px;text-align:center}
+.login-sub{font-size:13px;color:var(--g500);text-align:center;margin-bottom:32px;line-height:1.6}
+.login-box{width:100%}
+.fi{width:100%;border:1.5px solid var(--g300);border-radius:var(--rs);padding:12px 14px;font-size:15px;color:var(--g900);outline:none;transition:border-color .15s;background:#fff}
+.fi:focus{border-color:var(--P)}
+.fi::placeholder{color:var(--g500)}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px}
+.fg .req{color:var(--P)}
+.btn-primary{width:100%;padding:14px;background:var(--P);color:#fff;border-radius:var(--r);font-size:15px;font-weight:700;transition:background .15s}
+.btn-primary:hover{background:var(--PD)}
+.btn-secondary{width:100%;padding:13px;border:1.5px solid var(--g300);border-radius:var(--r);font-size:14px;font-weight:600;color:var(--g700);transition:all .15s}
+.btn-secondary:hover{border-color:var(--P);color:var(--P)}
+.divider-text{text-align:center;color:var(--g500);font-size:12px;margin:16px 0;position:relative}
+.divider-text::before,.divider-text::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--g200)}
+.divider-text::before{left:0}.divider-text::after{right:0}
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.type-card{border:1.5px solid var(--g300);border-radius:var(--rs);padding:12px 10px;text-align:center;cursor:pointer;transition:all .15s}
+.type-card:hover{border-color:var(--P);background:var(--PL)}
+.type-card.sel{border-color:var(--P);background:var(--PL);color:var(--P)}
+.type-card .tc-icon{font-size:24px;margin-bottom:4px}
+.type-card .tc-name{font-size:13px;font-weight:600}
+.type-card .tc-desc{font-size:10px;color:var(--g500);margin-top:2px}
+.type-card.sel .tc-desc{color:var(--PD)}
+
+/* DETAIL */
+.d-scroll{flex:1;overflow-y:auto;padding-bottom:88px}
+.d-slider{position:relative;width:100%;aspect-ratio:1;overflow:hidden;background:var(--g200)}
+.s-track{display:flex;height:100%;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.s-slide{flex-shrink:0;width:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,.9)}
+.s-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.s-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55);transition:all .2s}
+.s-dot.on{background:#fff;transform:scale(1.3)}
+.s-nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.28);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;z-index:2}
+.s-prev{left:10px}.s-next{right:10px}
+
+.sel-sec{padding:14px;border-bottom:8px solid var(--g100);display:flex;align-items:center;gap:12px}
+.sel-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;font-weight:700;flex-shrink:0}
+.sel-info{flex:1}
+.sel-name{font-size:14px;font-weight:700;margin-bottom:1px}
+.sel-loc{font-size:12px;color:var(--g500)}
+.temp-box{text-align:right}
+.temp-val{font-size:16px;font-weight:700;color:var(--P)}
+.temp-lbl{font-size:10px;color:var(--g500)}
+
+.d-sec{padding:14px;border-bottom:8px solid var(--g100)}
+.d-sec h3{font-size:15px;font-weight:700;margin-bottom:10px}
+.ftbl{width:100%;border-collapse:collapse}
+.ftbl tr:not(:last-child) td{border-bottom:1px solid var(--g100)}
+.ftbl td{padding:9px 4px;font-size:13px}
+.ftbl td:first-child{color:var(--g500);width:72px;font-weight:500}
+.ftbl td:last-child{font-weight:600}
+.d-desc p{font-size:13px;line-height:1.7;color:var(--g700)}
+.tag-row{display:flex;flex-wrap:wrap;gap:7px}
+.tagc{padding:4px 11px;border-radius:20px;background:var(--PL);color:var(--P);font-size:12px;font-weight:500}
+.d-stats{padding:10px 14px;font-size:11px;color:var(--g500);display:flex;gap:14px}
+
+.d-action{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:76px;background:#fff;border-top:1px solid var(--g200);display:flex;align-items:center;gap:10px;padding:0 14px;z-index:200}
+.heart-btn{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--g500);padding:6px 8px}
+.heart-btn .hicon{font-size:21px}
+.heart-btn.on{color:var(--P)}
+.price-area{flex:1}
+.price-area .tp{font-size:17px;font-weight:700}
+.price-area .pp{font-size:11px;color:var(--g500)}
+.chat-btn{background:var(--P);color:#fff;border-radius:10px;padding:11px 20px;font-size:14px;font-weight:700}
+.suggest-btn{border:1.5px solid var(--P);color:var(--P);border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600}
+
+/* FORM */
+.f-scroll{flex:1;overflow-y:auto;padding:14px 14px 96px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.total-disp{padding:11px 14px;background:var(--PL);border-radius:var(--rs);border:1.5px solid rgba(255,107,53,.2);font-size:14px;font-weight:700;color:var(--P)}
+.img-scroll{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.img-scroll::-webkit-scrollbar{display:none}
+.img-add{flex-shrink:0;width:76px;height:76px;border-radius:var(--rs);border:2px dashed var(--g300);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--g500);font-size:11px}
+.img-add:hover{border-color:var(--P);color:var(--P)}
+.img-prev{flex-shrink:0;width:76px;height:76px;border-radius:var(--rs);overflow:hidden;position:relative}
+.img-prev img{width:100%;height:100%;object-fit:cover}
+.img-rm{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center}
+select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239E9E9E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px}
+textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
+.submit-btn{width:100%;padding:15px;background:var(--P);color:#fff;border-radius:var(--r);font-size:15px;font-weight:700;margin-top:8px}
+.submit-btn:hover{background:var(--PD)}
+.form-divider{height:1px;background:var(--g200);margin:16px 0}
+.ai-hint{background:#f0f4ff;border:1px solid #c0d0ff;border-radius:var(--rs);padding:10px 12px;font-size:12px;color:#3355cc;line-height:1.6;margin-bottom:14px;display:flex;gap:8px;align-items:flex-start}
+.ai-hint .ai-icon{font-size:18px;flex-shrink:0}
+
+/* ADMIN */
+.admin-tabs{display:flex;border-bottom:1px solid var(--g200);background:#fff;position:sticky;top:52px;z-index:50}
+.atab{flex:1;padding:12px 4px;text-align:center;font-size:12px;font-weight:600;color:var(--g500);border-bottom:2px solid transparent;transition:all .15s}
+.atab.on{color:var(--P);border-bottom-color:var(--P)}
+.admin-content{flex:1;overflow-y:auto;padding:14px 14px 80px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.stat-card{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:14px;text-align:center}
+.stat-card .sv{font-size:22px;font-weight:700;color:var(--P)}
+.stat-card .sl{font-size:11px;color:var(--g500);margin-top:3px}
+.table-wrap{overflow-x:auto}
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{padding:8px 10px;text-align:left;background:var(--g100);color:var(--g700);font-weight:600;white-space:nowrap}
+.data-table td{padding:8px 10px;border-bottom:1px solid var(--g100);vertical-align:middle}
+.data-table tr:hover td{background:var(--g50)}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.badge-green{background:#e8f5e9;color:#2e7d32}
+.badge-blue{background:#e3f2fd;color:#1565c0}
+.badge-orange{background:var(--PL);color:var(--P)}
+.badge-gray{background:var(--g200);color:var(--g700)}
+.action-btn{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;border:1px solid var(--g300);color:var(--g700)}
+.action-btn.del{border-color:#ffcdd2;color:#c62828;background:#fff5f5}
+
+/* SELLER PAGE */
+.seller-hero{position:relative;height:140px;background:linear-gradient(135deg,var(--P),#ff9a6c);display:flex;align-items:flex-end;padding:14px}
+.seller-hero-info{display:flex;align-items:flex-end;gap:12px;color:#fff}
+.seller-big-av{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#fff;flex-shrink:0}
+.seller-hero-name{font-size:18px;font-weight:700;margin-bottom:2px}
+.seller-hero-loc{font-size:12px;opacity:.85}
+.seller-stats{display:flex;gap:0;border-bottom:8px solid var(--g100)}
+.sstat{flex:1;padding:14px;text-align:center;border-right:1px solid var(--g200)}
+.sstat:last-child{border-right:none}
+.sstat .sv{font-size:17px;font-weight:700}
+.sstat .sl{font-size:11px;color:var(--g500);margin-top:2px}
+
+/* MYPAGE */
+.mp-user{padding:20px 14px;display:flex;align-items:center;gap:14px;border-bottom:8px solid var(--g100)}
+.mp-av{width:54px;height:54px;border-radius:50%;background:var(--P);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0}
+.mp-info{}
+.mp-name{font-size:17px;font-weight:700;margin-bottom:2px}
+.mp-type{font-size:12px;color:var(--g500)}
+.mp-temp{font-size:13px;color:var(--P);font-weight:600;margin-top:2px}
+.menu-list{padding:0 0 80px}
+.menu-item{display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid var(--g100);cursor:pointer}
+.menu-item:hover{background:var(--g50)}
+.menu-icon{font-size:20px;width:28px;text-align:center}
+.menu-label{flex:1;font-size:14px;font-weight:500}
+.menu-arrow{color:var(--g300);font-size:14px}
+.menu-section{padding:12px 16px 6px;font-size:11px;font-weight:700;color:var(--g500);letter-spacing:.5px}
+
+/* ANALYTICS */
+.ana-sec{padding:14px;border-bottom:6px solid var(--g100)}
+.ana-sec h3{font-size:14px;font-weight:700;margin-bottom:10px}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:80px}
+.bar-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bar{border-radius:4px 4px 0 0;width:100%;background:var(--PL);transition:height .5s;position:relative}
+.bar.active{background:var(--P)}
+.bar-lbl{font-size:9px;color:var(--g500)}
+.bar-val{font-size:9px;font-weight:600;color:var(--g700)}
+
+/* LANG SELECTOR */
+.lang-sel{display:flex;gap:2px;padding:0 14px}
+.lang-btn{padding:4px 8px;border-radius:14px;font-size:11px;font-weight:600;color:var(--g500);border:1px solid transparent;transition:all .15s}
+.lang-btn.on{background:var(--P);color:#fff}
+
+/* RESERVATION */
+.res-type-row{display:flex;gap:8px;margin-bottom:16px}
+.res-card{flex:1;border:1.5px solid var(--g300);border-radius:var(--rs);padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s}
+.res-card:hover,.res-card.sel{border-color:var(--P);background:var(--PL)}
+.res-card .ri{font-size:22px;margin-bottom:5px}
+.res-card .rn{font-size:12px;font-weight:600}
+.res-card .rd{font-size:10px;color:var(--g500);margin-top:2px}
+
+/* TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(16px);background:rgba(33,33,33,.9);color:#fff;padding:11px 20px;border-radius:22px;font-size:13px;font-weight:500;opacity:0;transition:opacity .3s,transform .3s;z-index:999;white-space:nowrap;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* MODAL */
+.mover{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:none;align-items:flex-end;justify-content:center}
+.mover.open{display:flex}
+.msheet{width:100%;max-width:480px;background:#fff;border-radius:20px 20px 0 0;padding:20px 18px 36px}
+.mhandle{width:34px;height:4px;border-radius:2px;background:var(--g300);margin:0 auto 16px}
+.mtitle{font-size:17px;font-weight:700;margin-bottom:8px;text-align:center}
+.mdesc{font-size:13px;color:var(--g500);line-height:1.6;text-align:center}
+.mclose{margin-top:18px;padding:12px 32px;background:var(--P);color:#fff;border-radius:10px;font-size:14px;font-weight:600;width:100%}
+
+/* PRICE SUGGEST MODAL */
+.suggest-form{padding:0 0 8px}
+.suggest-form .fg{margin-bottom:12px}
+.suggest-form .fg label{font-size:13px;font-weight:600;color:var(--g700);display:block;margin-bottom:5px}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--g200);border-radius:4px}
+
+@media(min-width:480px){
+  .tabbar,.d-action,.toast{left:50%}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ========== LOGIN ========== -->
+<div id="view-login" class="view active">
+  <div style="padding:48px 24px 0;width:100%">
+    <div class="login-logo">🧵 비움마켓</div>
+    <div class="login-logo" style="font-size:13px;font-weight:400;color:var(--g500);margin-bottom:28px">BIUM MARKET — B2B 재고원단 거래 플랫폼</div>
+    <div class="login-box">
+      <div class="fg">
+        <label>아이디 (이메일)</label>
+        <input type="email" class="fi" id="l-email" placeholder="example@bium.market" />
+      </div>
+      <div class="fg">
+        <label>비밀번호</label>
+        <input type="password" class="fi" id="l-pw" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')doLogin()" />
+      </div>
+      <button class="btn-primary" onclick="doLogin()" style="margin-bottom:12px">로그인</button>
+      <button class="btn-secondary" onclick="showView('signup')">회원가입</button>
+      <div class="divider-text">테스트 계정</div>
+      <div style="background:var(--g100);border-radius:var(--rs);padding:12px 14px;font-size:12px;color:var(--g700);line-height:1.8">
+        관리자: <b>admin</b> / <b>1234</b><br>
+        판매자: <b>seller@test.com</b> / <b>1234</b><br>
+        구매자: <b>buyer@test.com</b> / <b>1234</b>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:auto;padding:20px;text-align:center;font-size:11px;color:var(--g500)">
+    ⓒ 2024 LOWHIGH MARKET · 서울 동대문구 · 대표 손정현
+  </div>
+</div>
+
+<!-- ========== SIGNUP ========== -->
+<div id="view-signup" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="showView('login')">←</button>
+    <div class="hdr-title" data-i18n="signup_title">회원가입</div>
+    <div style="width:38px"></div>
+  </header>
+  <div class="f-scroll">
+    <div style="margin-bottom:16px">
+      <div class="fg"><label>회원 유형 선택 <span class="req">*</span></label></div>
+      <div class="type-grid">
+        <div class="type-card sel" data-type="seller" onclick="selectType('seller',this)">
+          <div class="tc-icon">🏭</div>
+          <div class="tc-name">판매자</div>
+          <div class="tc-desc">원단 도매 · 재고 판매</div>
+        </div>
+        <div class="type-card" data-type="buyer" onclick="selectType('buyer',this)">
+          <div class="tc-icon">🛒</div>
+          <div class="tc-name">구매자</div>
+          <div class="tc-desc">원단 소싱 · 구매</div>
+        </div>
+        <div class="type-card" data-type="brand" onclick="selectType('brand',this)">
+          <div class="tc-icon">👗</div>
+          <div class="tc-name">브랜드</div>
+          <div class="tc-desc">패션 브랜드 · 제조사</div>
+        </div>
+        <div class="type-card" data-type="both" onclick="selectType('both',this)">
+          <div class="tc-icon">🔄</div>
+          <div class="tc-name">겸업</div>
+          <div class="tc-desc">판매 + 구매 모두</div>
+        </div>
+      </div>
+    </div>
+    <div class="fg"><label>이름 <span class="req">*</span></label><input type="text" class="fi" id="s-name" placeholder="이름 또는 업체명"/></div>
+    <div class="fg"><label>이메일 <span class="req">*</span></label><input type="email" class="fi" id="s-email" placeholder="example@bium.market"/></div>
+    <div class="fg"><label>비밀번호 <span class="req">*</span></label><input type="password" class="fi" id="s-pw" placeholder="6자 이상"/></div>
+    <div class="fg"><label>사업장 위치</label><input type="text" class="fi" id="s-loc" placeholder="예) 서울 동대문구 신설동"/></div>
+    <button class="submit-btn" onclick="doSignup()">가입하기</button>
+  </div>
+</div>
+
+<!-- ========== LIST ========== -->
+<div id="view-list" class="view">
+  <header class="hdr">
+    <div class="hdr-logo">비움마켓 <small>BIUM MARKET</small></div>
+    <button class="hdr-btn" id="btn-loc" title="지역">📍</button>
+    <button class="hdr-btn" id="btn-alert" title="알림">🔔</button>
+    <button class="hdr-btn" onclick="toggleLangPanel()" title="언어">🌐</button>
+  </header>
+  <div id="lang-panel" style="display:none;padding:8px 14px;background:#fff;border-bottom:1px solid var(--g200)">
+    <div class="lang-sel" id="lang-sel"></div>
+  </div>
+  <div class="srch-wrap">
+    <div class="srch-bar">
+      <span style="font-size:15px;color:var(--g500)">🔍</span>
+      <input type="text" id="search-input" placeholder="원단 종류, 색상, 업체명 검색" autocomplete="off"/>
+    </div>
+    <div class="chips" id="filter-chips"></div>
+  </div>
+  <ul class="plist" id="product-list"></ul>
+  <div class="empty" id="empty-state" style="display:none">
+    <div class="ei">🧵</div>
+    <p id="empty-msg">검색 결과가 없어요</p>
+  </div>
+  <nav class="tabbar">
+    <button class="tab on" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
+    <button class="tab" onclick="showView('search-view')"><span class="ti">🔍</span><span data-i18n="tab_search">검색</span></button>
+    <button class="tab-fab" onclick="showView('form')">＋</button>
+    <button class="tab" onclick="showToast(t('chat_coming'))"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
+  </nav>
+</div>
+
+<!-- ========== DETAIL ========== -->
+<div id="view-detail" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title" id="d-hdr-title">상품 상세</div>
+    <button class="hdr-btn" onclick="shareProduct()">⋯</button>
+  </header>
+  <div class="d-scroll" id="d-scroll">
+    <div class="d-slider" id="d-slider">
+      <div class="s-track" id="s-track"></div>
+      <div class="s-dots" id="s-dots"></div>
+      <button class="s-nav s-prev" id="s-prev" onclick="slideMove(-1)">‹</button>
+      <button class="s-nav s-next" id="s-next" onclick="slideMove(1)">›</button>
+    </div>
+    <div class="sel-sec">
+      <div class="sel-av" id="d-av"></div>
+      <div class="sel-info">
+        <div class="sel-name" id="d-sname"></div>
+        <div class="sel-loc" id="d-sloc"></div>
+      </div>
+      <div class="temp-box">
+        <div class="temp-val" id="d-temp"></div>
+        <div class="temp-lbl">매너온도</div>
+        <button style="font-size:11px;color:var(--P);margin-top:3px" onclick="openSellerPage()">미니홈피 →</button>
+      </div>
+    </div>
+    <div class="d-sec">
+      <h3 data-i18n="fabric_info">원단 정보</h3>
+      <table class="ftbl" id="d-ftbl"></table>
+    </div>
+    <div class="d-sec d-desc">
+      <h3 data-i18n="product_desc">상품 설명</h3>
+      <p id="d-desc"></p>
+    </div>
+    <div class="d-sec">
+      <div class="tag-row" id="d-tags"></div>
+    </div>
+    <div class="d-stats" id="d-stats"></div>
+    <!-- 예약 섹션 -->
+    <div class="d-sec">
+      <h3>예약 신청</h3>
+      <div class="res-type-row">
+        <div class="res-card sel" onclick="selectRes('visit',this)">
+          <div class="ri">🏠</div>
+          <div class="rn">방문 예약</div>
+          <div class="rd">직접 방문</div>
+        </div>
+        <div class="res-card" onclick="selectRes('swatch',this)">
+          <div class="ri">🎨</div>
+          <div class="rn">스와치</div>
+          <div class="rd">샘플 발송</div>
+        </div>
+        <div class="res-card" onclick="selectRes('inspect',this)">
+          <div class="ri">🔍</div>
+          <div class="rn">출장감별</div>
+          <div class="rd">전문가 방문</div>
+        </div>
+      </div>
+      <button class="btn-secondary" style="font-size:13px;padding:10px" onclick="openResModal()">예약하기</button>
+    </div>
+  </div>
+  <div class="d-action">
+    <button class="heart-btn" id="d-heart" onclick="toggleDetailLike()">
+      <span class="hicon" id="d-hicon">🤍</span>
+      <span id="d-lcnt">0</span>
+    </button>
+    <div class="price-area">
+      <div class="tp" id="d-tp"></div>
+      <div class="pp" id="d-pp"></div>
+    </div>
+    <button class="suggest-btn" onclick="openSuggestModal()">가격제안</button>
+    <button class="chat-btn" onclick="openChatModal()">채팅</button>
+  </div>
+</div>
+
+<!-- ========== FORM ========== -->
+<div id="view-form" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">✕</button>
+    <div class="hdr-title" data-i18n="form_title">원단 판매 등록</div>
+    <div style="width:38px"></div>
+  </header>
+  <div class="f-scroll">
+    <div class="ai-hint">
+      <span class="ai-icon">🤖</span>
+      <span>AI 자동 입력: 사진을 첨부하면 소재·색상·중량을 자동으로 인식해드려요!</span>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:13px;font-weight:600;color:var(--g700);margin-bottom:8px">사진 첨부 <span style="color:var(--g500);font-weight:400">(최대 5장)</span></div>
+      <div class="img-scroll" id="img-scroll">
+        <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
+        <button class="img-add" onclick="document.getElementById('file-input').click()">
+          <span style="font-size:22px">＋</span><span>사진추가</span>
+        </button>
+      </div>
+    </div>
+    <div class="form-divider"></div>
+    <div class="fg"><label>상품명 <span class="req">*</span></label><input type="text" class="fi" id="f-title" placeholder="예) 아이보리 면 원단 재고 45m"/></div>
+    <div class="fg"><label>카테고리 (대분류)</label>
+      <select class="fi" id="f-cat1" onchange="updateCat2()">
+        <option value="">선택</option>
+        <option value="천연섬유">천연섬유</option>
+        <option value="합성섬유">합성섬유</option>
+        <option value="혼방">혼방</option>
+        <option value="특수원단">특수원단</option>
+      </select>
+    </div>
+    <div class="fg"><label>원단 종류 <span class="req">*</span></label>
+      <select class="fi" id="f-type">
+        <option value="">선택해주세요</option>
+        <option value="면">면</option>
+        <option value="폴리">폴리</option>
+        <option value="울">울</option>
+        <option value="린넨">린넨</option>
+        <option value="실크">실크</option>
+        <option value="혼방">혼방</option>
+        <option value="기타">기타</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>색상 <span class="req">*</span></label><input type="text" class="fi" id="f-color" placeholder="예) 아이보리"/></div>
+      <div class="fg"><label>폭 (cm)</label><input type="number" class="fi" id="f-width" placeholder="예) 150" min="0"/></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>중량 (g/㎡)</label><input type="number" class="fi" id="f-weight" placeholder="예) 180"/></div>
+      <div class="fg"><label>수량 (m) <span class="req">*</span></label><input type="number" class="fi" id="f-qty" placeholder="예) 30" min="0" step="0.1" oninput="calcTotal()"/></div>
+    </div>
+    <div class="fg"><label>단가 (원/m) <span class="req">*</span></label><input type="number" class="fi" id="f-price" placeholder="예) 5000" min="0" oninput="calcTotal()"/></div>
+    <div class="fg"><label>총 금액 (자동 계산)</label><div class="total-disp" id="f-total">수량과 단가를 입력하면 자동 계산돼요</div></div>
+    <div class="fg"><label>거래 지역 <span class="req">*</span></label><input type="text" class="fi" id="f-loc" placeholder="예) 서울 동대문구 신설동"/></div>
+    <div class="form-divider"></div>
+    <div class="fg"><label>상세 설명</label><textarea class="fi" id="f-desc" placeholder="원단 상태, 구매 경위, 거래 방법 등을 자유롭게 적어주세요."></textarea></div>
+    <div class="fg"><label>해시태그 <span style="color:var(--g500);font-weight:400">(쉼표 구분)</span></label><input type="text" class="fi" id="f-tags" placeholder="재고원단, 할인, 소량가능"/></div>
+    <div class="fg"><label>AI 가격 예측</label>
+      <div style="background:#f8fff8;border:1px solid #c0e0c0;border-radius:var(--rs);padding:10px 12px;font-size:12px;color:#2e7d32" id="ai-price-hint">원단 정보를 입력하면 AI가 적정 가격을 예측해드려요 📊</div>
+    </div>
+    <button class="submit-btn" onclick="submitForm()">등록하기</button>
+  </div>
+</div>
+
+<!-- ========== ADMIN ========== -->
+<div id="view-admin" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title">관리자 대시보드</div>
+    <button class="hdr-btn" onclick="doLogout()">🚪</button>
+  </header>
+  <div class="admin-tabs" id="admin-tabs">
+    <button class="atab on" onclick="switchAdminTab('overview',this)">개요</button>
+    <button class="atab" onclick="switchAdminTab('users',this)">회원</button>
+    <button class="atab" onclick="switchAdminTab('products',this)">상품</button>
+    <button class="atab" onclick="switchAdminTab('notices',this)">공지</button>
+  </div>
+  <div class="admin-content" id="admin-content"></div>
+</div>
+
+<!-- ========== SELLER PAGE ========== -->
+<div id="view-seller" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title">판매자 미니홈피</div>
+    <button class="hdr-btn" onclick="showToast('공유됐어요!')">⋯</button>
+  </header>
+  <div style="flex:1;overflow-y:auto;padding-bottom:72px">
+    <div class="seller-hero" id="sh-hero">
+      <div class="seller-hero-info">
+        <div class="seller-big-av" id="sh-av"></div>
+        <div>
+          <div class="seller-hero-name" id="sh-name"></div>
+          <div class="seller-hero-loc" id="sh-loc"></div>
+        </div>
+      </div>
+    </div>
+    <div class="seller-stats" id="sh-stats"></div>
+    <div style="padding:14px;border-bottom:6px solid var(--g100)">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px">업체 소개</div>
+      <div style="font-size:13px;color:var(--g700);line-height:1.7" id="sh-intro"></div>
+    </div>
+    <div style="padding:14px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">등록 상품</div>
+      <ul class="plist" id="sh-products" style="padding:0;grid-template-columns:1fr 1fr"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MYPAGE ========== -->
+<div id="view-mypage" class="view">
+  <header class="hdr">
+    <div class="hdr-logo">비움마켓</div>
+    <button class="hdr-btn" onclick="doLogout()">🚪</button>
+  </header>
+  <div style="flex:1;overflow-y:auto">
+    <div class="mp-user">
+      <div class="mp-av" id="mp-av"></div>
+      <div class="mp-info">
+        <div class="mp-name" id="mp-name"></div>
+        <div class="mp-type" id="mp-type"></div>
+        <div class="mp-temp" id="mp-temp"></div>
+      </div>
+    </div>
+    <div class="menu-list" id="menu-list"></div>
+  </div>
+  <nav class="tabbar">
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
+    <button class="tab" onclick="showToast(t('chat_coming'))"><span class="ti">🔍</span><span>검색</span></button>
+    <button class="tab-fab" onclick="showView('form')">＋</button>
+    <button class="tab" onclick="showToast(t('chat_coming'))"><span class="ti">💬</span><span>채팅</span></button>
+    <button class="tab on" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
+  </nav>
+</div>
+
+<!-- ========== ANALYTICS ========== -->
+<div id="view-analytics" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title">매출 대시보드</div>
+    <div style="width:38px"></div>
+  </header>
+  <div style="flex:1;overflow-y:auto;padding-bottom:20px">
+    <div class="ana-sec">
+      <h3>이번 달 요약</h3>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="sv">₩2.4M</div><div class="sl">총 매출</div></div>
+        <div class="stat-card"><div class="sv">8건</div><div class="sl">거래 완료</div></div>
+        <div class="stat-card"><div class="sv">340m</div><div class="sl">판매 수량</div></div>
+        <div class="stat-card"><div class="sv">94%</div><div class="sl">응답률</div></div>
+      </div>
+    </div>
+    <div class="ana-sec">
+      <h3>월별 매출 (최근 6개월)</h3>
+      <div class="bar-chart" id="bar-chart"></div>
+    </div>
+    <div class="ana-sec">
+      <h3>인기 원단 TOP 3</h3>
+      <div id="top-fabrics"></div>
+    </div>
+    <div class="ana-sec">
+      <h3>실시간 원단 시세</h3>
+      <div id="market-price"></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- #app -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MODAL: CHAT -->
+<div class="mover" id="modal-chat" onclick="closeModal('modal-chat',event)">
+  <div class="msheet">
+    <div class="mhandle"></div>
+    <div style="font-size:40px;text-align:center;margin-bottom:10px">💬</div>
+    <div class="mtitle">채팅하기</div>
+    <div class="mdesc">실시간 채팅 기능은 준비 중입니다.<br>빠른 시일 내에 오픈할게요!</div>
+    <button class="mclose" onclick="closeModal('modal-chat')">확인</button>
+  </div>
+</div>
+
+<!-- MODAL: PRICE SUGGEST -->
+<div class="mover" id="modal-suggest" onclick="closeModal('modal-suggest',event)">
+  <div class="msheet">
+    <div class="mhandle"></div>
+    <div class="mtitle">💰 가격 제안</div>
+    <div class="suggest-form">
+      <div class="fg">
+        <label>제안 가격 (원/m)</label>
+        <input type="number" class="fi" id="suggest-price" placeholder="제안할 단가 입력"/>
+      </div>
+      <div class="fg">
+        <label>메시지</label>
+        <textarea class="fi" id="suggest-msg" placeholder="제안 이유나 거래 조건을 입력하세요" style="min-height:70px"></textarea>
+      </div>
+    </div>
+    <button class="mclose" onclick="submitSuggest()">제안 보내기</button>
+  </div>
+</div>
+
+<!-- MODAL: RESERVATION -->
+<div class="mover" id="modal-res" onclick="closeModal('modal-res',event)">
+  <div class="msheet">
+    <div class="mhandle"></div>
+    <div class="mtitle" id="res-modal-title">방문 예약</div>
+    <div class="suggest-form">
+      <div class="fg">
+        <label>희망 날짜</label>
+        <input type="date" class="fi" id="res-date"/>
+      </div>
+      <div class="fg">
+        <label>희망 시간</label>
+        <select class="fi" id="res-time">
+          <option>09:00</option><option>10:00</option><option>11:00</option>
+          <option>13:00</option><option>14:00</option><option>15:00</option><option>16:00</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>요청 사항</label>
+        <input type="text" class="fi" id="res-note" placeholder="특이사항이 있으면 입력해주세요"/>
+      </div>
+    </div>
+    <button class="mclose" onclick="submitReservation()">예약 신청</button>
+  </div>
+</div>
+
+<!-- MODAL: SHARE -->
+<div class="mover" id="modal-share" onclick="closeModal('modal-share',event)">
+  <div class="msheet">
+    <div class="mhandle"></div>
+    <div class="mtitle">공유하기</div>
+    <div style="display:flex;justify-content:center;gap:16px;margin:16px 0">
+      <button onclick="showToast('링크가 복사됐어요!');closeModal('modal-share')" style="display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--g700)"><span style="font-size:32px;background:var(--g100);border-radius:50%;width:52px;height:52px;display:flex;align-items:center;justify-content:center">🔗</span>링크복사</button>
+      <button onclick="showToast('카카오톡 공유 준비중');closeModal('modal-share')" style="display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--g700)"><span style="font-size:32px;background:#FFE812;border-radius:50%;width:52px;height:52px;display:flex;align-items:center;justify-content:center">💛</span>카카오톡</button>
+    </div>
+    <button class="mclose" onclick="closeModal('modal-share')">닫기</button>
+  </div>
+</div>
+
+<script>
+/* ==================== I18N ==================== */
+const LANGS={
+  ko:{code:'ko',name:'한국어',flag:'🇰🇷',
+    tab_home:'홈',tab_search:'검색',tab_chat:'채팅',tab_me:'MY',
+    signup_title:'회원가입',form_title:'원단 판매 등록',
+    fabric_info:'원단 정보',product_desc:'상품 설명',
+    chat_coming:'채팅 기능 준비중이에요',
+    empty_msg:'검색 결과가 없어요',
+    registered:'상품이 등록됐어요! 🎉',
+  },
+  en:{code:'en',name:'English',flag:'🇺🇸',
+    tab_home:'Home',tab_search:'Search',tab_chat:'Chat',tab_me:'My',
+    signup_title:'Sign Up',form_title:'Register Fabric',
+    fabric_info:'Fabric Info',product_desc:'Description',
+    chat_coming:'Chat coming soon',
+    empty_msg:'No results found',
+    registered:'Product registered! 🎉',
+  },
+  ja:{code:'ja',name:'日本語',flag:'🇯🇵',
+    tab_home:'ホーム',tab_search:'検索',tab_chat:'チャット',tab_me:'MY',
+    signup_title:'会員登録',form_title:'生地登録',
+    fabric_info:'生地情報',product_desc:'商品説明',
+    chat_coming:'チャット機能は準備中です',
+    empty_msg:'検索結果なし',
+    registered:'商品が登録されました！🎉',
+  },
+  zh:{code:'zh',name:'中文',flag:'🇨🇳',
+    tab_home:'首页',tab_search:'搜索',tab_chat:'聊天',tab_me:'我的',
+    signup_title:'注册',form_title:'注册面料',
+    fabric_info:'面料信息',product_desc:'商品描述',
+    chat_coming:'聊天功能准备中',
+    empty_msg:'没有搜索结果',
+    registered:'商品已注册！🎉',
+  },
+  vi:{code:'vi',name:'Tiếng Việt',flag:'🇻🇳',
+    tab_home:'Trang chủ',tab_search:'Tìm kiếm',tab_chat:'Chat',tab_me:'Tôi',
+    signup_title:'Đăng ký',form_title:'Đăng ký vải',
+    fabric_info:'Thông tin vải',product_desc:'Mô tả sản phẩm',
+    chat_coming:'Chức năng chat đang chuẩn bị',
+    empty_msg:'Không tìm thấy kết quả',
+    registered:'Sản phẩm đã được đăng ký! 🎉',
+  },
+};
+let curLang='ko';
+function t(k){return(LANGS[curLang]||LANGS.ko)[k]||k}
+function setLang(code){
+  curLang=code;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n;const v=t(k);if(v)el.textContent=v;
+  });
+  renderLangButtons();
+}
+function renderLangButtons(){
+  const el=document.getElementById('lang-sel');if(!el)return;
+  el.innerHTML=Object.values(LANGS).map(l=>`<button class="lang-btn ${l.code===curLang?'on':''}" onclick="setLang('${l.code}')">${l.flag} ${l.name}</button>`).join('');
+}
+function toggleLangPanel(){
+  const p=document.getElementById('lang-panel');
+  p.style.display=p.style.display==='none'?'block':'none';
+  renderLangButtons();
+}
+
+/* ==================== COLORS ==================== */
+const FCOLORS={
+  '면':['#E8D5C4','#C8DFE4','#D4E8C8','#2C3E50','#E8C8D4','#F2E8D0'],
+  '폴리':['#4A90D9','#B8D4F0','#D4B8F0','#F0B8B8','#B8F0D4','#F0D4B8'],
+  '울':['#8B4513','#4A2810','#A0522D','#CD853F','#D2691E','#DEB887'],
+  '린넨':['#D2B48C','#BFA37A','#8B7355','#C8A882','#E0C8A0','#F5DEB3'],
+  '실크':['#FFD700','#DA70D6','#9370DB','#87CEEB','#FF69B4','#98FB98'],
+  '혼방':['#7B8FA3','#5A6B7A','#3D5166','#9AA8B8','#6B7A8A','#B8C4CE'],
+  '기타':['#95A5A6','#566573','#7F8C8D','#85929E','#A9B7BF','#BDC3C7'],
+};
+function getFColor(type,color){
+  const p=FCOLORS[type]||FCOLORS['기타'];
+  const i=Math.abs((color||'').split('').reduce((a,c)=>a+c.charCodeAt(0),0))%p.length;
+  return p[i];
+}
+function getTexture(type){
+  const m={'면':'repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0px,rgba(255,255,255,.06) 2px,transparent 2px,transparent 8px)','폴리':'repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0px,rgba(255,255,255,.05) 1px,transparent 1px,transparent 4px)','울':'repeating-linear-gradient(-45deg,rgba(0,0,0,.05) 0px,rgba(0,0,0,.05) 1px,transparent 1px,transparent 6px)','린넨':'repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0px,rgba(255,255,255,.07) 1px,transparent 1px,transparent 5px),repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0px,rgba(255,255,255,.07) 1px,transparent 1px,transparent 5px)','실크':'linear-gradient(135deg,rgba(255,255,255,.3) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,.15) 100%)'};
+  return m[type]||'none';
+}
+function fmtPrice(n){return n.toLocaleString('ko-KR')+'원'}
+
+/* ==================== LOCAL STORAGE ==================== */
+function lsGet(k,def){try{const v=localStorage.getItem('bium_'+k);return v?JSON.parse(v):def}catch{return def}}
+function lsSet(k,v){try{localStorage.setItem('bium_'+k,JSON.stringify(v))}catch{}}
+
+/* ==================== USERS ==================== */
+const DEFAULT_USERS=[
+  {id:'admin',name:'관리자',email:'admin',pw:'1234',type:'admin',loc:'서울 동대문구',temp:99.9,joinDate:'2024-01-01'},
+  {id:'s1',name:'에이원원단',email:'seller@test.com',pw:'1234',type:'seller',loc:'서울 성동구 성수동',temp:38.2,joinDate:'2024-02-15',
+   intro:'동대문 20년 경력 원단 도매업체입니다. 면/폴리 중심으로 재고원단을 합리적인 가격에 공급합니다.',
+   bizName:'(주)에이원텍스타일',ceo:'김에이원',tel:'02-1234-5678'},
+  {id:'b1',name:'패션구매팀',email:'buyer@test.com',pw:'1234',type:'buyer',loc:'서울 강남구 역삼동',temp:36.5,joinDate:'2024-03-10'},
+];
+let users=lsGet('users',DEFAULT_USERS);
+let curUser=lsGet('curUser',null);
+
+function findUser(email,pw){return users.find(u=>u.email===email&&u.pw===pw)}
+
+/* ==================== PRODUCTS ==================== */
+const SELLERS_SAMPLE=[
+  {id:'s1',name:'에이원원단',temp:38.2,loc:'서울 성동구 성수동'},
+  {id:'s2',name:'직물나라',temp:36.5,loc:'서울 종로구 창신동'},
+  {id:'s3',name:'패션팩토리',temp:42.1,loc:'부산 중구 광복동'},
+  {id:'s4',name:'실과바늘',temp:35.0,loc:'대구 중구 동성로'},
+  {id:'s5',name:'텍스타일랩',temp:44.7,loc:'서울 마포구 망원동'},
+];
+const DEFAULT_PRODUCTS=[
+  {id:1,title:'소프트 아이보리 면 원단 재고 처분',type:'면',color:'아이보리',width:150,weight:120,qty:45,price:4500,loc:'서울 성동구 성수동',cat:'천연섬유',desc:'국내 대형 의류 브랜드 OEM 생산 후 남은 재고 원단입니다. 40수 면 소재로 부드럽고 내구성이 좋습니다. 여름 의류, 속옷, 침구류 등 다양하게 활용 가능합니다.',tags:['재고원단','면원단','아이보리','소량가능','직거래'],seller:SELLERS_SAMPLE[0],imgs:3,likes:12,chats:5,time:'3시간 전',liked:false},
+  {id:2,title:'시원한 네이비 폴리 쉬폰 원단 50m',type:'폴리',color:'네이비',width:110,weight:80,qty:50,price:2800,loc:'서울 종로구 창신동',cat:'합성섬유',desc:'여름 블라우스 생산에 사용하려다 남은 재고입니다. 통기성이 좋고 가벼운 쉬폰 소재로 드레스, 스카프, 커튼 등에 적합합니다.',tags:['폴리쉬폰','네이비','여름원단','50m'],seller:SELLERS_SAMPLE[1],imgs:2,likes:8,chats:3,time:'5시간 전',liked:false},
+  {id:3,title:'고급 버건디 울 원단 20m 특가',type:'울',color:'버건디',width:150,weight:320,qty:20,price:18000,loc:'부산 중구 광복동',cat:'천연섬유',desc:'이탈리아산 울 원단 수입 후 남은 재고입니다. 최고급 메리노 울 소재로 가을·겨울 코트, 재킷 제작에 최적입니다.',tags:['울원단','버건디','고급원단','이탈리아산','코트감'],seller:SELLERS_SAMPLE[2],imgs:4,likes:24,chats:11,time:'어제',liked:false},
+  {id:4,title:'내추럴 베이지 린넨 원단 세일',type:'린넨',color:'베이지',width:140,weight:160,qty:35,price:6000,loc:'대구 중구 동성로',cat:'천연섬유',desc:'봄·여름 시즌 준비로 들여온 린넨 원단입니다. 천연 소재 특유의 질감과 시원함이 특징이며, 의류뿐 아니라 홈 인테리어 패브릭으로도 인기가 많은 소재입니다.',tags:['린넨','베이지','내추럴','봄여름'],seller:SELLERS_SAMPLE[3],imgs:2,likes:18,chats:7,time:'1일 전',liked:false},
+  {id:5,title:'광택 샴페인 실크 새틴 15m',type:'실크',color:'샴페인골드',width:114,weight:90,qty:15,price:35000,loc:'서울 마포구 망원동',cat:'천연섬유',desc:'웨딩드레스 제작 후 남은 고급 실크 새틴 원단입니다. 광택이 우수하고 드레이프성이 뛰어납니다.',tags:['실크새틴','샴페인','웨딩원단','고급','이브닝'],seller:SELLERS_SAMPLE[4],imgs:5,likes:31,chats:15,time:'2일 전',liked:false},
+  {id:6,title:'모달 혼방 차콜 기모 원단 60m',type:'혼방',color:'차콜그레이',width:160,weight:280,qty:60,price:5500,loc:'인천 남동구 구월동',cat:'혼방',desc:'모달 60% + 폴리 40% 혼방 기모 원단입니다. 부드러운 촉감과 보온성이 뛰어나 겨울용 내의, 트레이닝복에 적합합니다.',tags:['혼방','기모','모달','겨울원단','대량할인'],seller:SELLERS_SAMPLE[0],imgs:3,likes:9,chats:4,time:'2일 전',liked:false},
+  {id:7,title:'빈티지 인디고 데님 원단 25m',type:'면',color:'인디고블루',width:150,weight:340,qty:25,price:8500,loc:'서울 동대문구 신설동',cat:'천연섬유',desc:'셀비지 데님 느낌의 인디고 블루 면 원단입니다. 청바지, 재킷, 가방 등 데님 아이템 제작에 적합합니다.',tags:['데님','인디고','면원단','청바지감'],seller:SELLERS_SAMPLE[1],imgs:2,likes:22,chats:9,time:'3일 전',liked:false},
+  {id:8,title:'파스텔 민트 기능성 폴리 에어로 80m',type:'폴리',color:'민트',width:155,weight:100,qty:80,price:3200,loc:'경기 안양시 만안구',cat:'합성섬유',desc:'스포츠웨어 브랜드 생산 후 남은 에어로 기능성 원단입니다. 흡습속건 기능이 있어 운동복, 아웃도어 의류에 적합합니다.',tags:['폴리','기능성원단','흡습속건','스포츠','대량'],seller:SELLERS_SAMPLE[2],imgs:3,likes:6,chats:2,time:'3일 전',liked:false},
+  {id:9,title:'로즈 울 헤링본 원단 소량 10m',type:'울',color:'로즈핑크',width:150,weight:290,qty:10,price:22000,loc:'서울 강남구 역삼동',cat:'천연섬유',desc:'영국산 울 헤링본 패턴 원단입니다. 클래식한 헤링본 패턴으로 코트, 블레이저, 스커트에 활용하기 좋습니다.',tags:['울헤링본','로즈','영국산','코트감','소량'],seller:SELLERS_SAMPLE[3],imgs:4,likes:27,chats:13,time:'4일 전',liked:false},
+  {id:10,title:'내추럴 그레이 린넨 혼방 40m',type:'린넨',color:'라이트그레이',width:135,weight:175,qty:40,price:7500,loc:'부산 동래구 온천동',cat:'혼방',desc:'린넨 55% + 면 45% 혼방 원단입니다. 린넨의 시원함과 면의 부드러움을 함께 느낄 수 있으며 홈웨어, 여름 셔츠에 적합합니다.',tags:['린넨혼방','그레이','홈웨어','여름'],seller:SELLERS_SAMPLE[4],imgs:2,likes:14,chats:6,time:'5일 전',liked:false},
+];
+let products=lsGet('products',DEFAULT_PRODUCTS);
+function saveProducts(){lsSet('products',products)}
+
+/* ==================== STATE ==================== */
+let curFilter='전체';
+let curSearch='';
+let curProductId=null;
+let prevView='list';
+let sliderIdx=0;
+let sliderTotal=0;
+let uploadedImgs=[];
+let curResType='visit';
+let curSellerData=null;
+let selectedUserType='seller';
+
+/* ==================== TOAST ==================== */
+function showToast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+/* ==================== VIEW ==================== */
+function showView(name){
+  const prev=document.querySelector('.view.active');
+  if(prev)prevView=prev.id.replace('view-','');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const target=document.getElementById('view-'+name);
+  if(target){target.classList.add('active');window.scrollTo(0,0)}
+  if(name==='list')renderList();
+  if(name==='mypage')renderMypage();
+  if(name==='admin')renderAdmin('overview');
+  if(name==='analytics')renderAnalytics();
+}
+function goBack(){showView(prevView||'list')}
+
+/* ==================== AUTH ==================== */
+function doLogin(){
+  const email=document.getElementById('l-email').value.trim();
+  const pw=document.getElementById('l-pw').value;
+  const user=findUser(email,pw);
+  if(!user){showToast('이메일 또는 비밀번호가 틀렸어요');return}
+  curUser=user;lsSet('curUser',curUser);
+  if(user.type==='admin'){showView('admin')}else{showView('list')}
+}
+function doSignup(){
+  const name=document.getElementById('s-name').value.trim();
+  const email=document.getElementById('s-email').value.trim();
+  const pw=document.getElementById('s-pw').value;
+  const loc=document.getElementById('s-loc').value.trim();
+  if(!name||!email||!pw){showToast('필수 항목을 입력해주세요');return}
+  if(users.find(u=>u.email===email)){showToast('이미 사용 중인 이메일이에요');return}
+  if(pw.length<4){showToast('비밀번호는 4자 이상이어야 해요');return}
+  const newUser={id:'u'+Date.now(),name,email,pw,type:selectedUserType,loc,temp:36.5,joinDate:new Date().toISOString().slice(0,10)};
+  users.push(newUser);lsSet('users',users);
+  curUser=newUser;lsSet('curUser',curUser);
+  showToast('가입 완료! 환영해요 🎉');showView('list');
+}
+function doLogout(){
+  curUser=null;lsSet('curUser',null);showView('login');
+}
+function selectType(type,el){
+  selectedUserType=type;
+  document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+/* ==================== FILTER CHIPS ==================== */
+const FILTERS=['전체','면','폴리','울','린넨','실크','혼방','기타'];
+function renderChips(){
+  const el=document.getElementById('filter-chips');
+  el.innerHTML=FILTERS.map(f=>`<button class="chip ${f===curFilter?'on':''}" onclick="setFilter('${f}')">${f}</button>`).join('');
+}
+function setFilter(f){curFilter=f;renderChips();renderList()}
+
+/* ==================== PRODUCT LIST ==================== */
+function renderList(){
+  renderChips();
+  const list=document.getElementById('product-list');
+  const empty=document.getElementById('empty-state');
+  const q=curSearch.trim().toLowerCase();
+  const filtered=products.filter(p=>{
+    const mf=curFilter==='전체'||p.type===curFilter;
+    const ms=!q||p.title.toLowerCase().includes(q)||p.type.includes(q)||p.color.toLowerCase().includes(q)||(p.tags||[]).some(tg=>tg.toLowerCase().includes(q))||(p.seller&&p.seller.name.toLowerCase().includes(q));
+    return mf&&ms;
+  });
+  if(!filtered.length){
+    list.innerHTML='';list.style.display='none';
+    empty.style.display='flex';
+    document.getElementById('empty-msg').textContent=t('empty_msg');
+  }else{
+    empty.style.display='none';list.style.display='grid';
+    list.innerHTML=filtered.map(renderCard).join('');
+  }
+}
+function renderCard(p){
+  const bg=getFColor(p.type,p.color);
+  const tex=getTexture(p.type);
+  const total=p.qty*p.price;
+  const isNew=p.id>10;
+  return `<li class="pcard" onclick="openDetail(${p.id})">
+    ${isNew?'<div class="badge-new">NEW</div>':''}
+    <div class="pthumb" style="background:${bg};background-image:${tex}">
+      <span class="fabric-badge">${p.type}</span>
+    </div>
+    <button class="card-heart" onclick="event.stopPropagation();toggleLike(${p.id})">${p.liked?'❤️':'🤍'}</button>
+    <div class="pinfo">
+      <div class="pname">${p.title}</div>
+      <div class="pmeta">${p.color} · ${p.width}cm · ${p.qty}m</div>
+      <div class="pprice">${fmtPrice(total)}<span class="pu"> (${fmtPrice(p.price)}/m)</span></div>
+      <div class="pfoot">
+        <span class="ploc">📍${p.loc.split(' ').slice(-1)[0]}</span>
+        <span class="pcnt"><span>🤍${p.likes}</span><span>💬${p.chats}</span></span>
+      </div>
+    </div>
+  </li>`;
+}
+
+/* ==================== LIKE ==================== */
+function toggleLike(id){
+  const p=products.find(x=>x.id===id);if(!p)return;
+  p.liked=!p.liked;p.likes+=p.liked?1:-1;saveProducts();renderList();
+  showToast(p.liked?'관심 목록에 추가됐어요 ❤️':'관심 목록에서 제거됐어요');
+}
+
+/* ==================== DETAIL ==================== */
+function openDetail(id){
+  prevView='list';
+  curProductId=id;sliderIdx=0;
+  const p=products.find(x=>x.id===id);if(!p)return;
+  document.getElementById('d-hdr-title').textContent=p.title;
+  document.getElementById('d-scroll').scrollTop=0;
+  // slider
+  sliderTotal=p.imgs||1;
+  const bg=getFColor(p.type,p.color);const tex=getTexture(p.type);
+  const track=document.getElementById('s-track');
+  const dots=document.getElementById('s-dots');
+  const vs=['','filter:brightness(1.1)','filter:brightness(.9)','filter:saturate(1.3)','filter:hue-rotate(15deg)'];
+  track.innerHTML=Array.from({length:sliderTotal},(_,i)=>`<div class="s-slide" style="background:${bg};background-image:${tex};${vs[i]||''};flex-shrink:0;width:${100/sliderTotal}%"><div style="font-size:36px">🧵</div><div style="font-size:13px;font-weight:600;background:rgba(0,0,0,.25);padding:5px 14px;border-radius:20px;color:rgba(255,255,255,.95)">${p.color} ${p.type}</div><div style="font-size:11px;margin-top:4px;opacity:.8">${i+1}/${sliderTotal}</div></div>`).join('');
+  track.style.width=(sliderTotal*100)+'%';
+  dots.innerHTML=Array.from({length:sliderTotal},(_,i)=>`<div class="s-dot ${i===0?'on':''}"></div>`).join('');
+  document.getElementById('s-prev').style.display=sliderTotal>1?'flex':'none';
+  document.getElementById('s-next').style.display=sliderTotal>1?'flex':'none';
+  updateSlider();
+  // seller
+  const av=document.getElementById('d-av');
+  av.textContent=p.seller.name[0];av.style.background=bg;
+  document.getElementById('d-sname').textContent=p.seller.name;
+  document.getElementById('d-sloc').textContent='📍 '+p.loc;
+  document.getElementById('d-temp').textContent=p.seller.temp.toFixed(1)+'°C';
+  // fabric table
+  document.getElementById('d-ftbl').innerHTML=[
+    ['원단 종류',p.type],['색상',p.color],['폭',p.width+'cm'],
+    ['중량',p.weight?(p.weight+'g/㎡'):'정보 없음'],
+    ['수량',p.qty+'m'],['단가',fmtPrice(p.price)+'/m'],
+  ].map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+  document.getElementById('d-desc').textContent=p.desc;
+  document.getElementById('d-tags').innerHTML=(p.tags||[]).map(tg=>`<span class="tagc">#${tg}</span>`).join('');
+  document.getElementById('d-stats').innerHTML=`관심 ${p.likes}명 &nbsp;·&nbsp; 채팅 ${p.chats}명 &nbsp;·&nbsp; ${p.time}`;
+  // action bar
+  document.getElementById('d-tp').textContent=fmtPrice(p.qty*p.price);
+  document.getElementById('d-pp').textContent=fmtPrice(p.price)+'/m · '+p.qty+'m';
+  updateDetailHeart(p);
+  // res date default
+  document.getElementById('res-date').valueAsDate=new Date();
+  curSellerData=p.seller;
+  showView('detail');
+}
+function updateDetailHeart(p){
+  const btn=document.getElementById('d-heart');
+  const icon=document.getElementById('d-hicon');
+  btn.className='heart-btn'+(p.liked?' on':'');
+  icon.textContent=p.liked?'❤️':'🤍';
+  document.getElementById('d-lcnt').textContent=p.likes;
+}
+function toggleDetailLike(){
+  const p=products.find(x=>x.id===curProductId);if(!p)return;
+  p.liked=!p.liked;p.likes+=p.liked?1:-1;saveProducts();updateDetailHeart(p);
+  showToast(p.liked?'관심 목록에 추가됐어요 ❤️':'관심 목록에서 제거됐어요');
+}
+function shareProduct(){openModal('modal-share')}
+function openSellerPage(){
+  const p=products.find(x=>x.id===curProductId);if(!p)return;
+  renderSellerPage(p.seller);
+}
+
+/* ==================== SLIDER ==================== */
+function slideMove(d){sliderIdx=Math.max(0,Math.min(sliderTotal-1,sliderIdx+d));updateSlider()}
+function updateSlider(){
+  const track=document.getElementById('s-track');
+  track.style.transform=`translateX(-${(sliderIdx/sliderTotal)*100}%)`;
+  document.querySelectorAll('.s-dot').forEach((d,i)=>d.classList.toggle('on',i===sliderIdx));
+}
+const slider=document.getElementById('d-slider');
+let tX=0;
+slider.addEventListener('touchstart',e=>{tX=e.touches[0].clientX},{passive:true});
+slider.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-tX)>40)slideMove(e.changedTouches[0].clientX<tX?1:-1)});
+
+/* ==================== MODALS ==================== */
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id,e){if(!e||e.target===document.getElementById(id)||!e)document.getElementById(id).classList.remove('open')}
+function openChatModal(){openModal('modal-chat')}
+function openSuggestModal(){openModal('modal-suggest')}
+function openResModal(){openModal('modal-res')}
+function submitSuggest(){
+  const price=document.getElementById('suggest-price').value;
+  if(!price){showToast('제안 가격을 입력해주세요');return}
+  closeModal('modal-suggest');showToast('가격 제안이 전송됐어요! 💰');
+}
+function selectRes(type,el){
+  curResType=type;
+  document.querySelectorAll('.res-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  const titles={visit:'방문 예약',swatch:'스와치 요청',inspect:'출장감별 예약'};
+  document.getElementById('res-modal-title').textContent=titles[type]||'예약';
+}
+function submitReservation(){
+  const date=document.getElementById('res-date').value;
+  const time=document.getElementById('res-time').value;
+  closeModal('modal-res');showToast(`${date} ${time} 예약이 신청됐어요! 📅`);
+}
+
+/* ==================== SELLER PAGE ==================== */
+function renderSellerPage(seller){
+  prevView='detail';
+  const bg=getFColor(seller.name,'abc');
+  document.getElementById('sh-hero').style.background=`linear-gradient(135deg,${bg},#ff9a6c)`;
+  const av=document.getElementById('sh-av');av.textContent=seller.name[0];
+  document.getElementById('sh-name').textContent=seller.name;
+  document.getElementById('sh-loc').textContent='📍 '+(seller.loc||'서울');
+  const userInfo=users.find(u=>u.id===seller.id||u.name===seller.name)||{};
+  document.getElementById('sh-intro').textContent=userInfo.intro||'재고원단 전문 업체입니다. 다양한 소재의 원단을 합리적인 가격에 공급합니다.';
+  const myProds=products.filter(p=>p.seller.name===seller.name);
+  const sl=document.getElementById('sh-stats');
+  sl.innerHTML=`
+    <div class="sstat"><div class="sv">${myProds.length}</div><div class="sl">상품</div></div>
+    <div class="sstat"><div class="sv">${seller.temp.toFixed(1)}°C</div><div class="sl">매너온도</div></div>
+    <div class="sstat"><div class="sv">${myProds.reduce((a,p)=>a+p.likes,0)}</div><div class="sl">관심</div></div>
+  `;
+  document.getElementById('sh-products').innerHTML=myProds.map(renderCard).join('');
+  showView('seller');
+}
+
+/* ==================== FORM ==================== */
+document.getElementById('file-input').addEventListener('change',e=>{
+  const files=Array.from(e.target.files);
+  const rem=5-uploadedImgs.length;
+  files.slice(0,rem).forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{uploadedImgs.push(ev.target.result);renderImgPreviews()};
+    r.readAsDataURL(f);
+  });
+  if(files.length>rem)showToast('최대 5장까지 첨부 가능해요');
+  e.target.value='';
+});
+function renderImgPreviews(){
+  const scroll=document.getElementById('img-scroll');
+  const add=scroll.querySelector('.img-add');
+  scroll.querySelectorAll('.img-prev').forEach(e=>e.remove());
+  uploadedImgs.forEach((src,i)=>{
+    const d=document.createElement('div');d.className='img-prev';
+    d.innerHTML=`<img src="${src}" alt="preview"/><button class="img-rm" onclick="removeImg(${i})">✕</button>`;
+    scroll.insertBefore(d,add);
+  });
+  add.style.display=uploadedImgs.length>=5?'none':'flex';
+}
+function removeImg(i){uploadedImgs.splice(i,1);renderImgPreviews()}
+function calcTotal(){
+  const qty=parseFloat(document.getElementById('f-qty').value)||0;
+  const price=parseFloat(document.getElementById('f-price').value)||0;
+  const el=document.getElementById('f-total');
+  el.textContent=qty&&price?`총 ${fmtPrice(qty*price)} (${fmtPrice(price)}/m × ${qty}m)`:'수량과 단가를 입력하면 자동 계산돼요';
+  // AI price hint
+  const hint=document.getElementById('ai-price-hint');
+  const type=document.getElementById('f-type').value;
+  if(type&&price){
+    const ranges={면:[3000,8000],폴리:[2000,6000],울:[12000,35000],린넨:[5000,12000],실크:[20000,80000],혼방:[4000,10000],기타:[2000,15000]};
+    const [lo,hi]=ranges[type]||[2000,20000];
+    const avg=Math.round((lo+hi)/2);
+    const diff=price-avg;
+    const msg=diff<-avg*.2?'✅ AI 예측: 시세보다 저렴해요! 빠른 거래 예상':diff>avg*.2?'⚠️ AI 예측: 시세보다 높을 수 있어요. 조정을 고려해보세요':'📊 AI 예측: 적정 시세 범위예요! ('+type+' 평균 '+fmtPrice(avg)+'/m)';
+    hint.textContent=msg;
+  }
+}
+function updateCat2(){/* 3-tier category hook */}
+function submitForm(){
+  const title=document.getElementById('f-title').value.trim();
+  const type=document.getElementById('f-type').value;
+  const color=document.getElementById('f-color').value.trim();
+  const qty=parseFloat(document.getElementById('f-qty').value);
+  const price=parseFloat(document.getElementById('f-price').value);
+  const loc=document.getElementById('f-loc').value.trim();
+  if(!title){showToast('상품명을 입력해주세요');return}
+  if(!type){showToast('원단 종류를 선택해주세요');return}
+  if(!color){showToast('색상을 입력해주세요');return}
+  if(!qty||qty<=0){showToast('수량을 입력해주세요');return}
+  if(!price||price<=0){showToast('단가를 입력해주세요');return}
+  if(!loc){showToast('거래 지역을 입력해주세요');return}
+  const rawTags=document.getElementById('f-tags').value.trim();
+  const tags=rawTags?rawTags.split(',').map(tg=>tg.trim().replace(/^#/,'')).filter(Boolean):[];
+  const width=parseInt(document.getElementById('f-width').value)||0;
+  const weight=parseInt(document.getElementById('f-weight').value)||0;
+  const desc=document.getElementById('f-desc').value.trim()||'상품 설명이 없습니다.';
+  const sellerInfo=curUser?{id:curUser.id,name:curUser.name,temp:curUser.temp,loc:curUser.loc}:{name:'나',temp:36.5,loc:loc};
+  const newP={id:Date.now(),title,type,color,width,weight,qty,price,loc,cat:document.getElementById('f-cat1').value||'기타',desc,tags,seller:sellerInfo,imgs:Math.max(1,uploadedImgs.length),likes:0,chats:0,time:'방금 전',liked:false};
+  products.unshift(newP);saveProducts();
+  // reset
+  ['f-title','f-color','f-width','f-weight','f-qty','f-price','f-loc','f-desc','f-tags'].forEach(id=>{document.getElementById(id).value=''});
+  document.getElementById('f-type').value='';document.getElementById('f-cat1').value='';
+  document.getElementById('f-total').textContent='수량과 단가를 입력하면 자동 계산돼요';
+  document.getElementById('ai-price-hint').textContent='원단 정보를 입력하면 AI가 적정 가격을 예측해드려요 📊';
+  uploadedImgs=[];renderImgPreviews();
+  showView('list');showToast(t('registered'));
+}
+document.getElementById('search-input').addEventListener('input',e=>{curSearch=e.target.value;renderList()});
+document.getElementById('btn-loc').addEventListener('click',()=>showToast('지역 설정 기능 준비중이에요'));
+document.getElementById('btn-alert').addEventListener('click',()=>showToast('새로운 알림이 없어요'));
+
+/* ==================== MYPAGE ==================== */
+function renderMypage(){
+  const u=curUser||{name:'게스트',type:'guest',temp:36.5};
+  const av=document.getElementById('mp-av');av.textContent=u.name[0];
+  document.getElementById('mp-name').textContent=u.name;
+  const types={seller:'판매자',buyer:'구매자',brand:'브랜드',both:'겸업',admin:'관리자',guest:'게스트'};
+  document.getElementById('mp-type').textContent=(types[u.type]||'회원')+' · '+(u.loc||'위치 미설정');
+  document.getElementById('mp-temp').textContent='매너온도 '+u.temp.toFixed(1)+'°C 🌡️';
+  const isSeller=u.type==='seller'||u.type==='both'||u.type==='brand';
+  const menus=[
+    {section:'내 거래'},
+    {icon:'❤️',label:'관심 목록',action:'showToast("관심 목록 준비중이에요")'},
+    {icon:'💬',label:'채팅 목록',action:'showToast("채팅 기능 준비중이에요")'},
+    {icon:'📅',label:'예약 내역',action:'showToast("예약 내역 준비중이에요")'},
+    ...(isSeller?[
+      {section:'판매자 메뉴'},
+      {icon:'📦',label:'내 상품 관리',action:'showMySales()'},
+      {icon:'📊',label:'매출 대시보드',action:"showView('analytics')"},
+      {icon:'🏠',label:'내 미니홈피',action:'openMySellerPage()'},
+    ]:[]),
+    {section:'설정'},
+    {icon:'🌐',label:'언어 설정',action:'showView("list");setTimeout(()=>toggleLangPanel(),200)'},
+    {icon:'🔔',label:'알림 설정',action:'showToast("알림 설정 준비중이에요")'},
+    {icon:'👤',label:'프로필 수정',action:'showToast("프로필 수정 준비중이에요")'},
+    {icon:'🚪',label:'로그아웃',action:'doLogout()'},
+  ];
+  document.getElementById('menu-list').innerHTML=menus.map(m=>{
+    if(m.section)return`<div class="menu-section">${m.section}</div>`;
+    return`<div class="menu-item" onclick="${m.action}"><span class="menu-icon">${m.icon}</span><span class="menu-label">${m.label}</span><span class="menu-arrow">›</span></div>`;
+  }).join('');
+}
+function showMySales(){
+  const u=curUser;if(!u){showToast('로그인이 필요해요');return}
+  const myP=products.filter(p=>p.seller&&(p.seller.id===u.id||p.seller.name===u.name));
+  showToast('내 상품 '+myP.length+'개');
+}
+function openMySellerPage(){
+  if(!curUser){showToast('로그인이 필요해요');return}
+  renderSellerPage({id:curUser.id,name:curUser.name,temp:curUser.temp,loc:curUser.loc});
+}
+
+/* ==================== ADMIN ==================== */
+let curAdminTab='overview';
+function renderAdmin(tab){
+  curAdminTab=tab;
+  const content=document.getElementById('admin-content');
+  if(tab==='overview'){
+    content.innerHTML=`
+      <div class="stat-grid">
+        <div class="stat-card"><div class="sv">${users.length}</div><div class="sl">총 회원</div></div>
+        <div class="stat-card"><div class="sv">${products.length}</div><div class="sl">총 상품</div></div>
+        <div class="stat-card"><div class="sv">${products.reduce((a,p)=>a+p.likes,0)}</div><div class="sl">총 관심</div></div>
+        <div class="stat-card"><div class="sv">${products.reduce((a,p)=>a+p.chats,0)}</div><div class="sl">총 채팅</div></div>
+      </div>
+      <div style="background:var(--g100);border-radius:var(--r);padding:14px;font-size:13px;line-height:1.8;color:var(--g700)">
+        <b>📌 최근 활동</b><br>
+        · 신규 상품 ${products.filter(p=>p.id>10).length}건 등록됨<br>
+        · 신규 회원 ${users.length-3}명 가입<br>
+        · 오늘 접속자: 127명<br>
+        · 이번 주 거래액: ₩18,450,000
+      </div>`;
+  }else if(tab==='users'){
+    content.innerHTML=`<div class="table-wrap"><table class="data-table"><thead><tr><th>이름</th><th>유형</th><th>이메일</th><th>가입일</th><th>관리</th></tr></thead><tbody>`+
+    users.map(u=>`<tr><td><b>${u.name}</b></td><td><span class="badge badge-${u.type==='admin'?'orange':u.type==='seller'?'green':'blue'}">${u.type}</span></td><td style="font-size:11px">${u.email}</td><td style="font-size:11px">${u.joinDate||'-'}</td><td><button class="action-btn" onclick="showToast('${u.name} 정보 수정 준비중')">수정</button></td></tr>`).join('')+
+    '</tbody></table></div>';
+  }else if(tab==='products'){
+    content.innerHTML=`<div class="table-wrap"><table class="data-table"><thead><tr><th>상품명</th><th>종류</th><th>수량</th><th>단가</th><th>관리</th></tr></thead><tbody>`+
+    products.slice(0,20).map(p=>`<tr><td style="font-size:11px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.title}</td><td><span class="badge badge-blue">${p.type}</span></td><td>${p.qty}m</td><td>${fmtPrice(p.price)}</td><td><button class="action-btn del" onclick="adminDeleteProduct(${p.id})">삭제</button></td></tr>`).join('')+
+    '</tbody></table></div>';
+  }else if(tab==='notices'){
+    content.innerHTML=`<div style="margin-bottom:12px"><button class="btn-primary" style="padding:10px 18px;font-size:13px" onclick="showToast('공지 작성 기능 준비중이에요')">+ 공지 작성</button></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${['[공지] 비움마켓 v18.3 업데이트 안내','[공지] 여름 원단 특가 기획전 진행 중','[안내] 매너 온도 시스템 개편 안내'].map((title,i)=>`<div style="border:1px solid var(--g200);border-radius:var(--rs);padding:12px 14px;cursor:pointer" onclick="showToast('공지 상세 준비중')"><div style="font-size:13px;font-weight:600;margin-bottom:4px">${title}</div><div style="font-size:11px;color:var(--g500)">${['2024.12.01','2024.11.25','2024.11.20'][i]}</div></div>`).join('')}
+    </div>`;
+  }
+}
+function switchAdminTab(tab,el){
+  document.querySelectorAll('.atab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');renderAdmin(tab);
+}
+function adminDeleteProduct(id){
+  if(!confirm('정말 삭제할까요?'))return;
+  products=products.filter(p=>p.id!==id);saveProducts();renderAdmin('products');showToast('삭제됐어요');
+}
+
+/* ==================== ANALYTICS ==================== */
+function renderAnalytics(){
+  const months=['8월','9월','10월','11월','12월','1월'];
+  const vals=[1.2,1.8,2.1,1.6,2.4,2.8];
+  const max=Math.max(...vals);
+  const chart=document.getElementById('bar-chart');
+  chart.innerHTML=vals.map((v,i)=>`<div class="bar-item"><div class="bar-val">₩${v}M</div><div class="bar" style="height:${(v/max)*68}px;${i===vals.length-1?'background:var(--P)':''}"></div><div class="bar-lbl">${months[i]}</div></div>`).join('');
+  document.getElementById('top-fabrics').innerHTML=[
+    {name:'면 원단',pct:38,color:'#E8D5C4'},
+    {name:'폴리 원단',pct:29,color:'#4A90D9'},
+    {name:'혼방 원단',pct:18,color:'#7B8FA3'},
+  ].map(f=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>${f.name}</span><span style="font-weight:700">${f.pct}%</span></div><div style="height:8px;background:var(--g200);border-radius:4px"><div style="height:100%;width:${f.pct}%;background:${f.color};border-radius:4px"></div></div></div>`).join('');
+  document.getElementById('market-price').innerHTML=[
+    {type:'면 (40수)',price:'4,200~6,800',trend:'↑'},
+    {type:'폴리 (쉬폰)',price:'2,500~4,500',trend:'→'},
+    {type:'울 (메리노)',price:'15,000~28,000',trend:'↓'},
+    {type:'린넨',price:'5,500~9,500',trend:'↑'},
+  ].map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--g100);font-size:13px"><span>${f.type}</span><span style="font-weight:600">${f.price}원/m <span style="color:${f.trend==='↑'?'#e53935':f.trend==='↓'?'#1565c0':'var(--g500)'}">${f.trend}</span></span></div>`).join('');
+}
+
+/* ==================== INIT ==================== */
+(function init(){
+  // Check saved session
+  if(curUser){
+    if(curUser.type==='admin')showView('admin');
+    else showView('list');
+  }else{
+    showView('login');
+  }
+  renderChips();
+})();
+</script>
+</body>
+</html>

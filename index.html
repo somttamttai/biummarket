@@ -261,6 +261,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   .tabbar,.d-action,.toast{left:50%}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <div id="app">
@@ -772,6 +773,17 @@ function fmtPrice(n){return n.toLocaleString('ko-KR')+'원'}
 function lsGet(k,def){try{const v=localStorage.getItem('bium_'+k);return v?JSON.parse(v):def}catch{return def}}
 function lsSet(k,v){try{localStorage.setItem('bium_'+k,JSON.stringify(v))}catch{}}
 
+/* ==================== SUPABASE ==================== */
+const _SB_URL='https://ygernyfkydqalqmjzjbw.supabase.co';
+const _SB_KEY='sb_publishable_CIC03pgTltIAwP24vpZXyQ_6QEajQ2_';
+const supabase=window.supabase.createClient(_SB_URL,_SB_KEY);
+// 세션 변경 감지 (강제 로그아웃 등)
+supabase.auth.onAuthStateChange((event)=>{
+  if(event==='SIGNED_OUT'&&curUser&&curUser.email!=='admin'){
+    curUser=null;lsSet('curUser',null);showView('login');
+  }
+});
+
 /* ==================== USERS ==================== */
 const DEFAULT_USERS=[
   {id:'admin',name:'관리자',email:'admin',pw:'1234',type:'admin',loc:'서울 동대문구',temp:99.9,joinDate:'2024-01-01'},
@@ -807,6 +819,24 @@ const DEFAULT_PRODUCTS=[
 ];
 let products=lsGet('products',DEFAULT_PRODUCTS);
 function saveProducts(){lsSet('products',products)}
+async function loadProductsFromSupabase(){
+  const{data,error}=await supabase.from('products').select('*').order('created_at',{ascending:false});
+  if(error){console.error('products fetch error:',error);return;}
+  if(!data||data.length===0)return;
+  const likedMap=lsGet('likedMap',{});
+  products=data.map(p=>({
+    ...p,
+    seller:p.seller||{name:'알수없음',temp:36.5,loc:''},
+    tags:Array.isArray(p.tags)?p.tags:(p.tags?p.tags.split(','):[]),
+    liked:!!likedMap[p.id],
+    time:p.time||'방금 전',
+    likes:p.likes||0,
+    chats:p.chats||0,
+    imgs:p.imgs||1,
+  }));
+  lsSet('products',products);
+  renderList();
+}
 
 /* ==================== STATE ==================== */
 let curFilter='전체';
@@ -842,28 +872,39 @@ function showView(name){
 function goBack(){showView(prevView||'list')}
 
 /* ==================== AUTH ==================== */
-function doLogin(){
+async function doLogin(){
   const email=document.getElementById('l-email').value.trim();
   const pw=document.getElementById('l-pw').value;
-  const user=findUser(email,pw);
-  if(!user){showToast('이메일 또는 비밀번호가 틀렸어요');return}
-  curUser=user;lsSet('curUser',curUser);
-  if(user.type==='admin'){showView('admin')}else{showView('list')}
+  // 관리자 계정 특별 처리 (로컬 검증)
+  if(email==='admin'){
+    const admin=DEFAULT_USERS.find(u=>u.email==='admin'&&u.pw===pw);
+    if(!admin){showToast('비밀번호가 틀렸어요');return;}
+    curUser=admin;lsSet('curUser',curUser);showView('admin');return;
+  }
+  const{data,error}=await supabase.auth.signInWithPassword({email,password:pw});
+  if(error){showToast('이메일 또는 비밀번호가 틀렸어요');return;}
+  const{data:profile}=await supabase.from('users').select('*').eq('id',data.user.id).single();
+  curUser=profile||{id:data.user.id,email,name:email,type:'buyer',temp:36.5,loc:'',joinDate:data.user.created_at?.slice(0,10)||''};
+  lsSet('curUser',curUser);
+  if(curUser.type==='admin')showView('admin');else{showView('list');loadProductsFromSupabase();}
 }
-function doSignup(){
+async function doSignup(){
   const name=document.getElementById('s-name').value.trim();
   const email=document.getElementById('s-email').value.trim();
   const pw=document.getElementById('s-pw').value;
   const loc=document.getElementById('s-loc').value.trim();
-  if(!name||!email||!pw){showToast('필수 항목을 입력해주세요');return}
-  if(users.find(u=>u.email===email)){showToast('이미 사용 중인 이메일이에요');return}
-  if(pw.length<4){showToast('비밀번호는 4자 이상이어야 해요');return}
-  const newUser={id:'u'+Date.now(),name,email,pw,type:selectedUserType,loc,temp:36.5,joinDate:new Date().toISOString().slice(0,10)};
-  users.push(newUser);lsSet('users',users);
-  curUser=newUser;lsSet('curUser',curUser);
-  showToast('가입 완료! 환영해요 🎉');showView('list');
+  if(!name||!email||!pw){showToast('필수 항목을 입력해주세요');return;}
+  if(pw.length<6){showToast('비밀번호는 6자 이상이어야 해요');return;}
+  const{data,error}=await supabase.auth.signUp({email,password:pw});
+  if(error){showToast(error.message||'회원가입에 실패했어요');return;}
+  const newProfile={id:data.user.id,name,email,type:selectedUserType,loc,temp:36.5,join_date:new Date().toISOString().slice(0,10)};
+  await supabase.from('users').insert(newProfile);
+  curUser={...newProfile,joinDate:newProfile.join_date};
+  lsSet('curUser',curUser);
+  showToast('가입 완료! 환영해요 🎉');showView('list');loadProductsFromSupabase();
 }
-function doLogout(){
+async function doLogout(){
+  if(curUser?.email!=='admin')await supabase.auth.signOut();
   curUser=null;lsSet('curUser',null);showView('login');
 }
 function selectType(type,el){
@@ -926,7 +967,10 @@ function renderCard(p){
 /* ==================== LIKE ==================== */
 function toggleLike(id){
   const p=products.find(x=>x.id===id);if(!p)return;
-  p.liked=!p.liked;p.likes+=p.liked?1:-1;saveProducts();renderList();
+  p.liked=!p.liked;p.likes+=p.liked?1:-1;saveProducts();
+  const likedMap=lsGet('likedMap',{});likedMap[id]=p.liked;lsSet('likedMap',likedMap);
+  supabase.from('products').update({likes:p.likes}).eq('id',id).then();
+  renderList();
   showToast(p.liked?'관심 목록에 추가됐어요 ❤️':'관심 목록에서 제거됐어요');
 }
 
@@ -982,7 +1026,10 @@ function updateDetailHeart(p){
 }
 function toggleDetailLike(){
   const p=products.find(x=>x.id===curProductId);if(!p)return;
-  p.liked=!p.liked;p.likes+=p.liked?1:-1;saveProducts();updateDetailHeart(p);
+  p.liked=!p.liked;p.likes+=p.liked?1:-1;saveProducts();
+  const likedMap=lsGet('likedMap',{});likedMap[p.id]=p.liked;lsSet('likedMap',likedMap);
+  supabase.from('products').update({likes:p.likes}).eq('id',p.id).then();
+  updateDetailHeart(p);
   showToast(p.liked?'관심 목록에 추가됐어요 ❤️':'관심 목록에서 제거됐어요');
 }
 function shareProduct(){openModal('modal-share')}
@@ -1021,9 +1068,19 @@ function selectRes(type,el){
   const titles={visit:'방문 예약',swatch:'스와치 요청',inspect:'출장감별 예약'};
   document.getElementById('res-modal-title').textContent=titles[type]||'예약';
 }
-function submitReservation(){
+async function submitReservation(){
   const date=document.getElementById('res-date').value;
   const time=document.getElementById('res-time').value;
+  const note=document.getElementById('res-note').value.trim();
+  if(curUser&&curProductId){
+    const{error}=await supabase.from('reservations').insert({
+      product_id:curProductId,
+      user_id:curUser.id,
+      type:curResType,
+      date,time,note,
+    });
+    if(error)console.error('reservation error:',error);
+  }
   closeModal('modal-res');showToast(`${date} ${time} 예약이 신청됐어요! 📅`);
 }
 
@@ -1090,28 +1147,34 @@ function calcTotal(){
   }
 }
 function updateCat2(){/* 3-tier category hook */}
-function submitForm(){
+async function submitForm(){
   const title=document.getElementById('f-title').value.trim();
   const type=document.getElementById('f-type').value;
   const color=document.getElementById('f-color').value.trim();
   const qty=parseFloat(document.getElementById('f-qty').value);
   const price=parseFloat(document.getElementById('f-price').value);
   const loc=document.getElementById('f-loc').value.trim();
-  if(!title){showToast('상품명을 입력해주세요');return}
-  if(!type){showToast('원단 종류를 선택해주세요');return}
-  if(!color){showToast('색상을 입력해주세요');return}
-  if(!qty||qty<=0){showToast('수량을 입력해주세요');return}
-  if(!price||price<=0){showToast('단가를 입력해주세요');return}
-  if(!loc){showToast('거래 지역을 입력해주세요');return}
+  if(!title){showToast('상품명을 입력해주세요');return;}
+  if(!type){showToast('원단 종류를 선택해주세요');return;}
+  if(!color){showToast('색상을 입력해주세요');return;}
+  if(!qty||qty<=0){showToast('수량을 입력해주세요');return;}
+  if(!price||price<=0){showToast('단가를 입력해주세요');return;}
+  if(!loc){showToast('거래 지역을 입력해주세요');return;}
   const rawTags=document.getElementById('f-tags').value.trim();
   const tags=rawTags?rawTags.split(',').map(tg=>tg.trim().replace(/^#/,'')).filter(Boolean):[];
   const width=parseInt(document.getElementById('f-width').value)||0;
   const weight=parseInt(document.getElementById('f-weight').value)||0;
   const desc=document.getElementById('f-desc').value.trim()||'상품 설명이 없습니다.';
-  const sellerInfo=curUser?{id:curUser.id,name:curUser.name,temp:curUser.temp,loc:curUser.loc}:{name:'나',temp:36.5,loc:loc};
-  const newP={id:Date.now(),title,type,color,width,weight,qty,price,loc,cat:document.getElementById('f-cat1').value||'기타',desc,tags,seller:sellerInfo,imgs:Math.max(1,uploadedImgs.length),likes:0,chats:0,time:'방금 전',liked:false};
+  const sellerInfo=curUser?{id:curUser.id,name:curUser.name,temp:curUser.temp||36.5,loc:curUser.loc||loc}:{name:'나',temp:36.5,loc};
+  const payload={title,type,color,width,weight,qty,price,loc,cat:document.getElementById('f-cat1').value||'기타',desc,tags,seller:sellerInfo,imgs:Math.max(1,uploadedImgs.length),likes:0,chats:0,time:'방금 전'};
+  // Supabase에 상품 저장
+  let newId=Date.now();
+  const{data:inserted,error}=await supabase.from('products').insert(payload).select().single();
+  if(!error&&inserted)newId=inserted.id;
+  else if(error)console.error('product insert error:',error);
+  const newP={...payload,id:newId,liked:false};
   products.unshift(newP);saveProducts();
-  // reset
+  // 폼 초기화
   ['f-title','f-color','f-width','f-weight','f-qty','f-price','f-loc','f-desc','f-tags'].forEach(id=>{document.getElementById(id).value=''});
   document.getElementById('f-type').value='';document.getElementById('f-cat1').value='';
   document.getElementById('f-total').textContent='수량과 단가를 입력하면 자동 계산돼요';
@@ -1203,8 +1266,10 @@ function switchAdminTab(tab,el){
   document.querySelectorAll('.atab').forEach(t=>t.classList.remove('on'));
   el.classList.add('on');renderAdmin(tab);
 }
-function adminDeleteProduct(id){
+async function adminDeleteProduct(id){
   if(!confirm('정말 삭제할까요?'))return;
+  const{error}=await supabase.from('products').delete().eq('id',id);
+  if(error)console.error('delete error:',error);
   products=products.filter(p=>p.id!==id);saveProducts();renderAdmin('products');showToast('삭제됐어요');
 }
 
@@ -1229,11 +1294,16 @@ function renderAnalytics(){
 }
 
 /* ==================== INIT ==================== */
-(function init(){
-  // Check saved session
+(async function init(){
+  // Supabase 세션 확인 (새로고침 후 자동 로그인 유지)
+  const{data:{session}}=await supabase.auth.getSession();
+  if(session){
+    const{data:profile}=await supabase.from('users').select('*').eq('id',session.user.id).single();
+    if(profile){curUser={...profile};lsSet('curUser',curUser);}
+  }
   if(curUser){
     if(curUser.type==='admin')showView('admin');
-    else showView('list');
+    else{showView('list');loadProductsFromSupabase();}
   }else{
     showView('login');
   }

@@ -776,13 +776,22 @@ function lsSet(k,v){try{localStorage.setItem('bium_'+k,JSON.stringify(v))}catch{
 /* ==================== SUPABASE ==================== */
 const _SB_URL='https://ygernyfkydqalqmjzjbw.supabase.co';
 const _SB_KEY='sb_publishable_CIC03pgTltIAwP24vpZXyQ_6QEajQ2_';
-const supabase=window.supabase.createClient(_SB_URL,_SB_KEY);
-// 세션 변경 감지 (강제 로그아웃 등)
-supabase.auth.onAuthStateChange((event)=>{
-  if(event==='SIGNED_OUT'&&curUser&&curUser.email!=='admin'){
-    curUser=null;lsSet('curUser',null);showView('login');
+let supabase=null;
+try{
+  if(typeof window.supabase!=='undefined'){
+    supabase=window.supabase.createClient(_SB_URL,_SB_KEY);
+    supabase.auth.onAuthStateChange((event)=>{
+      if(event==='SIGNED_OUT'&&typeof curUser!=='undefined'&&curUser&&curUser.email!=='admin'){
+        curUser=null;lsSet('curUser',null);showView('login');
+      }
+    });
+  }else{
+    console.warn('Supabase SDK 로드 실패 — 로컬 모드로 동작합니다.');
   }
-});
+}catch(e){
+  console.error('Supabase 초기화 오류:',e);
+  supabase=null;
+}
 
 /* ==================== USERS ==================== */
 const DEFAULT_USERS=[
@@ -820,6 +829,7 @@ const DEFAULT_PRODUCTS=[
 let products=lsGet('products',DEFAULT_PRODUCTS);
 function saveProducts(){lsSet('products',products)}
 async function loadProductsFromSupabase(){
+  if(!supabase)return;
   const{data,error}=await supabase.from('products').select('*').order('created_at',{ascending:false});
   if(error){console.error('products fetch error:',error);return;}
   if(!data||data.length===0)return;
@@ -881,12 +891,22 @@ async function doLogin(){
     if(!admin){showToast('비밀번호가 틀렸어요');return;}
     curUser=admin;lsSet('curUser',curUser);showView('admin');return;
   }
-  const{data,error}=await supabase.auth.signInWithPassword({email,password:pw});
-  if(error){showToast('이메일 또는 비밀번호가 틀렸어요');return;}
-  const{data:profile}=await supabase.from('users').select('*').eq('id',data.user.id).single();
-  curUser=profile||{id:data.user.id,email,name:email,type:'buyer',temp:36.5,loc:'',joinDate:data.user.created_at?.slice(0,10)||''};
-  lsSet('curUser',curUser);
-  if(curUser.type==='admin')showView('admin');else{showView('list');loadProductsFromSupabase();}
+  // Supabase 미연결 시 로컬 fallback
+  if(!supabase){
+    const user=findUser(email,pw);
+    if(!user){showToast('이메일 또는 비밀번호가 틀렸어요');return;}
+    curUser=user;lsSet('curUser',curUser);
+    if(user.type==='admin')showView('admin');else showView('list');
+    return;
+  }
+  try{
+    const{data,error}=await supabase.auth.signInWithPassword({email,password:pw});
+    if(error){showToast('이메일 또는 비밀번호가 틀렸어요');return;}
+    const{data:profile}=await supabase.from('users').select('*').eq('id',data.user.id).single();
+    curUser=profile||{id:data.user.id,email,name:email,type:'buyer',temp:36.5,loc:'',joinDate:data.user.created_at?.slice(0,10)||''};
+    lsSet('curUser',curUser);
+    if(curUser.type==='admin')showView('admin');else{showView('list');loadProductsFromSupabase();}
+  }catch(e){showToast('로그인 중 오류가 발생했어요');console.error(e);}
 }
 async function doSignup(){
   const name=document.getElementById('s-name').value.trim();
@@ -895,16 +915,26 @@ async function doSignup(){
   const loc=document.getElementById('s-loc').value.trim();
   if(!name||!email||!pw){showToast('필수 항목을 입력해주세요');return;}
   if(pw.length<6){showToast('비밀번호는 6자 이상이어야 해요');return;}
-  const{data,error}=await supabase.auth.signUp({email,password:pw});
-  if(error){showToast(error.message||'회원가입에 실패했어요');return;}
-  const newProfile={id:data.user.id,name,email,type:selectedUserType,loc,temp:36.5,join_date:new Date().toISOString().slice(0,10)};
-  await supabase.from('users').insert(newProfile);
-  curUser={...newProfile,joinDate:newProfile.join_date};
-  lsSet('curUser',curUser);
-  showToast('가입 완료! 환영해요 🎉');showView('list');loadProductsFromSupabase();
+  // Supabase 미연결 시 로컬 fallback
+  if(!supabase){
+    if(users.find(u=>u.email===email)){showToast('이미 사용 중인 이메일이에요');return;}
+    const newUser={id:'u'+Date.now(),name,email,pw,type:selectedUserType,loc,temp:36.5,joinDate:new Date().toISOString().slice(0,10)};
+    users.push(newUser);lsSet('users',users);
+    curUser=newUser;lsSet('curUser',curUser);
+    showToast('가입 완료! 환영해요 🎉');showView('list');return;
+  }
+  try{
+    const{data,error}=await supabase.auth.signUp({email,password:pw});
+    if(error){showToast(error.message||'회원가입에 실패했어요');return;}
+    const newProfile={id:data.user.id,name,email,type:selectedUserType,loc,temp:36.5,join_date:new Date().toISOString().slice(0,10)};
+    await supabase.from('users').insert(newProfile);
+    curUser={...newProfile,joinDate:newProfile.join_date};
+    lsSet('curUser',curUser);
+    showToast('가입 완료! 환영해요 🎉');showView('list');loadProductsFromSupabase();
+  }catch(e){showToast('회원가입 중 오류가 발생했어요');console.error(e);}
 }
 async function doLogout(){
-  if(curUser?.email!=='admin')await supabase.auth.signOut();
+  try{if(supabase&&curUser?.email!=='admin')await supabase.auth.signOut();}catch(e){}
   curUser=null;lsSet('curUser',null);showView('login');
 }
 function selectType(type,el){
@@ -1296,10 +1326,14 @@ function renderAnalytics(){
 /* ==================== INIT ==================== */
 (async function init(){
   // Supabase 세션 확인 (새로고침 후 자동 로그인 유지)
-  const{data:{session}}=await supabase.auth.getSession();
-  if(session){
-    const{data:profile}=await supabase.from('users').select('*').eq('id',session.user.id).single();
-    if(profile){curUser={...profile};lsSet('curUser',curUser);}
+  if(supabase){
+    try{
+      const{data:{session}}=await supabase.auth.getSession();
+      if(session){
+        const{data:profile}=await supabase.from('users').select('*').eq('id',session.user.id).single();
+        if(profile){curUser={...profile};lsSet('curUser',curUser);}
+      }
+    }catch(e){console.error('세션 복원 오류:',e);}
   }
   if(curUser){
     if(curUser.type==='admin')showView('admin');

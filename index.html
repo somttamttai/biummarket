@@ -830,22 +830,30 @@ let products=lsGet('products',DEFAULT_PRODUCTS);
 function saveProducts(){lsSet('products',products)}
 async function loadProductsFromSupabase(){
   if(!_sb)return;
-  const{data,error}=await _sb.from('products').select('*').order('created_at',{ascending:false});
-  if(error){console.error('products fetch error:',error);return;}
-  if(!data||data.length===0)return;
-  const likedMap=lsGet('likedMap',{});
-  products=data.map(p=>({
-    ...p,
-    seller:p.seller||{name:'알수없음',temp:36.5,loc:''},
-    tags:Array.isArray(p.tags)?p.tags:(p.tags?p.tags.split(','):[]),
-    liked:!!likedMap[p.id],
-    time:p.time||'방금 전',
-    likes:p.likes||0,
-    chats:p.chats||0,
-    imgs:p.imgs||1,
-  }));
-  lsSet('products',products);
-  renderList();
+  try{
+    const{data,error}=await _sb.from('products').select('*').order('created_at',{ascending:false});
+    if(error){console.error('[loadProducts] 오류:',error);return;}
+    const likedMap=lsGet('likedMap',{});
+    if(!data||data.length===0){
+      // Supabase 비어있으면 샘플 데이터로 복원
+      products=DEFAULT_PRODUCTS.map(p=>({...p,liked:!!likedMap[p.id]}));
+      lsSet('products',products);
+      renderList();
+      return;
+    }
+    products=data.map(p=>({
+      ...p,
+      seller:p.seller||{name:'알수없음',temp:36.5,loc:''},
+      tags:Array.isArray(p.tags)?p.tags:(p.tags?p.tags.split(','):[]),
+      liked:!!likedMap[p.id],
+      time:p.time||'방금 전',
+      likes:p.likes||0,
+      chats:p.chats||0,
+      imgs:p.imgs||1,
+    }));
+    lsSet('products',products);
+    renderList();
+  }catch(e){console.error('[loadProducts] 예외:',e);}
 }
 
 /* ==================== STATE ==================== */
@@ -1197,35 +1205,40 @@ async function submitForm(){
   const description=document.getElementById('f-desc').value.trim()||'상품 설명이 없습니다.';
   const sellerInfo=curUser?{id:curUser.id,name:curUser.name,temp:curUser.temp||36.5,loc:curUser.loc||loc}:{name:'나',temp:36.5,loc};
   const payload={title,type,color,width,weight,qty,price,loc,cat:document.getElementById('f-cat1').value||'기타',description,tags,seller:sellerInfo,imgs:Math.max(1,uploadedImgs.length),likes:0,chats:0,time:'방금 전'};
-  // Supabase에 상품 저장
-  let newId=Date.now();
-  if(!_sb){
-    console.warn('[submitForm] Supabase 미연결 — localStorage에만 저장됩니다.');
-  }else{
-    try{
-      console.log('[submitForm] insert 시도 payload:', JSON.stringify(payload));
-      const{data:inserted,error}=await _sb.from('products').insert(payload).select().single();
-      if(error){
-        console.error('[submitForm] insert 오류 — code:',error.code,'message:',error.message,'details:',error.details,'hint:',error.hint);
-        showToast('서버 저장 실패: '+error.message);
-      }else if(inserted){
-        newId=inserted.id;
-        console.log('[submitForm] insert 성공 — id:',newId);
-      }
-    }catch(e){
-      console.error('[submitForm] insert 예외:', e);
-      showToast('상품 저장 중 오류가 발생했어요');
-    }
+  // 폼 초기화 헬퍼
+  function resetForm(){
+    ['f-title','f-color','f-width','f-weight','f-qty','f-price','f-loc','f-desc','f-tags'].forEach(id=>{document.getElementById(id).value=''});
+    document.getElementById('f-type').value='';document.getElementById('f-cat1').value='';
+    document.getElementById('f-total').textContent='수량과 단가를 입력하면 자동 계산돼요';
+    document.getElementById('ai-price-hint').textContent='원단 정보를 입력하면 AI가 적정 가격을 예측해드려요 📊';
+    uploadedImgs=[];renderImgPreviews();
   }
-  const newP={...payload,id:newId,liked:false};
-  products.unshift(newP);saveProducts();
-  // 폼 초기화
-  ['f-title','f-color','f-width','f-weight','f-qty','f-price','f-loc','f-desc','f-tags'].forEach(id=>{document.getElementById(id).value=''});
-  document.getElementById('f-type').value='';document.getElementById('f-cat1').value='';
-  document.getElementById('f-total').textContent='수량과 단가를 입력하면 자동 계산돼요';
-  document.getElementById('ai-price-hint').textContent='원단 정보를 입력하면 AI가 적정 가격을 예측해드려요 📊';
-  uploadedImgs=[];renderImgPreviews();
-  showView('list');showToast(t('registered'));
+  // Supabase에 상품 저장
+  if(!_sb){
+    // Supabase 미연결 — localStorage에만 임시 저장
+    console.warn('[submitForm] Supabase 미연결 — localStorage에만 저장됩니다.');
+    const newP={...payload,id:Date.now(),liked:false};
+    products.unshift(newP);saveProducts();
+    resetForm();showView('list');showToast(t('registered'));
+    return;
+  }
+  try{
+    console.log('[submitForm] insert 시도 payload:', JSON.stringify(payload));
+    const{data:inserted,error}=await _sb.from('products').insert(payload).select().single();
+    if(error){
+      console.error('[submitForm] insert 오류 — code:',error.code,'message:',error.message,'details:',error.details,'hint:',error.hint);
+      showToast('저장 실패: '+error.message);
+      return; // insert 실패 시 목록에 추가하지 않음
+    }
+    console.log('[submitForm] insert 성공 — id:',inserted.id);
+    resetForm();
+    showView('list');
+    showToast(t('registered'));
+    await loadProductsFromSupabase(); // Supabase 최신 목록으로 갱신
+  }catch(e){
+    console.error('[submitForm] insert 예외:', e);
+    showToast('상품 저장 중 오류가 발생했어요');
+  }
 }
 document.getElementById('search-input').addEventListener('input',e=>{curSearch=e.target.value;renderList()});
 document.getElementById('btn-loc').addEventListener('click',()=>showToast('지역 설정 기능 준비중이에요'));

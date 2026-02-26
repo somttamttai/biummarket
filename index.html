@@ -1199,9 +1199,24 @@ async function submitForm(){
   const payload={title,type,color,width,weight,qty,price,loc,cat:document.getElementById('f-cat1').value||'기타',desc,tags,seller:sellerInfo,imgs:Math.max(1,uploadedImgs.length),likes:0,chats:0,time:'방금 전'};
   // Supabase에 상품 저장
   let newId=Date.now();
-  const{data:inserted,error}=await _sb.from('products').insert(payload).select().single();
-  if(!error&&inserted)newId=inserted.id;
-  else if(error)console.error('product insert error:',error);
+  if(!_sb){
+    console.warn('[submitForm] Supabase 미연결 — localStorage에만 저장됩니다.');
+  }else{
+    try{
+      console.log('[submitForm] insert 시도 payload:', JSON.stringify(payload));
+      const{data:inserted,error}=await _sb.from('products').insert(payload).select().single();
+      if(error){
+        console.error('[submitForm] insert 오류 — code:',error.code,'message:',error.message,'details:',error.details,'hint:',error.hint);
+        showToast('서버 저장 실패: '+error.message);
+      }else if(inserted){
+        newId=inserted.id;
+        console.log('[submitForm] insert 성공 — id:',newId);
+      }
+    }catch(e){
+      console.error('[submitForm] insert 예외:', e);
+      showToast('상품 저장 중 오류가 발생했어요');
+    }
+  }
   const newP={...payload,id:newId,liked:false};
   products.unshift(newP);saveProducts();
   // 폼 초기화

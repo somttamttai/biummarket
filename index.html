@@ -273,16 +273,16 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div class="login-logo" style="font-size:13px;font-weight:400;color:var(--g500);margin-bottom:28px">BIUM MARKET — B2B 재고원단 거래 플랫폼</div>
     <div class="login-box">
       <div class="fg">
-        <label>아이디 (이메일)</label>
+        <label data-i18n="login_id_label">아이디 (이메일)</label>
         <input type="email" class="fi" id="l-email" placeholder="example@bium.market" />
       </div>
       <div class="fg">
-        <label>비밀번호</label>
+        <label data-i18n="login_pw_label">비밀번호</label>
         <input type="password" class="fi" id="l-pw" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')doLogin()" />
       </div>
-      <button class="btn-primary" onclick="doLogin()" style="margin-bottom:12px">로그인</button>
-      <button class="btn-secondary" onclick="showView('signup')">회원가입</button>
-      <div class="divider-text">테스트 계정</div>
+      <button class="btn-primary" data-i18n="btn_login" onclick="doLogin()" style="margin-bottom:12px">로그인</button>
+      <button class="btn-secondary" data-i18n="btn_to_signup" onclick="showView('signup')">회원가입</button>
+      <div class="divider-text" data-i18n="test_account">테스트 계정</div>
       <div style="background:var(--g100);border-radius:var(--rs);padding:12px 14px;font-size:12px;color:var(--g700);line-height:1.8">
         관리자: <b>admin</b> / <b>1234</b><br>
         판매자: <b>seller@test.com</b> / <b>1234</b><br>
@@ -304,35 +304,35 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   </header>
   <div class="f-scroll">
     <div style="margin-bottom:16px">
-      <div class="fg"><label>회원 유형 선택 <span class="req">*</span></label></div>
+      <div class="fg"><label><span data-i18n="signup_type_label">회원 유형 선택</span> <span class="req">*</span></label></div>
       <div class="type-grid">
         <div class="type-card sel" data-type="seller" onclick="selectType('seller',this)">
           <div class="tc-icon">🏭</div>
-          <div class="tc-name">판매자</div>
-          <div class="tc-desc">원단 도매 · 재고 판매</div>
+          <div class="tc-name" data-i18n="type_seller">판매자</div>
+          <div class="tc-desc" data-i18n="type_seller_sub">원단 도매 · 재고 판매</div>
         </div>
         <div class="type-card" data-type="buyer" onclick="selectType('buyer',this)">
           <div class="tc-icon">🛒</div>
-          <div class="tc-name">구매자</div>
-          <div class="tc-desc">원단 소싱 · 구매</div>
+          <div class="tc-name" data-i18n="type_buyer">구매자</div>
+          <div class="tc-desc" data-i18n="type_buyer_sub">원단 소싱 · 구매</div>
         </div>
         <div class="type-card" data-type="brand" onclick="selectType('brand',this)">
           <div class="tc-icon">👗</div>
-          <div class="tc-name">브랜드</div>
-          <div class="tc-desc">패션 브랜드 · 제조사</div>
+          <div class="tc-name" data-i18n="type_brand">브랜드</div>
+          <div class="tc-desc" data-i18n="type_brand_sub">패션 브랜드 · 제조사</div>
         </div>
         <div class="type-card" data-type="both" onclick="selectType('both',this)">
           <div class="tc-icon">🔄</div>
-          <div class="tc-name">겸업</div>
-          <div class="tc-desc">판매 + 구매 모두</div>
+          <div class="tc-name" data-i18n="type_both">겸업</div>
+          <div class="tc-desc" data-i18n="type_both_sub">판매 + 구매 모두</div>
         </div>
       </div>
     </div>
-    <div class="fg"><label>이름 <span class="req">*</span></label><input type="text" class="fi" id="s-name" placeholder="이름 또는 업체명"/></div>
+    <div class="fg"><label><span data-i18n="login_id_label">아이디 (이메일)</span> <span class="req">*</span></label><input type="text" class="fi" id="s-name" placeholder="이름 또는 업체명"/></div>
     <div class="fg"><label>이메일 <span class="req">*</span></label><input type="email" class="fi" id="s-email" placeholder="example@bium.market"/></div>
-    <div class="fg"><label>비밀번호 <span class="req">*</span></label><input type="password" class="fi" id="s-pw" placeholder="6자 이상"/></div>
+    <div class="fg"><label><span data-i18n="login_pw_label">비밀번호</span> <span class="req">*</span></label><input type="password" class="fi" id="s-pw" placeholder="6자 이상"/></div>
     <div class="fg"><label>사업장 위치</label><input type="text" class="fi" id="s-loc" placeholder="예) 서울 동대문구 신설동"/></div>
-    <button class="submit-btn" onclick="doSignup()">가입하기</button>
+    <button class="submit-btn" data-i18n="btn_join" onclick="doSignup()">가입하기</button>
   </div>
 </div>
 
@@ -350,7 +350,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   <div class="srch-wrap">
     <div class="srch-bar">
       <span style="font-size:15px;color:var(--g500)">🔍</span>
-      <input type="text" id="search-input" placeholder="원단 종류, 색상, 업체명 검색" autocomplete="off"/>
+      <input type="text" id="search-input" data-i18n-ph="search_placeholder" placeholder="원단 종류, 색상, 업체명 검색" autocomplete="off"/>
     </div>
     <div class="chips" id="filter-chips"></div>
   </div>
@@ -390,7 +390,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
       </div>
       <div class="temp-box">
         <div class="temp-val" id="d-temp"></div>
-        <div class="temp-lbl">매너온도</div>
+        <div class="temp-lbl" data-i18n="manner_temp">매너온도</div>
         <button style="font-size:11px;color:var(--P);margin-top:3px" onclick="openSellerPage()">미니홈피 →</button>
       </div>
     </div>
@@ -408,25 +408,25 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div class="d-stats" id="d-stats"></div>
     <!-- 예약 섹션 -->
     <div class="d-sec">
-      <h3>예약 신청</h3>
+      <h3 data-i18n="res_title">예약 신청</h3>
       <div class="res-type-row">
         <div class="res-card sel" onclick="selectRes('visit',this)">
           <div class="ri">🏠</div>
-          <div class="rn">방문 예약</div>
-          <div class="rd">직접 방문</div>
+          <div class="rn" data-i18n="res_visit">방문 예약</div>
+          <div class="rd" data-i18n="res_visit_sub">직접 방문</div>
         </div>
         <div class="res-card" onclick="selectRes('swatch',this)">
           <div class="ri">🎨</div>
-          <div class="rn">스와치</div>
-          <div class="rd">샘플 발송</div>
+          <div class="rn" data-i18n="res_swatch">스와치</div>
+          <div class="rd" data-i18n="res_swatch_sub">샘플 발송</div>
         </div>
         <div class="res-card" onclick="selectRes('inspect',this)">
           <div class="ri">🔍</div>
-          <div class="rn">출장감별</div>
-          <div class="rd">전문가 방문</div>
+          <div class="rn" data-i18n="res_inspect">출장감별</div>
+          <div class="rd" data-i18n="res_inspect_sub">전문가 방문</div>
         </div>
       </div>
-      <button class="btn-secondary" style="font-size:13px;padding:10px" onclick="openResModal()">예약하기</button>
+      <button class="btn-secondary" data-i18n="btn_reserve" style="font-size:13px;padding:10px" onclick="openResModal()">예약하기</button>
     </div>
   </div>
   <div class="d-action">
@@ -438,8 +438,8 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
       <div class="tp" id="d-tp"></div>
       <div class="pp" id="d-pp"></div>
     </div>
-    <button class="suggest-btn" onclick="openSuggestModal()">가격제안</button>
-    <button class="chat-btn" onclick="openChatModal()">채팅</button>
+    <button class="suggest-btn" data-i18n="btn_suggest" onclick="openSuggestModal()">가격제안</button>
+    <button class="chat-btn" data-i18n="btn_chat" onclick="openChatModal()">채팅</button>
   </div>
 </div>
 
@@ -456,17 +456,17 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
       <span>AI 자동 입력: 사진을 첨부하면 소재·색상·중량을 자동으로 인식해드려요!</span>
     </div>
     <div style="margin-bottom:16px">
-      <div style="font-size:13px;font-weight:600;color:var(--g700);margin-bottom:8px">사진 첨부 <span style="color:var(--g500);font-weight:400">(최대 5장)</span></div>
+      <div style="font-size:13px;font-weight:600;color:var(--g700);margin-bottom:8px"><span data-i18n="form_photo">사진 첨부</span> <span style="color:var(--g500);font-weight:400">(최대 5장)</span></div>
       <div class="img-scroll" id="img-scroll">
         <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
         <button class="img-add" onclick="document.getElementById('file-input').click()">
-          <span style="font-size:22px">＋</span><span>사진추가</span>
+          <span style="font-size:22px">＋</span><span data-i18n="form_photo_add">사진추가</span>
         </button>
       </div>
     </div>
     <div class="form-divider"></div>
-    <div class="fg"><label>상품명 <span class="req">*</span></label><input type="text" class="fi" id="f-title" placeholder="예) 아이보리 면 원단 재고 45m"/></div>
-    <div class="fg"><label>카테고리 (대분류)</label>
+    <div class="fg"><label><span data-i18n="form_name_label">상품명</span> <span class="req">*</span></label><input type="text" class="fi" id="f-title" placeholder="예) 아이보리 면 원단 재고 45m"/></div>
+    <div class="fg"><label data-i18n="form_cat_label">카테고리 (대분류)</label>
       <select class="fi" id="f-cat1" onchange="updateCat2()">
         <option value="">선택</option>
         <option value="천연섬유">천연섬유</option>
@@ -475,7 +475,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
         <option value="특수원단">특수원단</option>
       </select>
     </div>
-    <div class="fg"><label>원단 종류 <span class="req">*</span></label>
+    <div class="fg"><label><span data-i18n="form_type_label">원단 종류</span> <span class="req">*</span></label>
       <select class="fi" id="f-type">
         <option value="">선택해주세요</option>
         <option value="면">면</option>
@@ -488,23 +488,23 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
       </select>
     </div>
     <div class="form-row">
-      <div class="fg"><label>색상 <span class="req">*</span></label><input type="text" class="fi" id="f-color" placeholder="예) 아이보리"/></div>
-      <div class="fg"><label>폭 (cm)</label><input type="number" class="fi" id="f-width" placeholder="예) 150" min="0"/></div>
+      <div class="fg"><label><span data-i18n="form_color_label">색상</span> <span class="req">*</span></label><input type="text" class="fi" id="f-color" placeholder="예) 아이보리"/></div>
+      <div class="fg"><label data-i18n="form_width_label">폭 (cm)</label><input type="number" class="fi" id="f-width" placeholder="예) 150" min="0"/></div>
     </div>
     <div class="form-row">
-      <div class="fg"><label>중량 (g/㎡)</label><input type="number" class="fi" id="f-weight" placeholder="예) 180"/></div>
-      <div class="fg"><label>수량 (m) <span class="req">*</span></label><input type="number" class="fi" id="f-qty" placeholder="예) 30" min="0" step="0.1" oninput="calcTotal()"/></div>
+      <div class="fg"><label data-i18n="form_weight_label">중량 (g/㎡)</label><input type="number" class="fi" id="f-weight" placeholder="예) 180"/></div>
+      <div class="fg"><label><span data-i18n="form_qty_label">수량 (m)</span> <span class="req">*</span></label><input type="number" class="fi" id="f-qty" placeholder="예) 30" min="0" step="0.1" oninput="calcTotal()"/></div>
     </div>
-    <div class="fg"><label>단가 (원/m) <span class="req">*</span></label><input type="number" class="fi" id="f-price" placeholder="예) 5000" min="0" oninput="calcTotal()"/></div>
-    <div class="fg"><label>총 금액 (자동 계산)</label><div class="total-disp" id="f-total">수량과 단가를 입력하면 자동 계산돼요</div></div>
-    <div class="fg"><label>거래 지역 <span class="req">*</span></label><input type="text" class="fi" id="f-loc" placeholder="예) 서울 동대문구 신설동"/></div>
+    <div class="fg"><label><span data-i18n="form_price_label">단가 (원/m)</span> <span class="req">*</span></label><input type="number" class="fi" id="f-price" placeholder="예) 5000" min="0" oninput="calcTotal()"/></div>
+    <div class="fg"><label data-i18n="form_total_label">총 금액 (자동 계산)</label><div class="total-disp" id="f-total">수량과 단가를 입력하면 자동 계산돼요</div></div>
+    <div class="fg"><label><span data-i18n="form_loc_label">거래 지역</span> <span class="req">*</span></label><input type="text" class="fi" id="f-loc" placeholder="예) 서울 동대문구 신설동"/></div>
     <div class="form-divider"></div>
-    <div class="fg"><label>상세 설명</label><textarea class="fi" id="f-desc" placeholder="원단 상태, 구매 경위, 거래 방법 등을 자유롭게 적어주세요."></textarea></div>
-    <div class="fg"><label>해시태그 <span style="color:var(--g500);font-weight:400">(쉼표 구분)</span></label><input type="text" class="fi" id="f-tags" placeholder="재고원단, 할인, 소량가능"/></div>
-    <div class="fg"><label>AI 가격 예측</label>
+    <div class="fg"><label data-i18n="form_desc_label">상세 설명</label><textarea class="fi" id="f-desc" placeholder="원단 상태, 구매 경위, 거래 방법 등을 자유롭게 적어주세요."></textarea></div>
+    <div class="fg"><label><span data-i18n="form_tags_label">해시태그</span> <span style="color:var(--g500);font-weight:400">(쉼표 구분)</span></label><input type="text" class="fi" id="f-tags" placeholder="재고원단, 할인, 소량가능"/></div>
+    <div class="fg"><label data-i18n="form_ai_label">AI 가격 예측</label>
       <div style="background:#f8fff8;border:1px solid #c0e0c0;border-radius:var(--rs);padding:10px 12px;font-size:12px;color:#2e7d32" id="ai-price-hint">원단 정보를 입력하면 AI가 적정 가격을 예측해드려요 📊</div>
     </div>
-    <button class="submit-btn" onclick="submitForm()">등록하기</button>
+    <button class="submit-btn" data-i18n="btn_register" onclick="submitForm()">등록하기</button>
   </div>
 </div>
 
@@ -571,11 +571,11 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div class="menu-list" id="menu-list"></div>
   </div>
   <nav class="tabbar">
-    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
-    <button class="tab" onclick="showToast(t('chat_coming'))"><span class="ti">🔍</span><span>검색</span></button>
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
+    <button class="tab" onclick="showToast(t('chat_coming'))"><span class="ti">🔍</span><span data-i18n="tab_search">검색</span></button>
     <button class="tab-fab" onclick="showView('form')">＋</button>
-    <button class="tab" onclick="showToast(t('chat_coming'))"><span class="ti">💬</span><span>채팅</span></button>
-    <button class="tab on" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
+    <button class="tab" onclick="showToast(t('chat_coming'))"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab on" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
   </nav>
 </div>
 
@@ -695,6 +695,36 @@ const LANGS={
     chat_coming:'채팅 기능 준비중이에요',
     empty_msg:'검색 결과가 없어요',
     registered:'상품이 등록됐어요! 🎉',
+    filter_전체:'전체',filter_면:'면',filter_폴리:'폴리',filter_울:'울',
+    filter_린넨:'린넨',filter_실크:'실크',filter_혼방:'혼방',filter_기타:'기타',
+    search_placeholder:'원단 종류, 색상, 업체명 검색',
+    detail_title:'상품 상세',manner_temp:'매너온도',
+    lbl_type:'원단 종류',lbl_color:'색상',lbl_width:'폭',
+    lbl_weight:'중량',lbl_qty:'수량',lbl_price:'단가',lbl_unknown:'정보 없음',
+    stats_interest:'관심',stats_chat:'채팅',
+    res_title:'예약 신청',
+    res_visit:'방문 예약',res_visit_sub:'직접 방문',
+    res_swatch:'스와치',res_swatch_sub:'샘플 발송',
+    res_inspect:'출장감별',res_inspect_sub:'전문가 방문',
+    btn_reserve:'예약하기',btn_suggest:'가격제안',btn_chat:'채팅',
+    login_id_label:'아이디 (이메일)',login_pw_label:'비밀번호',
+    btn_login:'로그인',btn_to_signup:'회원가입',test_account:'테스트 계정',
+    signup_type_label:'회원 유형 선택',
+    type_seller:'판매자',type_seller_sub:'원단 도매 · 재고 판매',
+    type_buyer:'구매자',type_buyer_sub:'원단 소싱 · 구매',
+    type_brand:'브랜드',type_brand_sub:'패션 브랜드 · 제조사',
+    type_both:'겸업',type_both_sub:'판매 + 구매 모두',
+    btn_join:'가입하기',
+    form_photo:'사진 첨부',form_photo_add:'사진추가',
+    form_name_label:'상품명',form_cat_label:'카테고리 (대분류)',
+    form_type_label:'원단 종류',form_color_label:'색상',
+    form_width_label:'폭 (cm)',form_weight_label:'중량 (g/㎡)',
+    form_qty_label:'수량 (m)',form_price_label:'단가 (원/m)',
+    form_total_label:'총 금액 (자동 계산)',form_total_hint:'수량과 단가를 입력하면 자동 계산돼요',
+    form_loc_label:'거래 지역',form_desc_label:'상세 설명',
+    form_tags_label:'해시태그',form_ai_label:'AI 가격 예측',
+    btn_register:'등록하기',
+    like_add:'관심 목록에 추가됐어요 ❤️',like_remove:'관심 목록에서 제거됐어요',
   },
   en:{code:'en',name:'English',flag:'🇺🇸',
     tab_home:'Home',tab_search:'Search',tab_chat:'Chat',tab_me:'My',
@@ -703,6 +733,36 @@ const LANGS={
     chat_coming:'Chat coming soon',
     empty_msg:'No results found',
     registered:'Product registered! 🎉',
+    filter_전체:'All',filter_면:'Cotton',filter_폴리:'Poly',filter_울:'Wool',
+    filter_린넨:'Linen',filter_실크:'Silk',filter_혼방:'Blend',filter_기타:'Other',
+    search_placeholder:'Search fabric, color, seller',
+    detail_title:'Product Detail',manner_temp:'Manner Temp',
+    lbl_type:'Fabric Type',lbl_color:'Color',lbl_width:'Width',
+    lbl_weight:'Weight',lbl_qty:'Qty',lbl_price:'Price/m',lbl_unknown:'N/A',
+    stats_interest:'Likes',stats_chat:'Chats',
+    res_title:'Reservation',
+    res_visit:'Visit',res_visit_sub:'Direct Visit',
+    res_swatch:'Swatch',res_swatch_sub:'Send Sample',
+    res_inspect:'Inspection',res_inspect_sub:'Expert Visit',
+    btn_reserve:'Reserve',btn_suggest:'Offer Price',btn_chat:'Chat',
+    login_id_label:'Email',login_pw_label:'Password',
+    btn_login:'Login',btn_to_signup:'Sign Up',test_account:'Test Account',
+    signup_type_label:'Select Member Type',
+    type_seller:'Seller',type_seller_sub:'Wholesale · Stock',
+    type_buyer:'Buyer',type_buyer_sub:'Sourcing · Purchase',
+    type_brand:'Brand',type_brand_sub:'Fashion Brand',
+    type_both:'Both',type_both_sub:'Buy & Sell',
+    btn_join:'Join Now',
+    form_photo:'Photos',form_photo_add:'Add Photo',
+    form_name_label:'Product Name',form_cat_label:'Category',
+    form_type_label:'Fabric Type',form_color_label:'Color',
+    form_width_label:'Width (cm)',form_weight_label:'Weight (g/㎡)',
+    form_qty_label:'Qty (m)',form_price_label:'Price (₩/m)',
+    form_total_label:'Total (auto)',form_total_hint:'Auto-calculated from qty & price',
+    form_loc_label:'Location',form_desc_label:'Description',
+    form_tags_label:'Hashtags',form_ai_label:'AI Price Est.',
+    btn_register:'Register',
+    like_add:'Added to wishlist ❤️',like_remove:'Removed from wishlist',
   },
   ja:{code:'ja',name:'日本語',flag:'🇯🇵',
     tab_home:'ホーム',tab_search:'検索',tab_chat:'チャット',tab_me:'MY',
@@ -711,6 +771,36 @@ const LANGS={
     chat_coming:'チャット機能は準備中です',
     empty_msg:'検索結果なし',
     registered:'商品が登録されました！🎉',
+    filter_전체:'すべて',filter_면:'コットン',filter_폴리:'ポリ',filter_울:'ウール',
+    filter_린넨:'リネン',filter_실크:'シルク',filter_혼방:'混紡',filter_기타:'その他',
+    search_placeholder:'生地種類、色、業者名で検索',
+    detail_title:'商品詳細',manner_temp:'マナー温度',
+    lbl_type:'生地種類',lbl_color:'色',lbl_width:'幅',
+    lbl_weight:'重量',lbl_qty:'数量',lbl_price:'単価',lbl_unknown:'情報なし',
+    stats_interest:'いいね',stats_chat:'チャット',
+    res_title:'予約申請',
+    res_visit:'訪問予約',res_visit_sub:'直接訪問',
+    res_swatch:'スワッチ',res_swatch_sub:'サンプル送付',
+    res_inspect:'出張鑑定',res_inspect_sub:'専門家訪問',
+    btn_reserve:'予約する',btn_suggest:'価格提案',btn_chat:'チャット',
+    login_id_label:'メールアドレス',login_pw_label:'パスワード',
+    btn_login:'ログイン',btn_to_signup:'会員登録',test_account:'テストアカウント',
+    signup_type_label:'会員タイプを選択',
+    type_seller:'販売者',type_seller_sub:'卸売り・在庫販売',
+    type_buyer:'購入者',type_buyer_sub:'生地調達・購入',
+    type_brand:'ブランド',type_brand_sub:'ファッションブランド',
+    type_both:'兼業',type_both_sub:'販売＋購入',
+    btn_join:'登録する',
+    form_photo:'写真添付',form_photo_add:'写真追加',
+    form_name_label:'商品名',form_cat_label:'カテゴリ',
+    form_type_label:'生地種類',form_color_label:'色',
+    form_width_label:'幅 (cm)',form_weight_label:'重量 (g/㎡)',
+    form_qty_label:'数量 (m)',form_price_label:'単価 (₩/m)',
+    form_total_label:'合計金額 (自動)',form_total_hint:'数量と単価を入力すると自動計算されます',
+    form_loc_label:'取引地域',form_desc_label:'詳細説明',
+    form_tags_label:'ハッシュタグ',form_ai_label:'AI価格予測',
+    btn_register:'登録する',
+    like_add:'お気に入りに追加しました ❤️',like_remove:'お気に入りから削除しました',
   },
   zh:{code:'zh',name:'中文',flag:'🇨🇳',
     tab_home:'首页',tab_search:'搜索',tab_chat:'聊天',tab_me:'我的',
@@ -719,6 +809,36 @@ const LANGS={
     chat_coming:'聊天功能准备中',
     empty_msg:'没有搜索结果',
     registered:'商品已注册！🎉',
+    filter_전체:'全部',filter_면:'棉',filter_폴리:'涤纶',filter_울:'羊毛',
+    filter_린넨:'亚麻',filter_실크:'丝绸',filter_혼방:'混纺',filter_기타:'其他',
+    search_placeholder:'搜索面料种类、颜色、厂商',
+    detail_title:'商品详情',manner_temp:'礼仪温度',
+    lbl_type:'面料类型',lbl_color:'颜色',lbl_width:'幅宽',
+    lbl_weight:'克重',lbl_qty:'数量',lbl_price:'单价',lbl_unknown:'暂无信息',
+    stats_interest:'关注',stats_chat:'聊天',
+    res_title:'预约申请',
+    res_visit:'上门预约',res_visit_sub:'直接到访',
+    res_swatch:'样品',res_swatch_sub:'样品邮寄',
+    res_inspect:'上门鉴定',res_inspect_sub:'专家上门',
+    btn_reserve:'立即预约',btn_suggest:'报价',btn_chat:'聊天',
+    login_id_label:'邮箱',login_pw_label:'密码',
+    btn_login:'登录',btn_to_signup:'注册',test_account:'测试账号',
+    signup_type_label:'选择会员类型',
+    type_seller:'卖家',type_seller_sub:'批发·库存销售',
+    type_buyer:'买家',type_buyer_sub:'面料采购',
+    type_brand:'品牌',type_brand_sub:'时尚品牌·制造商',
+    type_both:'兼营',type_both_sub:'买卖兼营',
+    btn_join:'立即注册',
+    form_photo:'上传图片',form_photo_add:'添加图片',
+    form_name_label:'商品名称',form_cat_label:'商品分类',
+    form_type_label:'面料种类',form_color_label:'颜色',
+    form_width_label:'幅宽 (cm)',form_weight_label:'克重 (g/㎡)',
+    form_qty_label:'数量 (m)',form_price_label:'单价 (₩/m)',
+    form_total_label:'总金额 (自动)',form_total_hint:'输入数量和单价后自动计算',
+    form_loc_label:'交易地区',form_desc_label:'详细描述',
+    form_tags_label:'标签',form_ai_label:'AI价格预测',
+    btn_register:'立即发布',
+    like_add:'已加入收藏 ❤️',like_remove:'已取消收藏',
   },
   vi:{code:'vi',name:'Tiếng Việt',flag:'🇻🇳',
     tab_home:'Trang chủ',tab_search:'Tìm kiếm',tab_chat:'Chat',tab_me:'Tôi',
@@ -727,6 +847,36 @@ const LANGS={
     chat_coming:'Chức năng chat đang chuẩn bị',
     empty_msg:'Không tìm thấy kết quả',
     registered:'Sản phẩm đã được đăng ký! 🎉',
+    filter_전체:'Tất cả',filter_면:'Cotton',filter_폴리:'Poly',filter_울:'Len',
+    filter_린넨:'Lanh',filter_실크:'Lụa',filter_혼방:'Pha trộn',filter_기타:'Khác',
+    search_placeholder:'Tìm vải, màu sắc, nhà bán',
+    detail_title:'Chi tiết sản phẩm',manner_temp:'Nhiệt độ',
+    lbl_type:'Loại vải',lbl_color:'Màu sắc',lbl_width:'Chiều rộng',
+    lbl_weight:'Trọng lượng',lbl_qty:'Số lượng',lbl_price:'Đơn giá',lbl_unknown:'Không có',
+    stats_interest:'Yêu thích',stats_chat:'Chat',
+    res_title:'Đặt lịch',
+    res_visit:'Đặt thăm',res_visit_sub:'Thăm trực tiếp',
+    res_swatch:'Mẫu vải',res_swatch_sub:'Gửi mẫu',
+    res_inspect:'Kiểm định',res_inspect_sub:'Chuyên gia thăm',
+    btn_reserve:'Đặt lịch',btn_suggest:'Đề xuất giá',btn_chat:'Chat',
+    login_id_label:'Email',login_pw_label:'Mật khẩu',
+    btn_login:'Đăng nhập',btn_to_signup:'Đăng ký',test_account:'Tài khoản test',
+    signup_type_label:'Chọn loại tài khoản',
+    type_seller:'Người bán',type_seller_sub:'Bán sỉ · Thanh lý',
+    type_buyer:'Người mua',type_buyer_sub:'Tìm nguồn · Mua',
+    type_brand:'Thương hiệu',type_brand_sub:'Thương hiệu thời trang',
+    type_both:'Kiêm nhiệm',type_both_sub:'Vừa mua vừa bán',
+    btn_join:'Đăng ký ngay',
+    form_photo:'Ảnh sản phẩm',form_photo_add:'Thêm ảnh',
+    form_name_label:'Tên sản phẩm',form_cat_label:'Danh mục',
+    form_type_label:'Loại vải',form_color_label:'Màu sắc',
+    form_width_label:'Chiều rộng (cm)',form_weight_label:'Trọng lượng (g/㎡)',
+    form_qty_label:'Số lượng (m)',form_price_label:'Đơn giá (₩/m)',
+    form_total_label:'Tổng tiền (tự động)',form_total_hint:'Tự động tính từ số lượng và đơn giá',
+    form_loc_label:'Khu vực',form_desc_label:'Mô tả',
+    form_tags_label:'Hashtag',form_ai_label:'Dự đoán giá AI',
+    btn_register:'Đăng bán',
+    like_add:'Đã thêm vào yêu thích ❤️',like_remove:'Đã xóa khỏi yêu thích',
   },
 };
 let curLang='ko';
@@ -736,7 +886,15 @@ function setLang(code){
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k=el.dataset.i18n;const v=t(k);if(v)el.textContent=v;
   });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const v=t(el.dataset.i18nPh);if(v)el.placeholder=v;
+  });
   renderLangButtons();
+  renderChips();
+  const emsg=document.getElementById('empty-msg');if(emsg)emsg.textContent=t('empty_msg');
+  if(curProductId&&document.getElementById('view-detail').classList.contains('active')){
+    openDetail(curProductId);
+  }
 }
 function renderLangButtons(){
   const el=document.getElementById('lang-sel');if(!el)return;
@@ -978,7 +1136,7 @@ function selectType(type,el){
 const FILTERS=['전체','면','폴리','울','린넨','실크','혼방','기타'];
 function renderChips(){
   const el=document.getElementById('filter-chips');
-  el.innerHTML=FILTERS.map(f=>`<button class="chip ${f===curFilter?'on':''}" onclick="setFilter('${f}')">${f}</button>`).join('');
+  el.innerHTML=FILTERS.map(f=>`<button class="chip ${f===curFilter?'on':''}" onclick="setFilter('${f}')">${t('filter_'+f)||f}</button>`).join('');
 }
 function setFilter(f){curFilter=f;renderChips();renderList()}
 
@@ -1032,7 +1190,7 @@ function toggleLike(id){
   const likedMap=lsGet('likedMap',{});likedMap[id]=p.liked;lsSet('likedMap',likedMap);
   _sb.from('products').update({likes:p.likes}).eq('id',id).then();
   renderList();
-  showToast(p.liked?'관심 목록에 추가됐어요 ❤️':'관심 목록에서 제거됐어요');
+  showToast(p.liked?t('like_add'):t('like_remove'));
 }
 
 /* ==================== DETAIL ==================== */
@@ -1062,13 +1220,13 @@ function openDetail(id){
   document.getElementById('d-temp').textContent=p.seller.temp.toFixed(1)+'°C';
   // fabric table
   document.getElementById('d-ftbl').innerHTML=[
-    ['원단 종류',p.type],['색상',p.color],['폭',p.width+'cm'],
-    ['중량',p.weight?(p.weight+'g/㎡'):'정보 없음'],
-    ['수량',p.qty+'m'],['단가',fmtPrice(p.price)+'/m'],
+    [t('lbl_type'),p.type],[t('lbl_color'),p.color],[t('lbl_width'),p.width+'cm'],
+    [t('lbl_weight'),p.weight?(p.weight+'g/㎡'):t('lbl_unknown')],
+    [t('lbl_qty'),p.qty+'m'],[t('lbl_price'),fmtPrice(p.price)+'/m'],
   ].map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
   document.getElementById('d-desc').textContent=p.description;
   document.getElementById('d-tags').innerHTML=(p.tags||[]).map(tg=>`<span class="tagc">#${tg}</span>`).join('');
-  document.getElementById('d-stats').innerHTML=`관심 ${p.likes}명 &nbsp;·&nbsp; 채팅 ${p.chats}명 &nbsp;·&nbsp; ${p.time}`;
+  document.getElementById('d-stats').innerHTML=`${t('stats_interest')} ${p.likes} &nbsp;·&nbsp; ${t('stats_chat')} ${p.chats} &nbsp;·&nbsp; ${p.time}`;
   // action bar
   document.getElementById('d-tp').textContent=fmtPrice(p.qty*p.price);
   document.getElementById('d-pp').textContent=fmtPrice(p.price)+'/m · '+p.qty+'m';
@@ -1091,7 +1249,7 @@ function toggleDetailLike(){
   const likedMap=lsGet('likedMap',{});likedMap[p.id]=p.liked;lsSet('likedMap',likedMap);
   _sb.from('products').update({likes:p.likes}).eq('id',p.id).then();
   updateDetailHeart(p);
-  showToast(p.liked?'관심 목록에 추가됐어요 ❤️':'관심 목록에서 제거됐어요');
+  showToast(p.liked?t('like_add'):t('like_remove'));
 }
 function shareProduct(){openModal('modal-share')}
 function openSellerPage(){
@@ -1194,7 +1352,7 @@ function calcTotal(){
   const qty=parseFloat(document.getElementById('f-qty').value)||0;
   const price=parseFloat(document.getElementById('f-price').value)||0;
   const el=document.getElementById('f-total');
-  el.textContent=qty&&price?`총 ${fmtPrice(qty*price)} (${fmtPrice(price)}/m × ${qty}m)`:'수량과 단가를 입력하면 자동 계산돼요';
+  el.textContent=qty&&price?`총 ${fmtPrice(qty*price)} (${fmtPrice(price)}/m × ${qty}m)`:t('form_total_hint');
   // AI price hint
   const hint=document.getElementById('ai-price-hint');
   const type=document.getElementById('f-type').value;
@@ -1232,7 +1390,7 @@ async function submitForm(){
   function resetForm(){
     ['f-title','f-color','f-width','f-weight','f-qty','f-price','f-loc','f-desc','f-tags'].forEach(id=>{document.getElementById(id).value=''});
     document.getElementById('f-type').value='';document.getElementById('f-cat1').value='';
-    document.getElementById('f-total').textContent='수량과 단가를 입력하면 자동 계산돼요';
+    document.getElementById('f-total').textContent=t('form_total_hint');
     document.getElementById('ai-price-hint').textContent='원단 정보를 입력하면 AI가 적정 가격을 예측해드려요 📊';
     uploadedImgs=[];renderImgPreviews();
   }

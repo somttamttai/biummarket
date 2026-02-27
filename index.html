@@ -835,8 +835,31 @@ async function loadProductsFromSupabase(){
     if(error){console.error('[loadProducts] 오류:',error);return;}
     const likedMap=lsGet('likedMap',{});
     if(!data||data.length===0){
-      // Supabase 비어있으면 샘플 데이터로 복원
-      products=DEFAULT_PRODUCTS.map(p=>({...p,liked:!!likedMap[p.id]}));
+      // Supabase 비어있으면 샘플 데이터를 Supabase에 자동 insert
+      try{
+        const samplePayloads=DEFAULT_PRODUCTS.map(p=>({
+          title:p.title,type:p.type,color:p.color,width:p.width,weight:p.weight,
+          qty:p.qty,price:p.price,loc:p.loc,cat:p.cat,description:p.description,
+          tags:p.tags,seller:p.seller,imgs:p.imgs,likes:p.likes,chats:p.chats,time:p.time
+        }));
+        console.log('[loadProducts] 샘플 데이터 10개 Supabase insert 시작...');
+        const{data:inserted,error:insertErr}=await _sb.from('products').insert(samplePayloads).select();
+        if(insertErr){
+          console.error('[loadProducts] 샘플 insert 오류:',insertErr);
+          products=DEFAULT_PRODUCTS.map(p=>({...p,liked:!!likedMap[p.id]}));
+        }else{
+          console.log('[loadProducts] 샘플 insert 완료:', inserted?.length,'개');
+          products=(inserted||[]).map(p=>({
+            ...p,
+            seller:p.seller||{name:'알수없음',temp:36.5,loc:''},
+            tags:Array.isArray(p.tags)?p.tags:(p.tags?p.tags.split(','):[]),
+            liked:false,time:p.time||'방금 전',likes:p.likes||0,chats:p.chats||0,imgs:p.imgs||1,
+          }));
+        }
+      }catch(insertEx){
+        console.error('[loadProducts] 샘플 insert 예외:',insertEx);
+        products=DEFAULT_PRODUCTS.map(p=>({...p,liked:!!likedMap[p.id]}));
+      }
       lsSet('products',products);
       renderList();
       return;

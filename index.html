@@ -258,8 +258,40 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 ::-webkit-scrollbar-thumb{background:var(--g200);border-radius:4px}
 
 @media(min-width:480px){
-  .tabbar,.d-action,.toast{left:50%}
+  .tabbar,.d-action,.toast,.chat-input-bar{left:50%}
 }
+
+/* CHAT LIST */
+.chat-list-wrap{flex:1;overflow-y:auto;padding-bottom:72px}
+.chat-room-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--g100);cursor:pointer;transition:background .15s}
+.chat-room-item:active,.chat-room-item:hover{background:var(--g50)}
+.cr-av{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0}
+.cr-info{flex:1;min-width:0}
+.cr-name{font-size:13px;font-weight:600;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cr-preview{font-size:12px;color:var(--g500);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cr-meta{text-align:right;flex-shrink:0;padding-left:8px}
+.cr-time{font-size:10px;color:var(--g500)}
+.cr-unread{display:inline-block;min-width:18px;background:var(--P);color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;font-weight:700;margin-top:3px;text-align:center}
+
+/* CHAT ROOM */
+.croom-body{flex:1;overflow-y:auto;padding:12px 14px 80px;display:flex;flex-direction:column;gap:10px}
+.msg-row{display:flex;gap:8px;align-items:flex-end}
+.msg-row.me{flex-direction:row-reverse}
+.msg-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.msg-col{display:flex;flex-direction:column}
+.msg-row.me .msg-col{align-items:flex-end}
+.msg-row.other .msg-col{align-items:flex-start}
+.msg-bubble{max-width:230px;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.5;word-break:break-word}
+.msg-row.me .msg-bubble{background:var(--P);color:#fff;border-bottom-right-radius:4px}
+.msg-row.other .msg-bubble{background:var(--g100);color:var(--g900);border-bottom-left-radius:4px}
+.msg-time{font-size:10px;color:var(--g500);margin-top:3px;padding:0 4px}
+.chat-input-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:1px solid var(--g200);padding:10px 12px;display:flex;gap:8px;z-index:200}
+.chat-input-bar input{flex:1;border:1.5px solid var(--g200);border-radius:22px;padding:9px 16px;font-size:14px;outline:none;font-family:inherit;transition:border-color .15s}
+.chat-input-bar input:focus{border-color:var(--P)}
+.chat-send{width:40px;height:40px;border-radius:50%;background:var(--P);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chat-product-bar{padding:10px 14px;background:var(--PL);border-bottom:1px solid rgba(255,107,53,.15);display:flex;align-items:center;gap:10px;cursor:pointer}
+.cpb-thumb{width:36px;height:36px;border-radius:8px;flex-shrink:0}
+.cpb-title{font-size:12px;font-weight:600;color:var(--P);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -363,7 +395,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <button class="tab on" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
     <button class="tab" onclick="showView('search-view')"><span class="ti">🔍</span><span data-i18n="tab_search">검색</span></button>
     <button class="tab-fab" onclick="showView('form')">＋</button>
-    <button class="tab" onclick="showToast(t('chat_coming'))"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
     <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
   </nav>
 </div>
@@ -572,9 +604,9 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   </div>
   <nav class="tabbar">
     <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
-    <button class="tab" onclick="showToast(t('chat_coming'))"><span class="ti">🔍</span><span data-i18n="tab_search">검색</span></button>
+    <button class="tab" onclick="showView('search-view')"><span class="ti">🔍</span><span data-i18n="tab_search">검색</span></button>
     <button class="tab-fab" onclick="showView('form')">＋</button>
-    <button class="tab" onclick="showToast(t('chat_coming'))"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
     <button class="tab on" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
   </nav>
 </div>
@@ -608,6 +640,86 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
       <h3>실시간 원단 시세</h3>
       <div id="market-price"></div>
     </div>
+  </div>
+</div>
+
+<!-- ========== SEARCH VIEW ========== -->
+<div id="view-search-view" class="view">
+  <header class="hdr">
+    <div class="hdr-logo">비움마켓 <small>BIUM MARKET</small></div>
+  </header>
+  <div class="srch-wrap">
+    <div class="srch-bar">
+      <span style="font-size:15px;color:var(--g500)">🔍</span>
+      <input type="text" id="sv-input" data-i18n-ph="search_placeholder" placeholder="원단 종류, 색상, 업체명 검색" autocomplete="off"/>
+    </div>
+    <div class="chips" id="sv-chips"></div>
+  </div>
+  <ul class="plist" id="sv-list"></ul>
+  <div class="empty" id="sv-empty" style="display:none">
+    <div class="ei">🔍</div>
+    <p id="sv-empty-msg">검색어를 입력하거나 카테고리를 선택하세요</p>
+  </div>
+  <nav class="tabbar">
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
+    <button class="tab on"><span class="ti">🔍</span><span data-i18n="tab_search">검색</span></button>
+    <button class="tab-fab" onclick="showView('form')">＋</button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
+  </nav>
+</div>
+
+<!-- ========== WISHLIST ========== -->
+<div id="view-wishlist" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title">관심 목록</div>
+    <div style="width:38px"></div>
+  </header>
+  <ul class="plist" id="wishlist-list" style="padding:10px 10px 72px"></ul>
+  <div class="empty" id="wishlist-empty" style="display:none">
+    <div class="ei">🤍</div>
+    <p>관심 상품이 없어요</p>
+  </div>
+</div>
+
+<!-- ========== CHAT LIST ========== -->
+<div id="view-chat" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title">채팅</div>
+    <div style="width:38px"></div>
+  </header>
+  <div class="chat-list-wrap" id="chat-list-wrap"></div>
+  <div class="empty" id="chat-list-empty" style="display:none">
+    <div class="ei">💬</div>
+    <p style="text-align:center">채팅 내역이 없어요<br><small style="font-size:12px;color:var(--g500)">상품 상세에서 채팅 버튼을 눌러보세요</small></p>
+  </div>
+  <nav class="tabbar">
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
+    <button class="tab" onclick="showView('search-view')"><span class="ti">🔍</span><span data-i18n="tab_search">검색</span></button>
+    <button class="tab-fab" onclick="showView('form')">＋</button>
+    <button class="tab on"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
+  </nav>
+</div>
+
+<!-- ========== CHAT ROOM ========== -->
+<div id="view-chat-room" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title" id="cr-hdr-title">채팅</div>
+    <div style="width:38px"></div>
+  </header>
+  <div class="chat-product-bar" id="cr-product-bar" onclick="goChatProduct()">
+    <div class="cpb-thumb" id="cr-thumb"></div>
+    <div class="cpb-title" id="cr-prod-title">상품 정보</div>
+    <span style="color:var(--P);font-size:14px">›</span>
+  </div>
+  <div class="croom-body" id="cr-body"></div>
+  <div class="chat-input-bar">
+    <input type="text" id="cr-input" placeholder="메시지를 입력하세요" onkeydown="if(event.key==='Enter')sendChatMsg()"/>
+    <button class="chat-send" onclick="sendChatMsg()">↑</button>
   </div>
 </div>
 
@@ -1048,6 +1160,10 @@ let uploadedImgs=[];
 let curResType='visit';
 let curSellerData=null;
 let selectedUserType='seller';
+let svSearch='';
+let svFilter='전체';
+let chatRooms=lsGet('chatRooms',{});
+let curChatRoomId=null;
 
 /* ==================== TOAST ==================== */
 function showToast(msg){
@@ -1067,6 +1183,10 @@ function showView(name){
   if(name==='mypage')renderMypage();
   if(name==='admin')renderAdmin('overview');
   if(name==='analytics')renderAnalytics();
+  if(name==='search-view')renderSearchView();
+  if(name==='chat')renderChatList();
+  if(name==='wishlist')renderWishlist();
+  if(name==='chat-room')renderChatRoom(curChatRoomId);
 }
 function goBack(){showView(prevView||'list')}
 
@@ -1251,6 +1371,7 @@ function toggleDetailLike(){
   updateDetailHeart(p);
   showToast(p.liked?t('like_add'):t('like_remove'));
 }
+function openChatModal(){if(curProductId)openChatRoom(curProductId);}
 function shareProduct(){openModal('modal-share')}
 function openSellerPage(){
   const p=products.find(x=>x.id===curProductId);if(!p)return;
@@ -1422,8 +1543,135 @@ async function submitForm(){
   }
 }
 document.getElementById('search-input').addEventListener('input',e=>{curSearch=e.target.value;renderList()});
+document.getElementById('sv-input').addEventListener('input',e=>{svSearch=e.target.value;renderSearchView()});
 document.getElementById('btn-loc').addEventListener('click',()=>showToast('지역 설정 기능 준비중이에요'));
 document.getElementById('btn-alert').addEventListener('click',()=>showToast('새로운 알림이 없어요'));
+
+/* ==================== SEARCH VIEW ==================== */
+function renderSearchView(){
+  renderSvChips();
+  const list=document.getElementById('sv-list');
+  const empty=document.getElementById('sv-empty');
+  const q=svSearch.trim().toLowerCase();
+  const filtered=products.filter(p=>{
+    const mf=svFilter==='전체'||p.type===svFilter;
+    const ms=!q||p.title.toLowerCase().includes(q)||p.type.includes(q)||p.color.toLowerCase().includes(q)||(p.tags||[]).some(tg=>tg.toLowerCase().includes(q))||(p.seller&&p.seller.name.toLowerCase().includes(q));
+    return mf&&ms;
+  });
+  if(!filtered.length){
+    list.innerHTML='';list.style.display='none';empty.style.display='flex';
+    document.getElementById('sv-empty-msg').textContent=q||svFilter!=='전체'?t('empty_msg'):'검색어를 입력하거나 카테고리를 선택하세요';
+  }else{
+    empty.style.display='none';list.style.display='grid';
+    list.innerHTML=filtered.map(renderCard).join('');
+  }
+  setTimeout(()=>document.getElementById('sv-input')?.focus(),120);
+}
+function renderSvChips(){
+  const el=document.getElementById('sv-chips');if(!el)return;
+  el.innerHTML=FILTERS.map(f=>`<button class="chip ${f===svFilter?'on':''}" onclick="setSvFilter('${f}')">${t('filter_'+f)||f}</button>`).join('');
+}
+function setSvFilter(f){svFilter=f;renderSvChips();renderSearchView();}
+
+/* ==================== WISHLIST ==================== */
+function renderWishlist(){
+  const likedMap=lsGet('likedMap',{});
+  const liked=products.filter(p=>likedMap[p.id]||p.liked);
+  const list=document.getElementById('wishlist-list');
+  const empty=document.getElementById('wishlist-empty');
+  if(!liked.length){list.innerHTML='';list.style.display='none';empty.style.display='flex';}
+  else{empty.style.display='none';list.style.display='grid';list.innerHTML=liked.map(renderCard).join('');}
+}
+
+/* ==================== CHAT ==================== */
+function formatChatTime(d){return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');}
+function openChatRoom(productId){
+  const roomId='prod_'+productId;
+  curChatRoomId=roomId;
+  if(!chatRooms[roomId]){
+    const p=products.find(x=>x.id===productId);
+    if(!p)return;
+    chatRooms[roomId]={
+      id:roomId,productId,productTitle:p.title,
+      sellerName:p.seller?.name||'판매자',
+      bgColor:getFColor(p.type,p.color),
+      messages:[{from:'seller',text:'안녕하세요! 관심 가져주셔서 감사합니다 😊 궁금한 점 있으시면 편하게 물어보세요!',time:formatChatTime(new Date())}],
+      lastMsg:'안녕하세요! 관심 가져주셔서 감사합니다 😊',
+      lastTime:formatChatTime(new Date()),unread:1,
+    };
+    lsSet('chatRooms',chatRooms);
+  }else{chatRooms[roomId].unread=0;lsSet('chatRooms',chatRooms);}
+  showView('chat-room');
+}
+function openChatRoomById(roomId){
+  curChatRoomId=roomId;
+  if(chatRooms[roomId]){chatRooms[roomId].unread=0;lsSet('chatRooms',chatRooms);}
+  showView('chat-room');
+}
+function renderChatList(){
+  const wrap=document.getElementById('chat-list-wrap');
+  const empty=document.getElementById('chat-list-empty');
+  const rooms=Object.values(chatRooms);
+  if(!rooms.length){wrap.innerHTML='';wrap.style.display='none';empty.style.display='flex';return;}
+  empty.style.display='none';wrap.style.display='block';
+  wrap.innerHTML=rooms.slice().reverse().map(r=>`
+    <div class="chat-room-item" onclick="openChatRoomById('${r.id}')">
+      <div class="cr-av" style="background:${r.bgColor||'#999'}">${(r.sellerName||'?')[0]}</div>
+      <div class="cr-info">
+        <div class="cr-name">${r.sellerName} · ${r.productTitle}</div>
+        <div class="cr-preview">${r.lastMsg||'채팅을 시작해보세요'}</div>
+      </div>
+      <div class="cr-meta">
+        <div class="cr-time">${r.lastTime||''}</div>
+        ${r.unread?`<div class="cr-unread">${r.unread}</div>`:''}
+      </div>
+    </div>`).join('');
+}
+function renderChatRoom(roomId){
+  const room=chatRooms[roomId];if(!room)return;
+  document.getElementById('cr-hdr-title').textContent=room.sellerName;
+  document.getElementById('cr-prod-title').textContent=room.productTitle;
+  const thumb=document.getElementById('cr-thumb');
+  thumb.style.cssText=`background:${room.bgColor||'#ccc'};border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;`;
+  thumb.textContent='🧵';
+  const body=document.getElementById('cr-body');
+  body.innerHTML=room.messages.map(m=>{
+    const isMe=m.from==='me';
+    return `<div class="msg-row ${isMe?'me':'other'}">
+      ${!isMe?`<div class="msg-av" style="background:${room.bgColor||'#999'}">${(room.sellerName||'?')[0]}</div>`:''}
+      <div class="msg-col">
+        <div class="msg-bubble">${m.text}</div>
+        <div class="msg-time">${m.time}</div>
+      </div>
+    </div>`;
+  }).join('');
+  setTimeout(()=>body.scrollTop=body.scrollHeight,50);
+}
+function sendChatMsg(){
+  const input=document.getElementById('cr-input');
+  const text=input.value.trim();
+  if(!text||!curChatRoomId)return;
+  const room=chatRooms[curChatRoomId];if(!room)return;
+  const time=formatChatTime(new Date());
+  room.messages.push({from:'me',text,time});
+  room.lastMsg=text;room.lastTime=time;room.unread=0;
+  input.value='';lsSet('chatRooms',chatRooms);
+  renderChatRoom(curChatRoomId);
+  setTimeout(()=>{
+    const replies=['네, 확인해 드릴게요!','소량도 가능합니다 😊','택배 및 직거래 모두 됩니다.','샘플 발송 가능해요!','가격 협의 가능합니다.','재고 확인 후 연락드릴게요!','사진 추가로 보내드릴게요!'];
+    const reply=replies[Math.floor(Math.random()*replies.length)];
+    const rtime=formatChatTime(new Date());
+    room.messages.push({from:'seller',text:reply,time:rtime});
+    room.lastMsg=reply;room.lastTime=rtime;
+    lsSet('chatRooms',chatRooms);
+    renderChatRoom(curChatRoomId);
+  },800+Math.random()*800);
+}
+function goChatProduct(){
+  const room=chatRooms[curChatRoomId];if(!room)return;
+  openDetail(room.productId);
+}
+function openLangSettings(){showView('list');setTimeout(toggleLangPanel,200);}
 
 /* ==================== MYPAGE ==================== */
 function renderMypage(){
@@ -1436,9 +1684,9 @@ function renderMypage(){
   const isSeller=u.type==='seller'||u.type==='both'||u.type==='brand';
   const menus=[
     {section:'내 거래'},
-    {icon:'❤️',label:'관심 목록',action:'showToast("관심 목록 준비중이에요")'},
-    {icon:'💬',label:'채팅 목록',action:'showToast("채팅 기능 준비중이에요")'},
-    {icon:'📅',label:'예약 내역',action:'showToast("예약 내역 준비중이에요")'},
+    {icon:'❤️',label:'관심 목록',action:"showView('wishlist')"},
+    {icon:'💬',label:'채팅 목록',action:"showView('chat')"},
+    {icon:'📅',label:'예약 내역',action:"showToast('예약 내역 준비중이에요')"},
     ...(isSeller?[
       {section:'판매자 메뉴'},
       {icon:'📦',label:'내 상품 관리',action:'showMySales()'},
@@ -1446,9 +1694,9 @@ function renderMypage(){
       {icon:'🏠',label:'내 미니홈피',action:'openMySellerPage()'},
     ]:[]),
     {section:'설정'},
-    {icon:'🌐',label:'언어 설정',action:'showView("list");setTimeout(()=>toggleLangPanel(),200)'},
-    {icon:'🔔',label:'알림 설정',action:'showToast("알림 설정 준비중이에요")'},
-    {icon:'👤',label:'프로필 수정',action:'showToast("프로필 수정 준비중이에요")'},
+    {icon:'🌐',label:'언어 설정',action:'openLangSettings()'},
+    {icon:'🔔',label:'알림 설정',action:"showToast('알림 설정 준비중이에요')"},
+    {icon:'👤',label:'프로필 수정',action:"showToast('프로필 수정 준비중이에요')"},
     {icon:'🚪',label:'로그아웃',action:'doLogout()'},
   ];
   document.getElementById('menu-list').innerHTML=menus.map(m=>{

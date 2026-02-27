@@ -902,7 +902,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 
 <script>
 /* ==================== CONFIG ==================== */
-const CLAUDE_API_KEY=''; // 여기에 Claude API 키를 입력하세요 (예: sk-ant-...)
+const CLAUDE_API_KEY=''; // 사용하지 않음 — API 키는 Vercel 환경변수로 서버에서 처리
 
 /* ==================== I18N ==================== */
 const LANGS={
@@ -1289,41 +1289,22 @@ function compressImage(dataUrl,maxSize=400,quality=0.7){
   });
 }
 async function analyzeImageWithAI(dataUrl){
-  if(!CLAUDE_API_KEY)return null;
   const base64=dataUrl.split(',')[1];
   const mediaType=dataUrl.startsWith('data:image/png')?'image/png':'image/jpeg';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
+    // Vercel Edge Function으로 프록시 — API 키는 서버에서만 사용
+    const res=await fetch('/api/analyze-image',{
       method:'POST',
-      headers:{
-        'x-api-key':CLAUDE_API_KEY,
-        'anthropic-version':'2023-06-01',
-        'anthropic-dangerous-allow-browser':'true',
-        'content-type':'application/json'
-      },
-      body:JSON.stringify({
-        model:'claude-haiku-4-5-20251001',
-        max_tokens:256,
-        messages:[{role:'user',content:[
-          {type:'image',source:{type:'base64',media_type:mediaType,data:base64}},
-          {type:'text',text:'이 원단(fabric) 이미지를 분석해서 JSON으로만 응답해주세요. 다른 텍스트 없이 JSON만. 형식: {"type":"면|폴리|울|린넨|실크|혼방|기타","color":"색상명(한국어)","weight":숫자또는null}'}
-        ]}]
-      })
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({base64,mediaType})
     });
     if(!res.ok)return null;
     const data=await res.json();
-    const text=data.content?.[0]?.text||'';
-    const match=text.match(/\{[\s\S]*\}/);
-    if(!match)return null;
-    return JSON.parse(match[0]);
+    return data.result||null;
   }catch(e){console.warn('[AI분석] 오류:',e);return null;}
 }
 async function runAIAnalysis(dataUrl){
   const hint=document.getElementById('ai-hint-text');
-  if(!CLAUDE_API_KEY){
-    hint.textContent='AI 자동 입력: API 키를 설정하면 소재·색상·중량을 자동 인식해드려요!';
-    return;
-  }
   hint.textContent='🤖 이미지 분석 중...';
   try{
     const result=await analyzeImageWithAI(dataUrl);

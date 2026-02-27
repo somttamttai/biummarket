@@ -292,6 +292,39 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .chat-product-bar{padding:10px 14px;background:var(--PL);border-bottom:1px solid rgba(255,107,53,.15);display:flex;align-items:center;gap:10px;cursor:pointer}
 .cpb-thumb{width:36px;height:36px;border-radius:8px;flex-shrink:0}
 .cpb-title{font-size:12px;font-weight:600;color:var(--P);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* TOGGLE SWITCH */
+.toggle-row{display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid var(--g100)}
+.toggle-label{flex:1}
+.toggle-title{font-size:14px;font-weight:600;margin-bottom:2px}
+.toggle-desc{font-size:12px;color:var(--g500);line-height:1.4}
+.toggle-switch{position:relative;width:46px;height:26px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:var(--g300);border-radius:26px;transition:.25s;cursor:pointer}
+.toggle-slider::before{content:'';position:absolute;width:20px;height:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle-switch input:checked+.toggle-slider{background:var(--P)}
+.toggle-switch input:checked+.toggle-slider::before{transform:translateX(20px)}
+
+/* RESERVATION CARD */
+.res-item{padding:14px 16px;border-bottom:1px solid var(--g100)}
+.res-item-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.res-item-icon{font-size:22px;width:32px;text-align:center}
+.res-item-info{flex:1}
+.res-item-type{font-size:14px;font-weight:700}
+.res-item-dt{font-size:12px;color:var(--g500);margin-top:1px}
+.res-item-note{font-size:12px;color:var(--g700);background:var(--g100);padding:8px 12px;border-radius:var(--rs);margin-top:6px;line-height:1.5}
+
+/* LANG MODAL BUTTONS */
+.lang-modal-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:var(--r);border:2px solid var(--g200);background:#fff;width:100%;text-align:left;margin-bottom:8px;transition:all .15s}
+.lang-modal-btn.on{border-color:var(--P);background:var(--PL)}
+.lang-modal-btn .lm-flag{font-size:24px}
+.lang-modal-btn .lm-name{font-size:15px;font-weight:600;flex:1}
+.lang-modal-btn .lm-check{color:var(--P);font-size:16px;font-weight:700}
+
+/* PROFILE EDIT */
+.pe-av-wrap{text-align:center;padding:24px 0 8px}
+.pe-av-circle{width:76px;height:76px;border-radius:50%;background:var(--P);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;color:#fff;margin:0 auto 8px}
+.pe-av-hint{font-size:11px;color:var(--g500)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -643,6 +676,66 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   </div>
 </div>
 
+<!-- ========== RESERVATIONS ========== -->
+<div id="view-reservations" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title">예약 내역</div>
+    <div style="width:38px"></div>
+  </header>
+  <div style="flex:1;overflow-y:auto;padding-bottom:20px" id="res-list-wrap">
+    <div id="res-list"></div>
+    <div class="empty" id="res-empty" style="display:none">
+      <div class="ei">📅</div>
+      <p>예약 내역이 없어요</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== NOTIF SETTINGS ========== -->
+<div id="view-notif-settings" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title">알림 설정</div>
+    <div style="width:38px"></div>
+  </header>
+  <div style="flex:1;overflow-y:auto">
+    <div style="padding:12px 16px 6px;font-size:11px;font-weight:700;color:var(--g500);letter-spacing:.5px">알림 종류</div>
+    <div id="notif-list"></div>
+    <div style="padding:14px 16px;font-size:12px;color:var(--g500);line-height:1.6">
+      ※ 알림 설정은 이 기기에만 저장됩니다.<br>실제 푸시 알림은 앱 설치 후 지원됩니다.
+    </div>
+  </div>
+</div>
+
+<!-- ========== PROFILE EDIT ========== -->
+<div id="view-profile-edit" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title">프로필 수정</div>
+    <div style="width:38px"></div>
+  </header>
+  <div class="f-scroll">
+    <div class="pe-av-wrap">
+      <div class="pe-av-circle" id="pe-av">?</div>
+      <div class="pe-av-hint">이름 첫 글자로 자동 설정돼요</div>
+    </div>
+    <div class="fg">
+      <label>이름 / 업체명 <span class="req">*</span></label>
+      <input type="text" class="fi" id="pe-name" placeholder="이름 또는 업체명" oninput="document.getElementById('pe-av').textContent=this.value[0]||'?'"/>
+    </div>
+    <div class="fg">
+      <label>소개</label>
+      <textarea class="fi" id="pe-intro" placeholder="업체 소개나 자기소개를 입력하세요" style="min-height:80px"></textarea>
+    </div>
+    <div class="fg">
+      <label>사업장 위치</label>
+      <input type="text" class="fi" id="pe-loc" placeholder="예) 서울 성동구 성수동"/>
+    </div>
+    <button class="submit-btn" onclick="saveProfile()">저장하기</button>
+  </div>
+</div>
+
 <!-- ========== SEARCH VIEW ========== -->
 <div id="view-search-view" class="view">
   <header class="hdr">
@@ -781,6 +874,16 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
       </div>
     </div>
     <button class="mclose" onclick="submitReservation()">예약 신청</button>
+  </div>
+</div>
+
+<!-- MODAL: LANGUAGE -->
+<div class="mover" id="modal-lang" onclick="closeModal('modal-lang',event)">
+  <div class="msheet">
+    <div class="mhandle"></div>
+    <div class="mtitle">🌐 언어 선택</div>
+    <div id="modal-lang-btns" style="padding:8px 0 4px"></div>
+    <button class="mclose" style="background:var(--g200);color:var(--g700)" onclick="closeModal('modal-lang')">닫기</button>
   </div>
 </div>
 
@@ -1164,6 +1267,7 @@ let svSearch='';
 let svFilter='전체';
 let chatRooms=lsGet('chatRooms',{});
 let curChatRoomId=null;
+let notifSettings=lsGet('notifSettings',{newMsg:true,reservation:true,priceChange:false,event:false});
 
 /* ==================== TOAST ==================== */
 function showToast(msg){
@@ -1187,6 +1291,9 @@ function showView(name){
   if(name==='chat')renderChatList();
   if(name==='wishlist')renderWishlist();
   if(name==='chat-room')renderChatRoom(curChatRoomId);
+  if(name==='reservations')renderReservations();
+  if(name==='notif-settings')renderNotifSettings();
+  if(name==='profile-edit')renderProfileEdit();
 }
 function goBack(){showView(prevView||'list')}
 
@@ -1671,7 +1778,104 @@ function goChatProduct(){
   const room=chatRooms[curChatRoomId];if(!room)return;
   openDetail(room.productId);
 }
-function openLangSettings(){showView('list');setTimeout(toggleLangPanel,200);}
+function openLangSettings(){
+  const el=document.getElementById('modal-lang-btns');
+  el.innerHTML=Object.values(LANGS).map(l=>`
+    <button class="lang-modal-btn ${l.code===curLang?'on':''}" onclick="setLang('${l.code}');closeModal('modal-lang')">
+      <span class="lm-flag">${l.flag}</span>
+      <span class="lm-name">${l.name}</span>
+      ${l.code===curLang?'<span class="lm-check">✓</span>':''}
+    </button>`).join('');
+  openModal('modal-lang');
+}
+
+/* ==================== RESERVATIONS ==================== */
+async function renderReservations(){
+  const list=document.getElementById('res-list');
+  const empty=document.getElementById('res-empty');
+  list.innerHTML='<div style="text-align:center;padding:40px;color:var(--g500);font-size:13px">불러오는 중...</div>';
+  empty.style.display='none';
+  if(!curUser||!_sb){
+    list.innerHTML='';empty.style.display='flex';return;
+  }
+  try{
+    const{data,error}=await _sb.from('reservations').select('*').eq('user_id',curUser.id).order('created_at',{ascending:false});
+    if(error||!data||!data.length){list.innerHTML='';empty.style.display='flex';return;}
+    const typeNames={visit:'방문 예약',swatch:'스와치 요청',inspect:'출장감별'};
+    const typeIcons={visit:'🏠',swatch:'🎨',inspect:'🔍'};
+    const statusMap={confirmed:'확정',cancelled:'취소',pending:'대기중'};
+    const statusBadge={confirmed:'badge-green',cancelled:'badge-gray',pending:'badge-orange'};
+    list.innerHTML=data.map(r=>`
+      <div class="res-item">
+        <div class="res-item-head">
+          <div class="res-item-icon">${typeIcons[r.type]||'📅'}</div>
+          <div class="res-item-info">
+            <div class="res-item-type">${typeNames[r.type]||r.type}</div>
+            <div class="res-item-dt">📅 ${r.date} &nbsp;🕐 ${r.time}</div>
+          </div>
+          <span class="badge ${statusBadge[r.status||'pending']||'badge-orange'}">${statusMap[r.status||'pending']}</span>
+        </div>
+        ${r.note?`<div class="res-item-note">💬 ${r.note}</div>`:''}
+      </div>`).join('');
+  }catch(e){
+    list.innerHTML='';empty.style.display='flex';
+  }
+}
+
+/* ==================== NOTIF SETTINGS ==================== */
+function renderNotifSettings(){
+  const items=[
+    {key:'newMsg',title:'새 메시지 알림',desc:'채팅 메시지를 받으면 알려드려요'},
+    {key:'reservation',title:'예약 확정 알림',desc:'예약이 확정되면 알려드려요'},
+    {key:'priceChange',title:'가격 변동 알림',desc:'관심 상품 가격이 바뀌면 알려드려요'},
+    {key:'event',title:'이벤트 · 공지 알림',desc:'새로운 이벤트와 공지를 알려드려요'},
+  ];
+  document.getElementById('notif-list').innerHTML=items.map(it=>`
+    <div class="toggle-row">
+      <div class="toggle-label">
+        <div class="toggle-title">${it.title}</div>
+        <div class="toggle-desc">${it.desc}</div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" ${notifSettings[it.key]?'checked':''} onchange="toggleNotif('${it.key}',this.checked)"/>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>`).join('');
+}
+function toggleNotif(key,val){
+  notifSettings[key]=val;
+  lsSet('notifSettings',notifSettings);
+  showToast(val?'알림이 켜졌어요 🔔':'알림이 꺼졌어요 🔕');
+}
+
+/* ==================== PROFILE EDIT ==================== */
+function renderProfileEdit(){
+  const u=curUser||{};
+  const nameEl=document.getElementById('pe-name');
+  const introEl=document.getElementById('pe-intro');
+  const locEl=document.getElementById('pe-loc');
+  const avEl=document.getElementById('pe-av');
+  nameEl.value=u.name||'';
+  introEl.value=u.intro||'';
+  locEl.value=u.loc||'';
+  avEl.textContent=(u.name||'?')[0];
+}
+async function saveProfile(){
+  const name=document.getElementById('pe-name').value.trim();
+  const intro=document.getElementById('pe-intro').value.trim();
+  const loc=document.getElementById('pe-loc').value.trim();
+  if(!name){showToast('이름을 입력해주세요');return;}
+  if(curUser){
+    curUser.name=name;curUser.intro=intro;curUser.loc=loc;
+    lsSet('curUser',curUser);
+    if(_sb&&curUser.id&&curUser.id!=='admin'){
+      try{await _sb.from('users').update({name,intro,loc}).eq('id',curUser.id);}
+      catch(e){console.error('프로필 업데이트 오류:',e);}
+    }
+  }
+  showToast('프로필이 저장됐어요 ✅');
+  goBack();
+}
 
 /* ==================== MYPAGE ==================== */
 function renderMypage(){
@@ -1686,7 +1890,7 @@ function renderMypage(){
     {section:'내 거래'},
     {icon:'❤️',label:'관심 목록',action:"showView('wishlist')"},
     {icon:'💬',label:'채팅 목록',action:"showView('chat')"},
-    {icon:'📅',label:'예약 내역',action:"showToast('예약 내역 준비중이에요')"},
+    {icon:'📅',label:'예약 내역',action:"showView('reservations')"},
     ...(isSeller?[
       {section:'판매자 메뉴'},
       {icon:'📦',label:'내 상품 관리',action:'showMySales()'},
@@ -1695,8 +1899,8 @@ function renderMypage(){
     ]:[]),
     {section:'설정'},
     {icon:'🌐',label:'언어 설정',action:'openLangSettings()'},
-    {icon:'🔔',label:'알림 설정',action:"showToast('알림 설정 준비중이에요')"},
-    {icon:'👤',label:'프로필 수정',action:"showToast('프로필 수정 준비중이에요')"},
+    {icon:'🔔',label:'알림 설정',action:"showView('notif-settings')"},
+    {icon:'👤',label:'프로필 수정',action:"showView('profile-edit')"},
     {icon:'🚪',label:'로그아웃',action:'doLogout()'},
   ];
   document.getElementById('menu-list').innerHTML=menus.map(m=>{

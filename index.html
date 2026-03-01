@@ -705,7 +705,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div class="hdr-logo" style="flex:none;font-size:16px">비움</div>
     <div class="home-search-bar" onclick="showView('search-view')">
       <span style="font-size:14px;color:#8888aa">🔍</span>
-      <span style="flex:1;font-size:13px;color:#8888aa">원단명, 색상, 종류 검색...</span>
+      <span style="flex:1;font-size:13px;color:#8888aa" data-i18n="home_search_ph">원단명, 색상, 종류 검색...</span>
     </div>
     <button class="hdr-btn" onclick="showView('ai')" title="AI분석">📷</button>
     <button class="hdr-btn" id="btn-alert" title="알림">🔔</button>
@@ -717,7 +717,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <!-- 공지 배너 -->
     <div class="notice-banner" onclick="openNoticeModal()">
       <span>📢</span>
-      <span>[공지] 비움마켓 베타 오픈 안내</span>
+      <span data-i18n="notice_text">[공지] 비움마켓 베타 오픈 안내</span>
       <span class="nb-arrow">›</span>
     </div>
     <!-- 카테고리 칩 -->
@@ -725,14 +725,14 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <!-- 프리미엄 배너 -->
     <div class="premium-banner" onclick="showView('form')">
       <div class="premium-badge">★ PREMIUM</div>
-      <div class="premium-title">동대문 재고원단 프리미엄 거래</div>
-      <div class="premium-sub">검증된 셀러의 고품질 원단을 만나보세요</div>
+      <div class="premium-title" data-i18n="prem_title">동대문 재고원단 프리미엄 거래</div>
+      <div class="premium-sub" data-i18n="prem_sub">검증된 셀러의 고품질 원단을 만나보세요</div>
     </div>
     <!-- AI 추천 섹션 -->
     <div class="ai-section">
       <div class="ai-section-hd">
-        <span class="ai-section-title">✨ AI 추천 원단</span>
-        <span class="ai-section-more" onclick="showView('ai')">AI 분석하기 →</span>
+        <span class="ai-section-title" data-i18n="ai_title">✨ AI 추천 원단</span>
+        <span class="ai-section-more" onclick="showView('ai')" data-i18n="ai_more">AI 분석하기 →</span>
       </div>
       <div class="ai-scroll" id="ai-rec-scroll"></div>
     </div>
@@ -757,7 +757,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 <!-- ========== CATEGORY ========== -->
 <div id="view-category" class="view">
   <header class="hdr">
-    <div class="hdr-logo">카테고리</div>
+    <div class="hdr-logo" data-i18n="cat_hdr">카테고리</div>
   </header>
   <div class="cat-grid" id="cat-grid"></div>
   <nav class="tabbar">
@@ -777,9 +777,9 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   </header>
   <div class="cp-scroll">
     <div class="cp-sort-bar">
-      <button class="cp-sort-btn on" id="cpSort-latest" onclick="setCatSort('latest')">최신순</button>
-      <button class="cp-sort-btn" id="cpSort-price" onclick="setCatSort('price')">가격순</button>
-      <button class="cp-sort-btn" id="cpSort-popular" onclick="setCatSort('popular')">인기순</button>
+      <button class="cp-sort-btn on" id="cpSort-latest" onclick="setCatSort('latest')" data-i18n="sort_latest">최신순</button>
+      <button class="cp-sort-btn" id="cpSort-price" onclick="setCatSort('price')" data-i18n="sort_price">가격순</button>
+      <button class="cp-sort-btn" id="cpSort-popular" onclick="setCatSort('popular')" data-i18n="sort_popular">인기순</button>
     </div>
     <div class="cp-list" id="cp-list"></div>
   </div>
@@ -831,12 +831,12 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     </div>
     <!-- 상세 설명 -->
     <div class="pd-section">
-      <div class="pd-section-title">상품 설명</div>
+      <div class="pd-section-title" data-i18n="detail_desc">상품 설명</div>
       <div class="pd-desc" id="pd-desc"></div>
     </div>
     <!-- 원단 스펙 -->
     <div class="pd-section">
-      <div class="pd-section-title">원단 스펙</div>
+      <div class="pd-section-title" data-i18n="detail_spec">원단 스펙</div>
       <div id="pd-spec"></div>
     </div>
     <!-- 태그 -->
@@ -866,11 +866,11 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <!-- AI 힌트 배너 -->
     <div class="ai-hint">
       <span class="ai-icon">🤖</span>
-      <span id="ai-hint-text">AI 자동 입력: 사진을 첨부하면 소재·색상·중량을 자동으로 인식해드려요!</span>
+      <span id="ai-hint-text" data-i18n="ai_hint_text">AI 자동 입력: 사진을 첨부하면 소재·색상·중량을 자동으로 인식해드려요!</span>
     </div>
 
     <!-- ── 기본 정보 ── -->
-    <div class="form-sec-hd"><span class="form-sec-label">기본 정보</span></div>
+    <div class="form-sec-hd"><span class="form-sec-label" data-i18n="form_sec_basic">기본 정보</span></div>
 
     <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
     <div class="img-upload-box" id="img-upload-box" onclick="document.getElementById('file-input').click()">
@@ -887,7 +887,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div class="fg"><label><span data-i18n="form_name_label">상품명</span> <span class="req">*</span></label><input type="text" class="fi" id="f-title" placeholder="예) 아이보리 면 원단 재고 45m"/></div>
 
     <!-- ── 원단 정보 ── -->
-    <div class="form-sec-hd"><span class="form-sec-label">원단 정보</span></div>
+    <div class="form-sec-hd"><span class="form-sec-label" data-i18n="form_sec_fabric">원단 정보</span></div>
 
     <div class="fg"><label data-i18n="form_cat_label">카테고리 (대분류)</label>
       <select class="fi" id="f-cat1" onchange="updateCat2()">
@@ -910,7 +910,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div class="fg"><label data-i18n="form_weight_label">중량 (g/㎡)</label><input type="number" class="fi" id="f-weight" placeholder="예) 180"/></div>
 
     <!-- ── 판매 정보 ── -->
-    <div class="form-sec-hd"><span class="form-sec-label">판매 정보</span></div>
+    <div class="form-sec-hd"><span class="form-sec-label" data-i18n="form_sec_sale">판매 정보</span></div>
 
     <div class="form-row">
       <div class="fg"><label><span data-i18n="form_qty_label">재고 (m)</span> <span class="req">*</span></label><input type="number" class="fi" id="f-qty" placeholder="예) 30" min="0" step="0.1" oninput="calcTotal()"/></div>
@@ -992,38 +992,38 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
           </div>
         </div>
       </div>
-      <div class="my-edit-btn" onclick="showView('profile-edit')">✏️ 프로필 수정</div>
+      <div class="my-edit-btn" onclick="showView('profile-edit')" data-i18n="my_edit_profile">✏️ 프로필 수정</div>
     </div>
     <!-- 통계 카드 -->
     <div class="my-stats">
       <div class="my-stat" onclick="showMySales()">
         <div class="my-stat-val" id="my-stat-products">0</div>
-        <div class="my-stat-lbl">등록상품</div>
+        <div class="my-stat-lbl" data-i18n="stat_products">등록상품</div>
       </div>
       <div class="my-stat" onclick="showView('wishlist')">
         <div class="my-stat-val" id="my-stat-wish">0</div>
-        <div class="my-stat-lbl">관심목록</div>
+        <div class="my-stat-lbl" data-i18n="stat_wish">관심목록</div>
       </div>
       <div class="my-stat" onclick="showView('reservations')">
         <div class="my-stat-val" id="my-stat-done">0</div>
-        <div class="my-stat-lbl">거래완료</div>
+        <div class="my-stat-lbl" data-i18n="stat_done">거래완료</div>
       </div>
     </div>
     <!-- 상품 관리 섹션 -->
     <div class="my-section-wrap">
-      <div class="my-section-title">상품 관리</div>
+      <div class="my-section-title" data-i18n="my_sec_products">상품 관리</div>
       <div class="my-menu-item" onclick="showView('form')">
         <div class="my-icon-box ib-purple">➕</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">상품 등록</div>
-          <div class="my-menu-sub">새 원단 등록하기</div>
+          <div class="my-menu-title" data-i18n="mnu_register">상품 등록</div>
+          <div class="my-menu-sub" data-i18n="mnu_register_sub">새 원단 등록하기</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="showMySales()">
         <div class="my-icon-box ib-green">📦</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">내 상품 관리</div>
+          <div class="my-menu-title" data-i18n="mnu_my_products">내 상품 관리</div>
           <div class="my-menu-sub" id="my-sub-products">0개 등록</div>
         </div>
         <span class="my-menu-arrow">›</span>
@@ -1031,7 +1031,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
       <div class="my-menu-item" onclick="showView('wishlist')">
         <div class="my-icon-box ib-pink">❤️</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">관심 목록</div>
+          <div class="my-menu-title" data-i18n="mnu_wishlist">관심 목록</div>
           <div class="my-menu-sub" id="my-sub-wish">0개 저장</div>
         </div>
         <span class="my-menu-arrow">›</span>
@@ -1039,27 +1039,27 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     </div>
     <!-- 서비스 섹션 -->
     <div class="my-section-wrap">
-      <div class="my-section-title">서비스</div>
+      <div class="my-section-title" data-i18n="my_sec_service">서비스</div>
       <div class="my-menu-item" onclick="showView('notif-settings')">
         <div class="my-icon-box ib-yellow">🔔</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">알림</div>
-          <div class="my-menu-sub">새 상품·가격변동·거래</div>
+          <div class="my-menu-title" data-i18n="mnu_notif">알림</div>
+          <div class="my-menu-sub" data-i18n="mnu_notif_sub">새 상품·가격변동·거래</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="openKeywordAlert()">
         <div class="my-icon-box ib-teal">🔍</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">키워드 알림</div>
-          <div class="my-menu-sub">원하는 원단 등록시 알림</div>
+          <div class="my-menu-title" data-i18n="mnu_keyword">키워드 알림</div>
+          <div class="my-menu-sub" data-i18n="mnu_keyword_sub">원하는 원단 등록시 알림</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="openCart()">
         <div class="my-icon-box ib-blue">🛒</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">묶음 장바구니</div>
+          <div class="my-menu-title" data-i18n="mnu_cart">묶음 장바구니</div>
           <div class="my-menu-sub" id="my-sub-cart">0건 담김</div>
         </div>
         <span class="my-menu-arrow">›</span>
@@ -1067,106 +1067,106 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     </div>
     <!-- 커뮤니티 섹션 -->
     <div class="my-section-wrap">
-      <div class="my-section-title">커뮤니티</div>
+      <div class="my-section-title" data-i18n="my_sec_community">커뮤니티</div>
       <div class="my-menu-item" onclick="openTopSellers()">
         <div class="my-icon-box ib-yellow">🏆</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">TOP 판매자 랭킹</div>
-          <div class="my-menu-sub">판매 실적 · 거래 완료 순위</div>
+          <div class="my-menu-title" data-i18n="mnu_top_sellers">TOP 판매자 랭킹</div>
+          <div class="my-menu-sub" data-i18n="mnu_top_sellers_sub">판매 실적 · 거래 완료 순위</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="openBoard()">
         <div class="my-icon-box ib-teal">💬</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">업계 게시판</div>
-          <div class="my-menu-sub">트렌드·정보·Q&A</div>
+          <div class="my-menu-title" data-i18n="mnu_board">업계 게시판</div>
+          <div class="my-menu-sub" data-i18n="mnu_board_sub">트렌드·정보·Q&A</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="showView('ai')">
         <div class="my-icon-box ib-purple">🔬</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">원단 감별 AI</div>
-          <div class="my-menu-sub">사진으로 소재 분석</div>
+          <div class="my-menu-title" data-i18n="mnu_ai_detect">원단 감별 AI</div>
+          <div class="my-menu-sub" data-i18n="mnu_ai_detect_sub">사진으로 소재 분석</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="openTrendReport()">
         <div class="my-icon-box ib-pink">📊</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">AI 트렌드 리포트</div>
-          <div class="my-menu-sub">시즌 수요 예측·패션위크 분석</div>
+          <div class="my-menu-title" data-i18n="mnu_trend">AI 트렌드 리포트</div>
+          <div class="my-menu-sub" data-i18n="mnu_trend_sub">시즌 수요 예측·패션위크 분석</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
     </div>
     <!-- 데이터·분석 섹션 -->
     <div class="my-section-wrap">
-      <div class="my-section-title">데이터·분석</div>
+      <div class="my-section-title" data-i18n="my_sec_data">데이터·분석</div>
       <div class="my-menu-item" onclick="showView('analytics')">
         <div class="my-icon-box ib-green">💰</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">매출 대시보드</div>
-          <div class="my-menu-sub">매출·조회·전환율 분석</div>
+          <div class="my-menu-title" data-i18n="mnu_sales_dash">매출 대시보드</div>
+          <div class="my-menu-sub" data-i18n="mnu_sales_dash_sub">매출·조회·전환율 분석</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="openPriceHeatmap()">
         <div class="my-icon-box ib-blue">🗺️</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">시장 가격 히트맵</div>
-          <div class="my-menu-sub">소재별·지역별 평균 가격</div>
+          <div class="my-menu-title" data-i18n="mnu_price_heat">시장 가격 히트맵</div>
+          <div class="my-menu-sub" data-i18n="mnu_price_heat_sub">소재별·지역별 평균 가격</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="openMarketPriceModal()">
         <div class="my-icon-box ib-teal">📈</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">원단 실시간 시세</div>
-          <div class="my-menu-sub">주요 소재 가격 차트</div>
+          <div class="my-menu-title" data-i18n="mnu_realtime">원단 실시간 시세</div>
+          <div class="my-menu-sub" data-i18n="mnu_realtime_sub">주요 소재 가격 차트</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="openMyActivity()">
         <div class="my-icon-box ib-purple">👤</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">내 활동 분석</div>
-          <div class="my-menu-sub">검색·관심 카테고리 통계</div>
+          <div class="my-menu-title" data-i18n="mnu_activity">내 활동 분석</div>
+          <div class="my-menu-sub" data-i18n="mnu_activity_sub">검색·관심 카테고리 통계</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="openProductRanking()">
         <div class="my-icon-box ib-orange">🔥</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">인기 상품 랭킹</div>
-          <div class="my-menu-sub">조회·찜·문의 TOP 10</div>
+          <div class="my-menu-title" data-i18n="mnu_ranking">인기 상품 랭킹</div>
+          <div class="my-menu-sub" data-i18n="mnu_ranking_sub">조회·찜·문의 TOP 10</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
       <div class="my-menu-item" onclick="openTradeStats()">
         <div class="my-icon-box ib-yellow">📋</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">거래 통계 리포트</div>
-          <div class="my-menu-sub">월간 거래·카테고리 비중</div>
+          <div class="my-menu-title" data-i18n="mnu_trade_stats">거래 통계 리포트</div>
+          <div class="my-menu-sub" data-i18n="mnu_trade_stats_sub">월간 거래·카테고리 비중</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
     </div>
     <!-- 계정 섹션 -->
     <div class="my-section-wrap">
-      <div class="my-section-title">계정</div>
+      <div class="my-section-title" data-i18n="my_sec_account">계정</div>
       <div class="my-menu-item" onclick="openLangSettings()">
         <div class="my-icon-box ib-green">🌐</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">언어 설정</div>
-          <div class="my-menu-sub">한국어 · English · 日本語 외</div>
+          <div class="my-menu-title" data-i18n="mnu_lang">언어 설정</div>
+          <div class="my-menu-sub" data-i18n="mnu_lang_sub">한국어 · English · 日本語 외</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
     </div>
     <!-- 로그아웃 버튼 -->
-    <button class="my-logout-btn" onclick="doLogout()">🚪 로그아웃</button>
+    <button class="my-logout-btn" onclick="doLogout()" data-i18n="mnu_logout">🚪 로그아웃</button>
   </div>
   <nav class="tabbar">
     <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
@@ -1337,13 +1337,13 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 <!-- ========== CHAT LIST ========== -->
 <div id="view-chat" class="view">
   <header class="hdr">
-    <div class="hdr-title" style="flex:1;text-align:left;font-size:18px;font-weight:800">채팅</div>
+    <div class="hdr-title" style="flex:1;text-align:left;font-size:18px;font-weight:800" data-i18n="chat_hdr">채팅</div>
     <button class="hdr-btn" onclick="showToast('채팅 검색 준비중이에요')">🔍</button>
   </header>
   <div class="chat-list-wrap" id="chat-list-wrap" style="flex:1;overflow-y:auto;padding-bottom:72px"></div>
   <div class="empty" id="chat-list-empty" style="display:none">
     <div class="ei">💬</div>
-    <p style="text-align:center">채팅 내역이 없어요<br><small style="font-size:12px;color:#8888aa">상품 상세에서 채팅하기를 눌러보세요</small></p>
+    <p style="text-align:center"><span data-i18n="chat_empty">채팅 내역이 없어요</span><br><small style="font-size:12px;color:#8888aa" data-i18n="chat_empty_hint">상품 상세에서 채팅하기를 눌러보세요</small></p>
   </div>
   <nav class="tabbar">
     <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
@@ -1684,6 +1684,34 @@ const LANGS={
     form_tags_label:'해시태그',form_ai_label:'AI 가격 예측',
     btn_register:'등록하기',
     like_add:'관심 목록에 추가됐어요 ❤️',like_remove:'관심 목록에서 제거됐어요',
+    my_sec_products:'상품 관리',my_sec_service:'서비스',my_sec_community:'커뮤니티',my_sec_data:'데이터·분석',my_sec_account:'계정',
+    stat_products:'등록상품',stat_wish:'관심목록',stat_done:'거래완료',
+    my_edit_profile:'✏️ 프로필 수정',my_need_login:'로그인이 필요해요',my_guest:'게스트',my_no_loc:'위치 미설정',
+    mnu_register:'상품 등록',mnu_register_sub:'새 원단 등록하기',
+    mnu_my_products:'내 상품 관리',mnu_wishlist:'관심 목록',
+    mnu_notif:'알림',mnu_notif_sub:'새 상품·가격변동·거래',
+    mnu_keyword:'키워드 알림',mnu_keyword_sub:'원하는 원단 등록시 알림',
+    mnu_cart:'묶음 장바구니',
+    mnu_top_sellers:'TOP 판매자 랭킹',mnu_top_sellers_sub:'판매 실적·거래 완료 순위',
+    mnu_board:'업계 게시판',mnu_board_sub:'트렌드·정보·Q&A',
+    mnu_ai_detect:'원단 감별 AI',mnu_ai_detect_sub:'사진으로 소재 분석',
+    mnu_trend:'AI 트렌드 리포트',mnu_trend_sub:'시즌 수요 예측·패션위크 분석',
+    mnu_sales_dash:'매출 대시보드',mnu_sales_dash_sub:'매출·조회·전환율 분석',
+    mnu_price_heat:'시장 가격 히트맵',mnu_price_heat_sub:'소재별·지역별 평균 가격',
+    mnu_realtime:'원단 실시간 시세',mnu_realtime_sub:'주요 소재 가격 차트',
+    mnu_activity:'내 활동 분석',mnu_activity_sub:'검색·관심 카테고리 통계',
+    mnu_ranking:'인기 상품 랭킹',mnu_ranking_sub:'조회·찜·문의 TOP 10',
+    mnu_trade_stats:'거래 통계 리포트',mnu_trade_stats_sub:'월간 거래·카테고리 비중',
+    mnu_lang:'언어 설정',mnu_lang_sub:'한국어 · English · 日本語 외',mnu_logout:'🚪 로그아웃',
+    home_search_ph:'원단명, 색상, 종류 검색...',notice_text:'[공지] 비움마켓 베타 오픈 안내',
+    prem_title:'동대문 재고원단 프리미엄 거래',prem_sub:'검증된 셀러의 고품질 원단을 만나보세요',
+    ai_title:'✨ AI 추천 원단',ai_more:'AI 분석하기 →',
+    cat_hdr:'카테고리',sort_latest:'최신순',sort_price:'가격순',sort_popular:'인기순',
+    chat_hdr:'채팅',chat_empty:'채팅 내역이 없어요',chat_empty_hint:'상품 상세에서 채팅하기를 눌러보세요',
+    detail_desc:'상품 설명',detail_spec:'원단 스펙',
+    form_sec_basic:'기본 정보',form_sec_fabric:'원단 정보',form_sec_sale:'판매 정보',
+    ai_hint_text:'AI 자동 입력: 사진을 첨부하면 소재·색상·중량을 자동으로 인식해드려요!',
+    cnt_reg:'개 등록',cnt_saved:'개 저장',cnt_cart:'건 담김',type_admin:'관리자',
   },
   en:{code:'en',name:'English',flag:'🇺🇸',
     tab_home:'Home',tab_category:'Category',tab_search:'Search',tab_chat:'Chat',tab_me:'My',
@@ -1722,6 +1750,34 @@ const LANGS={
     form_tags_label:'Hashtags',form_ai_label:'AI Price Est.',
     btn_register:'Register',
     like_add:'Added to wishlist ❤️',like_remove:'Removed from wishlist',
+    my_sec_products:'Product Mgmt',my_sec_service:'Services',my_sec_community:'Community',my_sec_data:'Data & Analytics',my_sec_account:'Account',
+    stat_products:'Products',stat_wish:'Wishlist',stat_done:'Completed',
+    my_edit_profile:'✏️ Edit Profile',my_need_login:'Login required',my_guest:'Guest',my_no_loc:'No location set',
+    mnu_register:'List Fabric',mnu_register_sub:'Register new fabric',
+    mnu_my_products:'My Products',mnu_wishlist:'Wishlist',
+    mnu_notif:'Notifications',mnu_notif_sub:'New items, price changes, trades',
+    mnu_keyword:'Keyword Alerts',mnu_keyword_sub:'Alert when matching fabric listed',
+    mnu_cart:'Bundle Cart',
+    mnu_top_sellers:'Top Seller Ranking',mnu_top_sellers_sub:'Ranked by sales & completed trades',
+    mnu_board:'Industry Board',mnu_board_sub:'Trends, Info, Q&A',
+    mnu_ai_detect:'Fabric AI',mnu_ai_detect_sub:'Analyze material by photo',
+    mnu_trend:'AI Trend Report',mnu_trend_sub:'Season forecasts & fashion week analysis',
+    mnu_sales_dash:'Sales Dashboard',mnu_sales_dash_sub:'Sales, views & conversion analysis',
+    mnu_price_heat:'Price Heatmap',mnu_price_heat_sub:'Avg price by material & region',
+    mnu_realtime:'Live Prices',mnu_realtime_sub:'Main material price charts',
+    mnu_activity:'My Activity',mnu_activity_sub:'Search & interest category stats',
+    mnu_ranking:'Product Ranking',mnu_ranking_sub:'Top 10 by views, likes & inquiries',
+    mnu_trade_stats:'Trade Stats',mnu_trade_stats_sub:'Monthly trades & category share',
+    mnu_lang:'Language',mnu_lang_sub:'Korean, English, Japanese & more',mnu_logout:'🚪 Logout',
+    home_search_ph:'Search fabric name, color, type...',notice_text:'[Notice] BIUM MARKET Beta Open',
+    prem_title:'Premium Dongdaemun Fabric Deals',prem_sub:'Quality fabrics from verified sellers',
+    ai_title:'✨ AI Recommended',ai_more:'AI Analyze →',
+    cat_hdr:'Category',sort_latest:'Latest',sort_price:'Price',sort_popular:'Popular',
+    chat_hdr:'Chat',chat_empty:'No chats yet',chat_empty_hint:'Go to a product to start chatting',
+    detail_desc:'Description',detail_spec:'Fabric Specs',
+    form_sec_basic:'Basic Info',form_sec_fabric:'Fabric Info',form_sec_sale:'Sale Info',
+    ai_hint_text:'AI Auto-fill: Upload a photo to auto-detect material, color & weight!',
+    cnt_reg:' listed',cnt_saved:' saved',cnt_cart:' in cart',type_admin:'Admin',
   },
   ja:{code:'ja',name:'日本語',flag:'🇯🇵',
     tab_home:'ホーム',tab_category:'カテゴリ',tab_search:'検索',tab_chat:'チャット',tab_me:'MY',
@@ -1760,6 +1816,34 @@ const LANGS={
     form_tags_label:'ハッシュタグ',form_ai_label:'AI価格予測',
     btn_register:'登録する',
     like_add:'お気に入りに追加しました ❤️',like_remove:'お気に入りから削除しました',
+    my_sec_products:'商品管理',my_sec_service:'サービス',my_sec_community:'コミュニティ',my_sec_data:'データ・分析',my_sec_account:'アカウント',
+    stat_products:'登録商品',stat_wish:'お気に入り',stat_done:'取引完了',
+    my_edit_profile:'✏️ プロフィール編集',my_need_login:'ログインが必要です',my_guest:'ゲスト',my_no_loc:'位置未設定',
+    mnu_register:'商品登録',mnu_register_sub:'新しい生地を登録',
+    mnu_my_products:'自分の商品',mnu_wishlist:'お気に入り',
+    mnu_notif:'通知',mnu_notif_sub:'新商品・価格変動・取引',
+    mnu_keyword:'キーワード通知',mnu_keyword_sub:'生地登録時に通知',
+    mnu_cart:'まとめカート',
+    mnu_top_sellers:'TOPセラーランキング',mnu_top_sellers_sub:'販売実績・取引完了順位',
+    mnu_board:'業界掲示板',mnu_board_sub:'トレンド・情報・Q&A',
+    mnu_ai_detect:'生地分析AI',mnu_ai_detect_sub:'写真で素材を分析',
+    mnu_trend:'AIトレンドレポート',mnu_trend_sub:'シーズン需要予測・ファッションウィーク',
+    mnu_sales_dash:'売上ダッシュボード',mnu_sales_dash_sub:'売上・閲覧・転換率分析',
+    mnu_price_heat:'価格ヒートマップ',mnu_price_heat_sub:'素材別・地域別平均価格',
+    mnu_realtime:'生地リアルタイム価格',mnu_realtime_sub:'主要素材価格チャート',
+    mnu_activity:'自分の活動分析',mnu_activity_sub:'検索・関心カテゴリ統計',
+    mnu_ranking:'人気商品ランキング',mnu_ranking_sub:'閲覧・いいね・問合 TOP10',
+    mnu_trade_stats:'取引統計レポート',mnu_trade_stats_sub:'月間取引・カテゴリ比率',
+    mnu_lang:'言語設定',mnu_lang_sub:'한국어·English·日本語 他',mnu_logout:'🚪 ログアウト',
+    home_search_ph:'生地名、色、種類で検索...',notice_text:'【お知らせ】BIUM MARKETβ版オープン',
+    prem_title:'東大門プレミアム生地取引',prem_sub:'検証済みセラーの高品質生地',
+    ai_title:'✨ AIおすすめ生地',ai_more:'AI分析する →',
+    cat_hdr:'カテゴリ',sort_latest:'最新順',sort_price:'価格順',sort_popular:'人気順',
+    chat_hdr:'チャット',chat_empty:'チャット履歴がありません',chat_empty_hint:'商品詳細からチャットを始めてください',
+    detail_desc:'商品説明',detail_spec:'生地スペック',
+    form_sec_basic:'基本情報',form_sec_fabric:'生地情報',form_sec_sale:'販売情報',
+    ai_hint_text:'AI自動入力：写真を添付すると素材・色・重量を自動認識します！',
+    cnt_reg:'件登録',cnt_saved:'件保存',cnt_cart:'件入り',type_admin:'管理者',
   },
   zh:{code:'zh',name:'中文',flag:'🇨🇳',
     tab_home:'首页',tab_category:'分类',tab_search:'搜索',tab_chat:'聊天',tab_me:'我的',
@@ -1798,6 +1882,34 @@ const LANGS={
     form_tags_label:'标签',form_ai_label:'AI价格预测',
     btn_register:'立即发布',
     like_add:'已加入收藏 ❤️',like_remove:'已取消收藏',
+    my_sec_products:'商品管理',my_sec_service:'服务',my_sec_community:'社区',my_sec_data:'数据·分析',my_sec_account:'账户',
+    stat_products:'发布商品',stat_wish:'收藏',stat_done:'完成交易',
+    my_edit_profile:'✏️ 编辑资料',my_need_login:'请先登录',my_guest:'访客',my_no_loc:'未设置位置',
+    mnu_register:'发布商品',mnu_register_sub:'注册新面料',
+    mnu_my_products:'我的商品',mnu_wishlist:'收藏夹',
+    mnu_notif:'通知',mnu_notif_sub:'新商品·价格变动·交易',
+    mnu_keyword:'关键词提醒',mnu_keyword_sub:'面料上架时提醒',
+    mnu_cart:'批量购物车',
+    mnu_top_sellers:'顶级卖家排名',mnu_top_sellers_sub:'销售业绩·完成交易排名',
+    mnu_board:'行业公告板',mnu_board_sub:'趋势·信息·问答',
+    mnu_ai_detect:'面料鉴别AI',mnu_ai_detect_sub:'拍照分析面料',
+    mnu_trend:'AI趋势报告',mnu_trend_sub:'季节需求预测·时装周分析',
+    mnu_sales_dash:'销售仪表盘',mnu_sales_dash_sub:'销售·浏览·转化率分析',
+    mnu_price_heat:'市场价格热力图',mnu_price_heat_sub:'按材质·地区平均价',
+    mnu_realtime:'面料实时行情',mnu_realtime_sub:'主要面料价格图',
+    mnu_activity:'我的活动分析',mnu_activity_sub:'搜索·兴趣类别统计',
+    mnu_ranking:'热门商品排名',mnu_ranking_sub:'浏览·收藏·咨询TOP10',
+    mnu_trade_stats:'交易统计报告',mnu_trade_stats_sub:'月度交易·类别占比',
+    mnu_lang:'语言设置',mnu_lang_sub:'한국어·English·中文 等',mnu_logout:'🚪 退出登录',
+    home_search_ph:'搜索面料名称、颜色、种类...',notice_text:'[公告] 비움마켓测试版开放',
+    prem_title:'东大门优质面料交易',prem_sub:'优质卖家的高品质面料',
+    ai_title:'✨ AI推荐面料',ai_more:'AI分析 →',
+    cat_hdr:'分类',sort_latest:'最新',sort_price:'价格',sort_popular:'热门',
+    chat_hdr:'聊天',chat_empty:'暂无聊天记录',chat_empty_hint:'在商品详情中点击聊天开始对话',
+    detail_desc:'商品描述',detail_spec:'面料规格',
+    form_sec_basic:'基本信息',form_sec_fabric:'面料信息',form_sec_sale:'销售信息',
+    ai_hint_text:'AI自动填写：上传图片即可自动识别面料·颜色·克重！',
+    cnt_reg:'件已发布',cnt_saved:'件已收藏',cnt_cart:'件已添加',type_admin:'管理员',
   },
   vi:{code:'vi',name:'Tiếng Việt',flag:'🇻🇳',
     tab_home:'Trang chủ',tab_category:'Danh mục',tab_search:'Tìm kiếm',tab_chat:'Chat',tab_me:'Tôi',
@@ -1836,6 +1948,34 @@ const LANGS={
     form_tags_label:'Hashtag',form_ai_label:'Dự đoán giá AI',
     btn_register:'Đăng bán',
     like_add:'Đã thêm vào yêu thích ❤️',like_remove:'Đã xóa khỏi yêu thích',
+    my_sec_products:'Quản lý SP',my_sec_service:'Dịch vụ',my_sec_community:'Cộng đồng',my_sec_data:'Dữ liệu & Phân tích',my_sec_account:'Tài khoản',
+    stat_products:'Sản phẩm',stat_wish:'Yêu thích',stat_done:'Hoàn thành',
+    my_edit_profile:'✏️ Chỉnh sửa hồ sơ',my_need_login:'Vui lòng đăng nhập',my_guest:'Khách',my_no_loc:'Chưa đặt vị trí',
+    mnu_register:'Đăng sản phẩm',mnu_register_sub:'Đăng vải mới',
+    mnu_my_products:'Sản phẩm của tôi',mnu_wishlist:'Yêu thích',
+    mnu_notif:'Thông báo',mnu_notif_sub:'SP mới, giá thay đổi, giao dịch',
+    mnu_keyword:'Cảnh báo từ khóa',mnu_keyword_sub:'Thông báo khi vải được đăng',
+    mnu_cart:'Giỏ hàng nhóm',
+    mnu_top_sellers:'Xếp hạng người bán',mnu_top_sellers_sub:'Xếp hạng doanh số & giao dịch',
+    mnu_board:'Bảng tin ngành',mnu_board_sub:'Xu hướng, Thông tin, Q&A',
+    mnu_ai_detect:'AI nhận diện vải',mnu_ai_detect_sub:'Phân tích vải bằng ảnh',
+    mnu_trend:'Báo cáo xu hướng AI',mnu_trend_sub:'Dự báo mùa vụ & phân tích thời trang',
+    mnu_sales_dash:'Bảng doanh số',mnu_sales_dash_sub:'Doanh số, lượt xem & chuyển đổi',
+    mnu_price_heat:'Bản đồ nhiệt giá',mnu_price_heat_sub:'Giá TB theo vùng & loại vải',
+    mnu_realtime:'Giá vải thực tế',mnu_realtime_sub:'Biểu đồ giá vải chính',
+    mnu_activity:'Phân tích hoạt động',mnu_activity_sub:'Thống kê tìm kiếm & yêu thích',
+    mnu_ranking:'Xếp hạng sản phẩm',mnu_ranking_sub:'TOP 10 lượt xem/thích/hỏi',
+    mnu_trade_stats:'Thống kê giao dịch',mnu_trade_stats_sub:'Giao dịch hàng tháng & danh mục',
+    mnu_lang:'Ngôn ngữ',mnu_lang_sub:'Tiếng Hàn, Anh, Nhật & thêm',mnu_logout:'🚪 Đăng xuất',
+    home_search_ph:'Tìm tên vải, màu, loại...',notice_text:'[Thông báo] BIUM MARKET mở thử nghiệm',
+    prem_title:'Giao dịch vải cao cấp Dongdaemun',prem_sub:'Vải chất lượng từ người bán uy tín',
+    ai_title:'✨ Vải đề xuất AI',ai_more:'Phân tích AI →',
+    cat_hdr:'Danh mục',sort_latest:'Mới nhất',sort_price:'Theo giá',sort_popular:'Phổ biến',
+    chat_hdr:'Trò chuyện',chat_empty:'Chưa có cuộc trò chuyện',chat_empty_hint:'Nhấn Trò chuyện trong chi tiết sản phẩm',
+    detail_desc:'Mô tả sản phẩm',detail_spec:'Thông số vải',
+    form_sec_basic:'Thông tin cơ bản',form_sec_fabric:'Thông tin vải',form_sec_sale:'Thông tin bán',
+    ai_hint_text:'AI tự động điền: Tải ảnh lên để nhận diện vải, màu & trọng lượng!',
+    cnt_reg:' đã đăng',cnt_saved:' đã lưu',cnt_cart:' trong giỏ',type_admin:'Quản trị viên',
   },
 };
 let curLang=lsGet('lang','ko');
@@ -1850,6 +1990,9 @@ function setLang(code){
   });
   renderLangButtons();
   renderChips();
+  renderMypage();
+  renderHomeSections();
+  renderAiRecs();
   const emsg=document.getElementById('empty-msg');if(emsg)emsg.textContent=t('empty_msg');
   if(curProductId&&document.getElementById('view-detail').classList.contains('active')){
     openDetail(curProductId);
@@ -3148,8 +3291,8 @@ async function saveProfile(){
 
 /* ==================== MYPAGE ==================== */
 function renderMypage(){
-  const u=curUser||{name:'게스트',type:'guest',loc:''};
-  const types={seller:'판매자',buyer:'구매자',brand:'브랜드',both:'겸업',admin:'관리자',guest:'게스트'};
+  const u=curUser||{name:t('my_guest'),type:'guest',loc:''};
+  const types={seller:t('type_seller'),buyer:t('type_buyer'),brand:t('type_brand'),both:t('type_both'),admin:t('type_admin'),guest:t('my_guest')};
 
   // 아바타
   const avEl=document.getElementById('my-av');
@@ -3157,17 +3300,17 @@ function renderMypage(){
 
   // 이름
   const nameEl=document.getElementById('my-name');
-  if(nameEl)nameEl.textContent=u.name||'로그인이 필요해요';
+  if(nameEl)nameEl.textContent=u.name||t('my_need_login');
 
   // 업종 뱃지
   const typeEl=document.getElementById('my-type-badge');
-  if(typeEl)typeEl.textContent=types[u.type]||'회원';
+  if(typeEl)typeEl.textContent=types[u.type]||t('my_guest');
 
   // 위치 뱃지
   const locEl=document.getElementById('my-loc-badge');
   if(locEl){
     const loc=u.loc||u.location||'';
-    locEl.textContent=loc?`📍 ${loc.split(' ').slice(-1)[0]}`:'📍 위치 미설정';
+    locEl.textContent=loc?`📍 ${loc.split(' ').slice(-1)[0]}`:`📍 ${t('my_no_loc')}`;
   }
 
   // 통계 계산
@@ -3184,14 +3327,14 @@ function renderMypage(){
   set('my-stat-done',done);
 
   // 메뉴 부제 업데이트
-  set('my-sub-products',myProducts.length+'개 등록');
-  set('my-sub-wish',wishes+'개 저장');
-  set('my-sub-cart',cartCnt+'건 담김');
+  set('my-sub-products',myProducts.length+t('cnt_reg'));
+  set('my-sub-wish',wishes+t('cnt_saved'));
+  set('my-sub-cart',cartCnt+t('cnt_cart'));
 
   // Supabase 실시간 카운트 (연결 시)
   if(_sb&&u.id){
     _sb.from('products').select('id',{count:'exact',head:true}).eq('seller_id',u.id)
-      .then(({count})=>{if(count!=null){set('my-stat-products',count);set('my-sub-products',count+'개 등록');}});
+      .then(({count})=>{if(count!=null){set('my-stat-products',count);set('my-sub-products',count+t('cnt_reg'));}});
   }
 }
 function showMySales(){

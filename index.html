@@ -268,6 +268,16 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .ib-blue{background:rgba(59,130,246,.12)}
 .ib-yellow{background:rgba(234,179,8,.12)}
 .ib-teal{background:rgba(20,184,166,.12)}
+.ib-orange{background:rgba(249,115,22,.12)}
+.my-logout-btn{display:block;margin:20px 14px 24px;padding:14px;width:calc(100% - 28px);border:1.5px solid rgba(255,101,132,.35);border-radius:14px;color:#ff6584;font-size:14px;font-weight:700;background:transparent;cursor:pointer;transition:all .2s;text-align:center}
+.my-logout-btn:hover{background:rgba(255,101,132,.08);border-color:#ff6584}
+.cs-modal-icon{font-size:52px;margin-bottom:14px}
+.cs-modal-title{font-size:18px;font-weight:800;color:#ffffff;margin-bottom:8px}
+.cs-modal-sub{font-size:13px;color:#8888aa;margin-bottom:24px;line-height:1.7}
+.mp-price-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1e1e2e}
+.mp-price-type{font-size:13px;color:#aaaacc}
+.mp-price-val{font-size:13px;font-weight:700;color:#6c63ff;text-align:right}
+.mp-price-trend{font-size:11px;font-weight:600;margin-top:2px}
 /* 레거시 호환 (다른 뷰에서 사용) */
 .menu-list{padding:0 0 80px;background:#0a0a0f}
 .menu-item{display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid #1e1e2e;cursor:pointer;background:#0a0a0f}
@@ -1023,17 +1033,97 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
         <span class="my-menu-arrow">›</span>
       </div>
     </div>
-    <!-- 계정 섹션 -->
+    <!-- 커뮤니티 섹션 -->
     <div class="my-section-wrap">
-      <div class="my-section-title">계정</div>
-      <div class="my-menu-item" onclick="showView('analytics')">
-        <div class="my-icon-box ib-purple">📊</div>
+      <div class="my-section-title">커뮤니티</div>
+      <div class="my-menu-item" onclick="showComingSoon('TOP 판매자 랭킹')">
+        <div class="my-icon-box ib-yellow">🏆</div>
         <div class="my-menu-info">
-          <div class="my-menu-title">매출 대시보드</div>
-          <div class="my-menu-sub">월별 매출 · 인기 원단</div>
+          <div class="my-menu-title">TOP 판매자 랭킹</div>
+          <div class="my-menu-sub">판매 실적 · 거래 완료 순위</div>
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
+      <div class="my-menu-item" onclick="showComingSoon('업계 게시판')">
+        <div class="my-icon-box ib-teal">💬</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">업계 게시판</div>
+          <div class="my-menu-sub">트렌드·정보·Q&A</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="showView('ai')">
+        <div class="my-icon-box ib-purple">🔬</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">원단 감별 AI</div>
+          <div class="my-menu-sub">사진으로 소재 분석</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="showComingSoon('AI 트렌드 리포트')">
+        <div class="my-icon-box ib-pink">📊</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">AI 트렌드 리포트</div>
+          <div class="my-menu-sub">시즌 수요 예측·패션위크 분석</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+    </div>
+    <!-- 데이터·분석 섹션 -->
+    <div class="my-section-wrap">
+      <div class="my-section-title">데이터·분석</div>
+      <div class="my-menu-item" onclick="showView('analytics')">
+        <div class="my-icon-box ib-green">💰</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">매출 대시보드</div>
+          <div class="my-menu-sub">매출·조회·전환율 분석</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="showComingSoon('시장 가격 히트맵')">
+        <div class="my-icon-box ib-blue">🗺️</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">시장 가격 히트맵</div>
+          <div class="my-menu-sub">소재별·지역별 평균 가격</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="openMarketPriceModal()">
+        <div class="my-icon-box ib-teal">📈</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">원단 실시간 시세</div>
+          <div class="my-menu-sub">주요 소재 가격 차트</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="showComingSoon('내 활동 분석')">
+        <div class="my-icon-box ib-purple">👤</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">내 활동 분석</div>
+          <div class="my-menu-sub">검색·관심 카테고리 통계</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="openProductRanking()">
+        <div class="my-icon-box ib-orange">🔥</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">인기 상품 랭킹</div>
+          <div class="my-menu-sub">조회·찜·문의 TOP 10</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="showComingSoon('거래 통계 리포트')">
+        <div class="my-icon-box ib-yellow">📋</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">거래 통계 리포트</div>
+          <div class="my-menu-sub">월간 거래·카테고리 비중</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+    </div>
+    <!-- 계정 섹션 -->
+    <div class="my-section-wrap">
+      <div class="my-section-title">계정</div>
       <div class="my-menu-item" onclick="openLangSettings()">
         <div class="my-icon-box ib-green">🌐</div>
         <div class="my-menu-info">
@@ -1042,15 +1132,9 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
-      <div class="my-menu-item" onclick="doLogout()">
-        <div class="my-icon-box" style="background:rgba(255,101,132,.1)">🚪</div>
-        <div class="my-menu-info">
-          <div class="my-menu-title" style="color:#ff6584">로그아웃</div>
-          <div class="my-menu-sub">계정에서 로그아웃</div>
-        </div>
-        <span class="my-menu-arrow" style="color:#ff6584">›</span>
-      </div>
     </div>
+    <!-- 로그아웃 버튼 -->
+    <button class="my-logout-btn" onclick="doLogout()">🚪 로그아웃</button>
   </div>
   <nav class="tabbar">
     <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
@@ -1316,6 +1400,34 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
       </div>
     </div>
     <button class="mclose" onclick="submitSuggest()">제안 보내기</button>
+  </div>
+</div>
+
+<!-- MODAL: COMING SOON -->
+<div class="mover" id="modal-coming-soon" onclick="closeModal('modal-coming-soon',event)">
+  <div class="msheet" style="text-align:center">
+    <div class="mhandle"></div>
+    <div style="padding:28px 24px 28px">
+      <div class="cs-modal-icon">🚧</div>
+      <div class="cs-modal-title" id="cs-title">준비 중</div>
+      <div class="cs-modal-sub">해당 기능은 현재 준비 중이에요.<br>곧 더 나은 모습으로 만나볼 수 있어요!</div>
+      <button onclick="closeModal('modal-coming-soon')" style="padding:13px 44px;background:linear-gradient(135deg,#6c63ff,#ff6584);color:#fff;border-radius:14px;font-size:14px;font-weight:700">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: MARKET PRICE -->
+<div class="mover" id="modal-market-price" onclick="closeModal('modal-market-price',event)">
+  <div class="msheet" style="max-height:75vh">
+    <div class="mhandle"></div>
+    <div class="mtitle">📈 원단 실시간 시세</div>
+    <div style="padding:0 20px 24px;overflow-y:auto">
+      <div id="mp-price-list"></div>
+      <div style="margin-top:14px;padding:10px 14px;background:#1e1e2e;border-radius:12px;font-size:11px;color:#8888aa;line-height:1.7">
+        📌 동대문 도매시장 기준 · 매주 업데이트<br>
+        실제 거래가는 품질·수량에 따라 다를 수 있어요
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2926,6 +3038,47 @@ function openCart(){
   if(!cart.length){showToast('장바구니가 비어있어요 🛒');return;}
   showToast('장바구니 기능 준비중이에요 🛒');
 }
+function showComingSoon(title){
+  const el=document.getElementById('cs-title');
+  if(el)el.textContent=title;
+  openModal('modal-coming-soon');
+}
+function openProductRanking(){
+  const sorted=[...products].sort((a,b)=>(b.likes||0)-(a.likes||0)).slice(0,20);
+  curCatKey='';
+  document.getElementById('cp-hdr-title').textContent='🔥 인기 상품 랭킹 TOP';
+  ['latest','price','popular'].forEach(s=>{
+    const btn=document.getElementById('cpSort-'+s);
+    if(btn)btn.classList.toggle('on',s==='popular');
+  });
+  const el=document.getElementById('cp-list');
+  if(el)el.innerHTML=sorted.length
+    ?sorted.map(p=>renderHomeProduct(p)).join('')
+    :'<div class="cp-empty">📭<br>상품 데이터를 불러오는 중이에요</div>';
+  showView('cat-products');
+}
+const MARKET_PRICES=[
+  {type:'면 (40수)',range:'4,200 ~ 6,800',trend:'↑',up:true},
+  {type:'폴리 (쉬폰)',range:'2,500 ~ 4,500',trend:'→',up:null},
+  {type:'울 (메리노)',range:'15,000 ~ 28,000',trend:'↓',up:false},
+  {type:'린넨',range:'5,500 ~ 9,500',trend:'↑',up:true},
+  {type:'실크',range:'18,000 ~ 35,000',trend:'↑',up:true},
+  {type:'데님',range:'3,800 ~ 7,200',trend:'→',up:null},
+  {type:'니트',range:'6,000 ~ 12,000',trend:'↑',up:true},
+  {type:'기능성',range:'8,000 ~ 18,000',trend:'↑',up:true},
+];
+function openMarketPriceModal(){
+  const el=document.getElementById('mp-price-list');
+  if(el)el.innerHTML=MARKET_PRICES.map(p=>`
+    <div class="mp-price-row">
+      <span class="mp-price-type">${p.type}</span>
+      <div>
+        <div class="mp-price-val">${p.range}원/m</div>
+        <div class="mp-price-trend" style="color:${p.up===true?'#4ade80':p.up===false?'#f87171':'#8888aa'}">${p.up===true?'▲ 상승세':p.up===false?'▼ 하락세':'― 보합세'}</div>
+      </div>
+    </div>`).join('');
+  openModal('modal-market-price');
+}
 
 /* ==================== ADMIN ==================== */
 let curAdminTab='overview';
@@ -2975,22 +3128,38 @@ async function adminDeleteProduct(id){
 
 /* ==================== ANALYTICS ==================== */
 function renderAnalytics(){
+  // 월별 매출 바 차트 (모의 데이터 + 실제 상품 수 반영)
   const months=['8월','9월','10월','11월','12월','1월'];
   const vals=[1.2,1.8,2.1,1.6,2.4,2.8];
   const max=Math.max(...vals);
   const chart=document.getElementById('bar-chart');
-  chart.innerHTML=vals.map((v,i)=>`<div class="bar-item"><div class="bar-val">₩${v}M</div><div class="bar" style="height:${(v/max)*68}px;${i===vals.length-1?'background:var(--P)':''}"></div><div class="bar-lbl">${months[i]}</div></div>`).join('');
-  document.getElementById('top-fabrics').innerHTML=[
-    {name:'면 원단',pct:38,color:'#E8D5C4'},
-    {name:'폴리 원단',pct:29,color:'#4A90D9'},
-    {name:'혼방 원단',pct:18,color:'#7B8FA3'},
-  ].map(f=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>${f.name}</span><span style="font-weight:700">${f.pct}%</span></div><div style="height:8px;background:var(--g200);border-radius:4px"><div style="height:100%;width:${f.pct}%;background:${f.color};border-radius:4px"></div></div></div>`).join('');
-  document.getElementById('market-price').innerHTML=[
-    {type:'면 (40수)',price:'4,200~6,800',trend:'↑'},
-    {type:'폴리 (쉬폰)',price:'2,500~4,500',trend:'→'},
-    {type:'울 (메리노)',price:'15,000~28,000',trend:'↓'},
-    {type:'린넨',price:'5,500~9,500',trend:'↑'},
-  ].map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--g100);font-size:13px"><span>${f.type}</span><span style="font-weight:600">${f.price}원/m <span style="color:${f.trend==='↑'?'#e53935':f.trend==='↓'?'#1565c0':'var(--g500)'}">${f.trend}</span></span></div>`).join('');
+  if(chart)chart.innerHTML=vals.map((v,i)=>`<div class="bar-item"><div class="bar-val">₩${v}M</div><div class="bar" style="height:${(v/max)*68}px;${i===vals.length-1?'background:var(--P)':''}"></div><div class="bar-lbl">${months[i]}</div></div>`).join('');
+
+  // 실제 products 배열 기반 인기 원단 TOP 3
+  const typeCounts={};
+  products.forEach(p=>{typeCounts[p.type]=(typeCounts[p.type]||0)+1;});
+  const total=Math.max(products.length,1);
+  const barColors=['#6c63ff','#4A90D9','#7B8FA3'];
+  const topTypes=Object.entries(typeCounts).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  const tfEl=document.getElementById('top-fabrics');
+  if(tfEl){
+    tfEl.innerHTML=topTypes.length
+      ?topTypes.map(([name,cnt],i)=>{
+          const pct=Math.round(cnt/total*100);
+          return `<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="color:#fff">${name}</span><span style="font-weight:700;color:#fff">${pct}% (${cnt}개)</span></div><div style="height:8px;background:#1e1e2e;border-radius:4px"><div style="height:100%;width:${pct}%;background:${barColors[i]};border-radius:4px;transition:width .6s"></div></div></div>`;
+        }).join('')
+      :'<div style="color:#8888aa;font-size:13px;padding:10px 0">상품 데이터를 불러오는 중이에요</div>';
+  }
+
+  // 시장 가격 (MARKET_PRICES 배열 재사용)
+  const mpEl=document.getElementById('market-price');
+  if(mpEl)mpEl.innerHTML=MARKET_PRICES.map(p=>
+    `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e1e2e;font-size:13px">
+      <span style="color:#aaaacc">${p.type}</span>
+      <span style="font-weight:700;color:#fff">${p.range}원/m
+        <span style="color:${p.up===true?'#4ade80':p.up===false?'#f87171':'#8888aa'}">${p.trend}</span>
+      </span>
+    </div>`).join('');
 }
 
 /* ==================== INIT ==================== */

@@ -23,11 +23,15 @@ ul{list-style:none}
   --g500:#8888aa;--g700:#aaaacc;--g900:#ffffff;
   --r:16px;--rs:12px;
 }
-#app{width:100%;max-width:480px;background:#0a0a0f;min-height:100vh;position:relative;overflow-x:hidden;box-shadow:0 0 40px rgba(0,0,0,.6)}
+#app{width:100%;max-width:430px;background:#0a0a0f;min-height:100vh;position:relative;overflow-x:hidden;box-shadow:0 0 40px rgba(0,0,0,.6)}
 
 /* VIEWS */
 .view{display:none;flex-direction:column;min-height:100vh}
-.view.active{display:flex}
+.view.active{display:flex;animation:viewIn .2s ease-out}
+#view-splash.active,#view-login.active{animation:none}
+@keyframes viewIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 
 /* SPLASH */
 #view-splash{background:#0a0a0f;align-items:center;justify-content:center;flex-direction:column;gap:12px}
@@ -48,7 +52,7 @@ ul{list-style:none}
 .hdr-loc{display:flex;align-items:center;gap:3px;font-size:13px;font-weight:600;padding:5px 10px;border-radius:20px;background:#1e1e2e;color:#8888aa}
 
 /* TAB BAR */
-.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:64px;background:#12121a;border-top:1px solid #1e1e2e;display:flex;align-items:center;justify-content:space-around;z-index:200}
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:64px;background:#12121a;border-top:1px solid #1e1e2e;display:flex;align-items:center;justify-content:space-around;z-index:200}
 .tab{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;color:#8888aa;font-size:10px;font-weight:500}
 .tab .ti{font-size:20px;line-height:1}
 .tab.on{color:#6c63ff}
@@ -77,7 +81,7 @@ ul{list-style:none}
 
 /* PRODUCT LIST */
 .plist{flex:1;padding:10px 10px 80px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pcard{border-radius:16px;overflow:hidden;background:#12121a;border:1px solid #1e1e2e;cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative}
+.pcard{border-radius:16px;overflow:hidden;background:#12121a;border:1px solid #1e1e2e;cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;animation:cardIn .35s ease-out both}
 .pcard:hover{transform:translateY(-2px);box-shadow:0 4px 24px rgba(108,99,255,.15)}
 .pthumb{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .pthumb::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 60%)}
@@ -156,7 +160,7 @@ ul{list-style:none}
 .tagc{padding:4px 11px;border-radius:20px;background:rgba(108,99,255,.12);color:#6c63ff;font-size:12px;font-weight:500}
 .d-stats{padding:10px 14px;font-size:11px;color:#8888aa;display:flex;gap:14px;background:#12121a}
 
-.d-action{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:76px;background:#12121a;border-top:1px solid #1e1e2e;display:flex;align-items:center;gap:10px;padding:0 14px;z-index:200}
+.d-action{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:76px;background:#12121a;border-top:1px solid #1e1e2e;display:flex;align-items:center;gap:10px;padding:0 14px;z-index:200}
 .heart-btn{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#8888aa;padding:6px 8px}
 .heart-btn .hicon{font-size:21px}
 .heart-btn.on{color:#6c63ff}
@@ -283,7 +287,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 /* MODAL */
 .mover{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:flex-end;justify-content:center}
 .mover.open{display:flex}
-.msheet{width:100%;max-width:480px;background:#12121a;border:1px solid #1e1e2e;border-radius:20px 20px 0 0;padding:20px 18px 36px}
+.msheet{width:100%;max-width:430px;background:#12121a;border:1px solid #1e1e2e;border-radius:20px 20px 0 0;padding:20px 18px 36px}
 .mhandle{width:34px;height:4px;border-radius:2px;background:#2a2a3e;margin:0 auto 16px}
 .mtitle{font-size:17px;font-weight:700;margin-bottom:8px;text-align:center;color:#ffffff}
 .mdesc{font-size:13px;color:#8888aa;line-height:1.6;text-align:center}
@@ -299,7 +303,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#2a2a3e;border-radius:4px}
 
-@media(min-width:480px){
+@media(min-width:430px){
   .tabbar,.d-action,.toast,.chat-input-bar{left:50%}
 }
 
@@ -327,7 +331,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .msg-row.me .msg-bubble{background:linear-gradient(135deg,#6c63ff,#7c73ff);color:#fff;border-bottom-right-radius:4px}
 .msg-row.other .msg-bubble{background:#1e1e2e;color:#ffffff;border-bottom-left-radius:4px}
 .msg-time{font-size:10px;color:#8888aa;margin-top:3px;padding:0 4px}
-.chat-input-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#12121a;border-top:1px solid #1e1e2e;padding:10px 12px;display:flex;gap:8px;z-index:200}
+.chat-input-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#12121a;border-top:1px solid #1e1e2e;padding:10px 12px;display:flex;gap:8px;z-index:200}
 .chat-input-bar input{flex:1;border:1.5px solid #2a2a3e;border-radius:22px;padding:9px 16px;font-size:14px;outline:none;font-family:inherit;transition:border-color .15s;background:#1e1e2e;color:#ffffff}
 .chat-input-bar input:focus{border-color:#6c63ff}
 .chat-send{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -402,6 +406,27 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .img-upload-text{font-size:13px;font-weight:600;color:#aaaacc}
 .img-upload-sub{font-size:11px;color:#8888aa}
 .ai-price-box{background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.2);border-radius:12px;padding:10px 12px;font-size:12px;color:#66bb6a;line-height:1.6}
+
+/* BUTTON HOVER EFFECTS */
+.btn-primary,.submit-btn,.hero-btn-primary{transition:transform .15s,box-shadow .15s,opacity .15s}
+.btn-primary:hover,.submit-btn:hover,.hero-btn-primary:hover{transform:scale(1.02);box-shadow:0 6px 20px rgba(108,99,255,.35)}
+.chat-btn,.seller-follow-btn{transition:transform .15s,box-shadow .15s}
+.chat-btn:hover,.seller-follow-btn:hover{transform:scale(1.02);box-shadow:0 4px 14px rgba(108,99,255,.25)}
+.tab-fab{transition:transform .15s,box-shadow .15s}
+.tab-fab:hover{transform:scale(1.06);box-shadow:0 6px 20px rgba(108,99,255,.45)}
+.ai-analyze-btn{transition:transform .15s,box-shadow .15s,opacity .15s}
+.ai-analyze-btn:not(:disabled):hover{transform:scale(1.02);box-shadow:0 6px 20px rgba(108,99,255,.35)}
+
+/* SKELETON */
+.skeleton{background:linear-gradient(90deg,#12121a 25%,#2a2a3e 50%,#12121a 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+.skel-card{border-radius:16px;overflow:hidden;background:#12121a;border:1px solid #1e1e2e}
+.skel-thumb{aspect-ratio:1;width:100%}
+.skel-line{height:11px;border-radius:6px;margin:8px 10px}
+.skel-line.sm{width:60%}
+.skel-line.xs{width:38%;height:9px}
+
+/* INFINITE SCROLL SENTINEL */
+#list-sentinel{height:60px}
 
 /* AI VIEW */
 #view-ai{background:#0a0a0f}
@@ -548,6 +573,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div class="chips" id="filter-chips"></div>
   </div>
   <ul class="plist" id="product-list"></ul>
+  <div id="list-sentinel"></div>
   <div class="empty" id="empty-state" style="display:none">
     <div class="ei">🧵</div>
     <p id="empty-msg">검색 결과가 없어요</p>
@@ -1376,6 +1402,10 @@ function fmtPrice(n){return n.toLocaleString('ko-KR')+'원'}
 /* ==================== LOCAL STORAGE ==================== */
 function lsGet(k,def){try{const v=localStorage.getItem('bium_'+k);return v?JSON.parse(v):def}catch{return def}}
 function lsSet(k,v){try{localStorage.setItem('bium_'+k,JSON.stringify(v))}catch{}}
+const _CACHE_TTL=5*60*1000;
+function lsGetTTL(k){try{const raw=localStorage.getItem('bium_ttl_'+k);if(!raw)return null;const o=JSON.parse(raw);if(Date.now()-o.__t>_CACHE_TTL)return null;return o.__v}catch{return null}}
+function lsSetTTL(k,v){try{localStorage.setItem('bium_ttl_'+k,JSON.stringify({__v:v,__t:Date.now()}))}catch{}}
+function lsDelTTL(k){try{localStorage.removeItem('bium_ttl_'+k)}catch{}}
 
 /* ==================== SUPABASE ==================== */
 const _SB_URL='https://ygernyfkydqalqmjzjbw.supabase.co';
@@ -1434,6 +1464,9 @@ let products=lsGet('products',DEFAULT_PRODUCTS);
 function saveProducts(){lsSet('products',products)}
 async function loadProductsFromSupabase(){
   if(!_sb)return;
+  const cached=lsGetTTL('products_sb');
+  if(cached&&cached.length){products=cached;renderList();return;}
+  showListSkeleton();
   try{
     const{data,error}=await _sb.from('products').select('*').order('created_at',{ascending:false});
     if(error){console.error('[loadProducts] 오류:',error);return;}
@@ -1464,7 +1497,7 @@ async function loadProductsFromSupabase(){
         console.error('[loadProducts] 샘플 insert 예외:',insertEx);
         products=DEFAULT_PRODUCTS.map(p=>({...p,liked:!!likedMap[p.id]}));
       }
-      lsSet('products',products);
+      lsSet('products',products);lsSetTTL('products_sb',products);
       renderList();
       return;
     }
@@ -1478,7 +1511,7 @@ async function loadProductsFromSupabase(){
       chats:p.chats||0,
       imgs:p.imgs||1,
     }));
-    lsSet('products',products);
+    lsSet('products',products);lsSetTTL('products_sb',products);
     renderList();
   }catch(e){console.error('[loadProducts] 예외:',e);}
 }
@@ -1663,7 +1696,7 @@ async function doLogin(){
     const user=findUser(email,pw);
     if(!user){showToast('이메일 또는 비밀번호가 틀렸어요');return;}
     curUser=user;lsSet('curUser',curUser);
-    if(user.type==='admin')showView('admin');else showView('list');
+    if(user.type==='admin')showView('admin');else{showView('list');showListSkeleton();}
     return;
   }
   try{
@@ -1672,7 +1705,7 @@ async function doLogin(){
     const{data:profile}=await _sb.from('users').select('*').eq('id',data.user.id).single();
     curUser=profile||{id:data.user.id,email,name:email,type:'buyer',temp:36.5,loc:'',joinDate:data.user.created_at?.slice(0,10)||''};
     lsSet('curUser',curUser);
-    if(curUser.type==='admin')showView('admin');else{showView('list');loadProductsFromSupabase();}
+    if(curUser.type==='admin')showView('admin');else{showView('list');showListSkeleton();loadProductsFromSupabase();}
   }catch(e){showToast('로그인 중 오류가 발생했어요');console.error(e);}
 }
 async function doSignup(){
@@ -1697,7 +1730,7 @@ async function doSignup(){
     await _sb.from('users').insert(newProfile);
     curUser={...newProfile,joinDate:newProfile.join_date};
     lsSet('curUser',curUser);
-    showToast('가입 완료! 환영해요 🎉');showView('list');loadProductsFromSupabase();
+    showToast('가입 완료! 환영해요 🎉');showView('list');showListSkeleton();loadProductsFromSupabase();
   }catch(e){showToast('회원가입 중 오류가 발생했어요');console.error(e);}
 }
 async function doLogout(){
@@ -1719,31 +1752,66 @@ function renderChips(){
 function setFilter(f){curFilter=f;renderChips();renderList()}
 
 /* ==================== PRODUCT LIST ==================== */
-function renderList(){
-  renderChips();
+const PAGE_SIZE=20;
+let listPage=0,listFiltered=[],listObserver=null;
+
+function showListSkeleton(){
   const list=document.getElementById('product-list');
   const empty=document.getElementById('empty-state');
+  if(!list||!empty)return;
+  empty.style.display='none';list.style.display='grid';
+  list.innerHTML=Array(6).fill(0).map(()=>`<li class="skel-card"><div class="skel-thumb skeleton"></div><div style="padding:9px 6px"><div class="skel-line skeleton"></div><div class="skel-line sm skeleton"></div><div class="skel-line xs skeleton" style="margin-top:5px"></div></div></li>`).join('');
+}
+
+function renderList(){
+  renderChips();
+  if(listObserver){listObserver.disconnect();listObserver=null;}
   const q=curSearch.trim().toLowerCase();
-  const filtered=products.filter(p=>{
+  listFiltered=products.filter(p=>{
     const mf=curFilter==='전체'||p.type===curFilter;
     const ms=!q||p.title.toLowerCase().includes(q)||p.type.includes(q)||p.color.toLowerCase().includes(q)||(p.tags||[]).some(tg=>tg.toLowerCase().includes(q))||(p.seller&&p.seller.name.toLowerCase().includes(q));
     return mf&&ms;
   });
-  if(!filtered.length){
+  const list=document.getElementById('product-list');
+  const empty=document.getElementById('empty-state');
+  if(!listFiltered.length){
     list.innerHTML='';list.style.display='none';
     empty.style.display='flex';
     document.getElementById('empty-msg').textContent=t('empty_msg');
-  }else{
-    empty.style.display='none';list.style.display='grid';
-    list.innerHTML=filtered.map(renderCard).join('');
+    return;
   }
+  empty.style.display='none';list.style.display='grid';
+  list.innerHTML='';listPage=0;
+  appendListPage();
 }
-function renderCard(p){
+
+function appendListPage(){
+  const list=document.getElementById('product-list');
+  if(!list)return;
+  const start=listPage*PAGE_SIZE;
+  const page=listFiltered.slice(start,start+PAGE_SIZE);
+  if(!page.length)return;
+  list.innerHTML+=page.map((p,i)=>renderCard(p,start+i)).join('');
+  listPage++;
+  setupListObserver();
+}
+
+function setupListObserver(){
+  if(listObserver){listObserver.disconnect();listObserver=null;}
+  const sentinel=document.getElementById('list-sentinel');
+  if(!sentinel||listPage*PAGE_SIZE>=listFiltered.length)return;
+  listObserver=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){listObserver.disconnect();listObserver=null;appendListPage();}
+  },{threshold:0,rootMargin:'300px'});
+  listObserver.observe(sentinel);
+}
+function renderCard(p, idx){
   const bg=getFColor(p.type,p.color);
   const tex=getTexture(p.type);
   const total=p.qty*p.price;
   const isNew=p.id>10;
-  return `<li class="pcard" onclick="openDetail(${p.id})">
+  const delay=typeof idx==='number'?(idx%PAGE_SIZE)*0.04:0;
+  return `<li class="pcard" onclick="openDetail(${p.id})" style="animation-delay:${delay}s">
     ${isNew?'<div class="badge-new">NEW</div>':''}
     <div class="pthumb" style="background:${bg};background-image:${tex}">
       ${p.image_url?`<img src="${p.image_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>`:'' }
@@ -1860,7 +1928,6 @@ slider.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-t
 /* ==================== MODALS ==================== */
 function openModal(id){document.getElementById(id).classList.add('open')}
 function closeModal(id,e){if(!e||e.target===document.getElementById(id)||!e)document.getElementById(id).classList.remove('open')}
-function openChatModal(){openModal('modal-chat')}
 function openSuggestModal(){openModal('modal-suggest')}
 function openResModal(){openModal('modal-res')}
 function submitSuggest(){
@@ -2055,7 +2122,7 @@ async function submitForm(){
     resetForm();
     showView('list');
     showToast(t('registered'));
-    await loadProductsFromSupabase(); // Supabase 최신 목록으로 갱신
+    lsDelTTL('products_sb');await loadProductsFromSupabase(); // Supabase 최신 목록으로 갱신
   }catch(e){
     console.error('[submitForm] insert 예외:', e);
     showToast('상품 저장 중 오류가 발생했어요');
@@ -2495,7 +2562,7 @@ function renderAnalytics(){
   if(elapsed<2000)await new Promise(r=>setTimeout(r,2000-elapsed));
   if(curUser){
     if(curUser.type==='admin')showView('admin');
-    else{showView('list');loadProductsFromSupabase();}
+    else{showView('list');showListSkeleton();loadProductsFromSupabase();}
   }else{
     showView('login');
   }

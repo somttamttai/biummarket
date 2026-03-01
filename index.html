@@ -271,6 +271,9 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .ib-orange{background:rgba(249,115,22,.12)}
 .my-logout-btn{display:block;margin:20px 14px 24px;padding:14px;width:calc(100% - 28px);border:1.5px solid rgba(255,101,132,.35);border-radius:14px;color:#ff6584;font-size:14px;font-weight:700;background:transparent;cursor:pointer;transition:all .2s;text-align:center}
 .my-logout-btn:hover{background:rgba(255,101,132,.08);border-color:#ff6584}
+/* SETTINGS */
+.sett-val{font-size:11px;font-weight:600;color:#6c63ff;background:rgba(108,99,255,.12);padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-right:2px}
+.sett-ver{padding:16px;text-align:center;font-size:11px;color:#3a3a5e}
 .cs-modal-icon{font-size:52px;margin-bottom:14px}
 .cs-modal-title{font-size:18px;font-weight:800;color:#ffffff;margin-bottom:8px}
 .cs-modal-sub{font-size:13px;color:#8888aa;margin-bottom:24px;line-height:1.7}
@@ -977,7 +980,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 <div id="view-mypage" class="view">
   <header class="hdr">
     <div class="hdr-title" style="flex:1;text-align:left;font-size:20px;font-weight:900;background:linear-gradient(135deg,#6c63ff,#ff6584);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">MY</div>
-    <button class="hdr-btn" onclick="showView('notif-settings')" title="설정">⚙️</button>
+    <button class="hdr-btn" onclick="showView('settings')" title="설정">⚙️</button>
   </header>
   <div class="my-scroll">
     <!-- 프로필 카드 -->
@@ -1221,6 +1224,75 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
       <div class="ei">📅</div>
       <p>예약 내역이 없어요</p>
     </div>
+  </div>
+</div>
+
+<!-- ========== SETTINGS ========== -->
+<div id="view-settings" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title">설정</div>
+    <div style="width:38px"></div>
+  </header>
+  <div style="flex:1;overflow-y:auto;padding-bottom:20px">
+    <!-- 계정 섹션 -->
+    <div class="my-section-wrap">
+      <div class="my-section-title">계정</div>
+      <div class="my-menu-item" onclick="openChangePw()">
+        <div class="my-icon-box ib-purple">🔑</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">비밀번호 변경</div>
+          <div class="my-menu-sub">로그인 비밀번호를 변경해요</div>
+        </div>
+        <span class="sett-val">••••••</span>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="openSettLocModal()">
+        <div class="my-icon-box ib-green">📍</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">지역 변경</div>
+          <div class="my-menu-sub">거래 기준 지역을 설정해요</div>
+        </div>
+        <span class="sett-val" id="sett-loc-val">–</span>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="openSettTypeModal()">
+        <div class="my-icon-box ib-blue">👤</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">회원 유형 변경</div>
+          <div class="my-menu-sub">판매자·구매자·겸업 변경</div>
+        </div>
+        <span class="sett-val" id="sett-type-val">–</span>
+        <span class="my-menu-arrow">›</span>
+      </div>
+    </div>
+    <!-- 서비스 섹션 -->
+    <div class="my-section-wrap">
+      <div class="my-section-title">서비스</div>
+      <div class="my-menu-item" onclick="openLangSettings()">
+        <div class="my-icon-box ib-teal">🌐</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">언어 설정</div>
+          <div class="my-menu-sub">앱 표시 언어를 변경해요</div>
+        </div>
+        <span class="sett-val" id="sett-lang-val">🇰🇷 한국어</span>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="showView('notif-settings')">
+        <div class="my-icon-box ib-yellow">🔔</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">알림 설정</div>
+          <div class="my-menu-sub">새 상품·가격변동·거래 알림</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+    </div>
+    <!-- 기타 섹션 -->
+    <div class="my-section-wrap">
+      <div class="my-section-title">기타</div>
+    </div>
+    <button class="my-logout-btn" onclick="doLogout()">🚪 로그아웃</button>
+    <div class="sett-ver">BIUM MARKET v2.0 · ⓒ 2025 비움마켓</div>
   </div>
 </div>
 
@@ -1641,6 +1713,48 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   </div>
 </div>
 
+<!-- MODAL: 비밀번호 변경 -->
+<div class="mover" id="modal-change-pw" onclick="closeModal('modal-change-pw',event)">
+  <div class="msheet">
+    <div class="mhandle"></div>
+    <div class="mtitle">비밀번호 변경</div>
+    <div class="fg" style="margin:0 0 10px">
+      <label style="font-size:12px;color:#8888aa;margin-bottom:4px;display:block">현재 비밀번호</label>
+      <input type="password" class="fi" id="pw-current" placeholder="현재 비밀번호 입력"/>
+    </div>
+    <div class="fg" style="margin:0 0 10px">
+      <label style="font-size:12px;color:#8888aa;margin-bottom:4px;display:block">새 비밀번호</label>
+      <input type="password" class="fi" id="pw-new" placeholder="새 비밀번호 (6자 이상)"/>
+    </div>
+    <div class="fg" style="margin:0 0 16px">
+      <label style="font-size:12px;color:#8888aa;margin-bottom:4px;display:block">새 비밀번호 확인</label>
+      <input type="password" class="fi" id="pw-confirm" placeholder="새 비밀번호 재입력"/>
+    </div>
+    <button class="submit-btn" style="margin:0" onclick="doChangePw()">변경하기</button>
+    <button class="mclose" onclick="closeModal('modal-change-pw')" style="margin-top:8px">취소</button>
+  </div>
+</div>
+
+<!-- MODAL: 지역 변경 -->
+<div class="mover" id="modal-change-loc" onclick="closeModal('modal-change-loc',event)">
+  <div class="msheet">
+    <div class="mhandle"></div>
+    <div class="mtitle">지역 변경</div>
+    <div id="loc-options" style="display:flex;flex-direction:column;gap:8px;margin:4px 0 12px"></div>
+    <button class="mclose" onclick="closeModal('modal-change-loc')">닫기</button>
+  </div>
+</div>
+
+<!-- MODAL: 회원 유형 변경 -->
+<div class="mover" id="modal-change-type" onclick="closeModal('modal-change-type',event)">
+  <div class="msheet">
+    <div class="mhandle"></div>
+    <div class="mtitle">회원 유형 변경</div>
+    <div id="type-options" style="display:flex;flex-direction:column;gap:8px;margin:4px 0 12px"></div>
+    <button class="mclose" onclick="closeModal('modal-change-type')">닫기</button>
+  </div>
+</div>
+
 <script>
 /* ==================== CONFIG ==================== */
 const CLAUDE_API_KEY=''; // 사용하지 않음 — API 키는 Vercel 환경변수로 서버에서 처리
@@ -1993,6 +2107,7 @@ function setLang(code){
   renderMypage();
   renderHomeSections();
   renderAiRecs();
+  renderSettings();
   const emsg=document.getElementById('empty-msg');if(emsg)emsg.textContent=t('empty_msg');
   if(curProductId&&document.getElementById('view-detail').classList.contains('active')){
     openDetail(curProductId);
@@ -2297,7 +2412,7 @@ function showToast(msg){
 
 /* ==================== VIEW ==================== */
 function showView(name){
-  const PROTECTED=['chat','form','mypage','wishlist','reservations','notif-settings','profile-edit','analytics'];
+  const PROTECTED=['chat','form','mypage','wishlist','reservations','notif-settings','profile-edit','analytics','settings'];
   if(PROTECTED.includes(name)&&!curUser){showToast('로그인 후 이용해주세요');name='login';}
   const prev=document.querySelector('.view.active');
   if(prev)prevView=prev.id.replace('view-','');
@@ -2315,6 +2430,7 @@ function showView(name){
   if(name==='reservations')renderReservations();
   if(name==='notif-settings')renderNotifSettings();
   if(name==='profile-edit')renderProfileEdit();
+  if(name==='settings')renderSettings();
   if(name==='ai')resetAiView();
   if(name==='category')renderCategoryView();
 }
@@ -3287,6 +3403,124 @@ async function saveProfile(){
   }
   showToast('프로필이 저장됐어요 ✅');
   goBack();
+}
+
+/* ==================== SETTINGS ==================== */
+const LOCATION_OPTIONS=[
+  '서울 중구 동대문','서울 성동구 성수동','서울 중구 을지로',
+  '서울 종로구 창신동','서울 중구 신당동','서울 동대문구 답십리',
+];
+const TYPE_OPTIONS=[
+  {key:'seller',label:'판매자',sub:'원단 도매 · 재고 판매',icon:'🏭'},
+  {key:'buyer',label:'구매자',sub:'원단 소싱 · 구매',icon:'🛒'},
+  {key:'both',label:'겸업',sub:'판매 + 구매 모두',icon:'🔄'},
+];
+function renderSettings(){
+  const u=curUser||{};
+  const lang=LANGS[curLang]||LANGS.ko;
+  const locEl=document.getElementById('sett-loc-val');
+  if(locEl){
+    const locShort=(u.loc||u.location||'').split(' ').slice(-1)[0];
+    locEl.textContent=locShort||'미설정';
+  }
+  const typeEl=document.getElementById('sett-type-val');
+  const typeMap={seller:'판매자',buyer:'구매자',brand:'브랜드',both:'겸업',admin:'관리자',guest:'게스트'};
+  if(typeEl)typeEl.textContent=typeMap[u.type]||'–';
+  const langEl=document.getElementById('sett-lang-val');
+  if(langEl)langEl.textContent=`${lang.flag} ${lang.name}`;
+}
+function openSettLocModal(){
+  const u=curUser||{};
+  const curLoc=u.loc||u.location||'';
+  const el=document.getElementById('loc-options');
+  if(el){
+    el.innerHTML=LOCATION_OPTIONS.map(loc=>`
+      <button onclick="doChangeLoc('${loc}')" style="
+        display:flex;align-items:center;justify-content:space-between;
+        padding:13px 14px;border-radius:12px;font-size:13px;font-weight:600;
+        background:${loc===curLoc?'rgba(108,99,255,.15)':'#1e1e2e'};
+        color:${loc===curLoc?'#6c63ff':'#e0e0f0'};
+        border:1.5px solid ${loc===curLoc?'#6c63ff':'transparent'};
+        cursor:pointer;text-align:left;width:100%">
+        <span>📍 ${loc}</span>
+        ${loc===curLoc?'<span style="color:#6c63ff;font-size:16px">✓</span>':''}
+      </button>`).join('');
+  }
+  openModal('modal-change-loc');
+}
+function openSettTypeModal(){
+  const u=curUser||{};
+  const curType=u.type||'';
+  const el=document.getElementById('type-options');
+  if(el){
+    el.innerHTML=TYPE_OPTIONS.map(o=>`
+      <button onclick="doChangeType('${o.key}')" style="
+        display:flex;align-items:center;gap:12px;
+        padding:13px 14px;border-radius:12px;
+        background:${o.key===curType?'rgba(108,99,255,.15)':'#1e1e2e'};
+        border:1.5px solid ${o.key===curType?'#6c63ff':'transparent'};
+        cursor:pointer;text-align:left;width:100%">
+        <span style="font-size:22px">${o.icon}</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:${o.key===curType?'#6c63ff':'#e0e0f0'}">${o.label}</div>
+          <div style="font-size:11px;color:#8888aa;margin-top:1px">${o.sub}</div>
+        </div>
+        ${o.key===curType?'<span style="color:#6c63ff;font-size:18px">✓</span>':''}
+      </button>`).join('');
+  }
+  openModal('modal-change-type');
+}
+function openChangePw(){
+  document.getElementById('pw-current').value='';
+  document.getElementById('pw-new').value='';
+  document.getElementById('pw-confirm').value='';
+  openModal('modal-change-pw');
+}
+async function doChangePw(){
+  const cur=document.getElementById('pw-current').value;
+  const nw=document.getElementById('pw-new').value;
+  const cf=document.getElementById('pw-confirm').value;
+  if(!cur){showToast('현재 비밀번호를 입력해주세요');return;}
+  if(nw.length<6){showToast('새 비밀번호는 6자 이상이어야 해요');return;}
+  if(nw!==cf){showToast('새 비밀번호가 일치하지 않아요');return;}
+  // 로컬 계정(admin 등) 처리
+  if(!_sb||curUser?.email==='admin'){
+    if(curUser?.pw!==cur){showToast('현재 비밀번호가 틀렸어요');return;}
+    if(curUser){curUser.pw=nw;lsSet('curUser',curUser);}
+    closeModal('modal-change-pw');showToast('비밀번호가 변경됐어요 ✅');return;
+  }
+  // Supabase Auth
+  try{
+    const {error}=await _sb.auth.updateUser({password:nw});
+    if(error)throw error;
+    closeModal('modal-change-pw');showToast('비밀번호가 변경됐어요 ✅');
+  }catch(e){
+    showToast('비밀번호 변경 실패. 재로그인 후 시도해주세요');
+    console.error(e);
+  }
+}
+async function doChangeLoc(loc){
+  if(!curUser)return;
+  curUser.loc=loc;lsSet('curUser',curUser);
+  if(_sb&&curUser.id&&curUser.id!=='admin'){
+    try{await _sb.from('users').update({loc}).eq('id',curUser.id);}
+    catch(e){console.error('지역 업데이트 오류:',e);}
+  }
+  renderSettings();renderMypage();
+  closeModal('modal-change-loc');
+  showToast('지역이 변경됐어요 📍');
+}
+async function doChangeType(type){
+  if(!curUser)return;
+  curUser.type=type;lsSet('curUser',curUser);
+  if(_sb&&curUser.id&&curUser.id!=='admin'){
+    try{await _sb.from('users').update({type}).eq('id',curUser.id);}
+    catch(e){console.error('유형 업데이트 오류:',e);}
+  }
+  renderSettings();renderMypage();
+  closeModal('modal-change-type');
+  const labels={seller:'판매자',buyer:'구매자',both:'겸업'};
+  showToast(`${labels[type]||type}으로 변경됐어요 ✅`);
 }
 
 /* ==================== MYPAGE ==================== */

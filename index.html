@@ -428,6 +428,58 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 /* INFINITE SCROLL SENTINEL */
 #list-sentinel{height:60px}
 
+/* HOME REDESIGN */
+.home-hdr{position:sticky;top:0;z-index:100;background:#12121a;border-bottom:1px solid #1e1e2e;padding:0 12px;height:56px;display:flex;align-items:center;gap:8px}
+.home-search-bar{flex:1;display:flex;align-items:center;gap:8px;background:#1e1e2e;border-radius:22px;padding:9px 14px;cursor:pointer;transition:background .15s}
+.home-search-bar:hover{background:#2a2a3e}
+.home-scroll{flex:1;overflow-y:auto;padding-bottom:72px}
+.notice-banner{margin:12px 14px 0;background:linear-gradient(135deg,#1f1c38,#1a1a2e);border:1px solid rgba(108,99,255,.25);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:600;color:#aaaacc}
+.notice-banner:hover{border-color:rgba(108,99,255,.5)}
+.notice-banner .nb-arrow{margin-left:auto;color:#6c63ff;font-size:14px}
+.home-cats{display:flex;gap:8px;overflow-x:auto;padding:12px 14px 4px;scrollbar-width:none}
+.home-cats::-webkit-scrollbar{display:none}
+.home-cat{flex-shrink:0;padding:7px 15px;border-radius:20px;font-size:12px;font-weight:600;background:#1e1e2e;color:#8888aa;border:1.5px solid #1e1e2e;cursor:pointer;transition:all .15s;white-space:nowrap}
+.home-cat.on{background:#ffffff;color:#0a0a0f;border-color:#ffffff}
+.premium-banner{margin:14px 14px 0;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);border:1px solid rgba(180,150,80,.3);border-radius:18px;padding:18px 20px;position:relative;overflow:hidden;cursor:pointer}
+.premium-banner::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(180,150,80,.08)}
+.premium-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#b49650,#e8c97e);color:#0a0a0f;font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:0.5px;margin-bottom:8px}
+.premium-title{font-size:16px;font-weight:800;color:#ffffff;margin-bottom:4px;position:relative;z-index:1}
+.premium-sub{font-size:12px;color:#8888aa;position:relative;z-index:1}
+.ai-section{margin:16px 14px 0}
+.ai-section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ai-section-title{font-size:14px;font-weight:800;color:#ffffff}
+.ai-section-more{font-size:12px;color:#6c63ff;font-weight:600}
+.ai-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.ai-scroll::-webkit-scrollbar{display:none}
+.ai-card{flex-shrink:0;width:130px;background:#12121a;border:1px solid #1e1e2e;border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .15s}
+.ai-card:hover{transform:translateY(-2px)}
+.ai-card-thumb{height:90px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.ai-card-thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.ai-badge-gold{position:absolute;top:6px;left:6px;background:linear-gradient(135deg,#b49650,#e8c97e);color:#0a0a0f;font-size:9px;font-weight:800;padding:2px 7px;border-radius:10px;z-index:2}
+.ai-card-info{padding:8px 8px 9px}
+.ai-card-name{font-size:11px;font-weight:600;color:#ffffff;margin-bottom:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.ai-card-price{font-size:12px;font-weight:700;color:#6c63ff}
+.ai-card-disc{font-size:10px;color:#ff6584;font-weight:600;margin-left:4px}
+.cat-section{margin:18px 0 0}
+.cat-section-hd{display:flex;align-items:center;justify-content:space-between;padding:0 14px;margin-bottom:10px}
+.cat-section-title{font-size:14px;font-weight:800;color:#ffffff}
+.cat-section-more{font-size:12px;color:#6c63ff;font-weight:600;cursor:pointer}
+.h-product-card{display:flex;gap:12px;padding:12px 14px;border-bottom:1px solid #1e1e2e;cursor:pointer;transition:background .15s}
+.h-product-card:hover{background:#12121a}
+.h-product-img{width:80px;height:80px;border-radius:12px;overflow:hidden;flex-shrink:0;background:#1e1e2e;display:flex;align-items:center;justify-content:center;position:relative}
+.h-product-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.h-product-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between}
+.h-badge-urgent{display:inline-flex;align-items:center;background:rgba(255,101,132,.15);color:#ff6584;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;margin-bottom:4px;width:fit-content}
+.h-product-name{font-size:13px;font-weight:600;color:#ffffff;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;margin-bottom:3px}
+.h-badges{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}
+.h-fabric-badge{font-size:10px;padding:2px 7px;border-radius:10px;background:#1e1e2e;color:#aaaacc;font-weight:500}
+.h-weight-badge{font-size:10px;padding:2px 7px;border-radius:10px;background:rgba(108,99,255,.12);color:#6c63ff;font-weight:500}
+.h-price{font-size:14px;font-weight:700;color:#6c63ff}
+.h-price .h-pu{font-size:10px;font-weight:400;color:#8888aa;margin-left:3px}
+.h-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.h-seller{font-size:11px;color:#8888aa}
+.h-counts{display:flex;gap:8px;font-size:10px;color:#8888aa}
+
 /* AI VIEW */
 #view-ai{background:#0a0a0f}
 .ai-view-scroll{flex:1;overflow-y:auto;padding:16px 14px 80px}
@@ -551,39 +603,56 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 
 <!-- ========== LIST ========== -->
 <div id="view-list" class="view">
-  <header class="hdr">
-    <button class="hdr-btn" id="btn-loc" title="메뉴">☰</button>
-    <div class="hdr-logo">BIUM</div>
+  <header class="home-hdr">
+    <div class="hdr-logo" style="flex:none;font-size:16px">비움</div>
+    <div class="home-search-bar" onclick="showView('search-view')">
+      <span style="font-size:14px;color:#8888aa">🔍</span>
+      <span style="flex:1;font-size:13px;color:#8888aa">원단명, 색상, 종류 검색...</span>
+    </div>
+    <button class="hdr-btn" onclick="showView('ai')" title="AI분석">📷</button>
     <button class="hdr-btn" id="btn-alert" title="알림">🔔</button>
-    <button class="hdr-btn" onclick="showView('search-view')" title="검색">🔍</button>
   </header>
-  <div id="lang-panel" style="display:none;padding:8px 14px;background:#12121a;border-bottom:1px solid #1e1e2e">
-    <div class="lang-sel" id="lang-sel"></div>
-  </div>
-  <div class="hero-card">
-    <div class="hero-title">재고 원단을<br>스마트하게 거래하세요</div>
-    <div class="hero-sub">국내 최대 B2B 재고원단 플랫폼</div>
-    <div class="hero-btns">
-      <button class="hero-btn-primary" onclick="document.querySelector('#product-list').scrollIntoView({behavior:'smooth'})">원단 둘러보기</button>
-      <button class="hero-btn-outline" onclick="showView('form')">판매 시작하기</button>
+  <!-- 레거시 호환용 숨김 요소 -->
+  <input type="text" id="search-input" placeholder="원단 종류, 색상, 업체명 검색" autocomplete="off" style="display:none"/>
+  <div id="filter-chips" style="display:none"></div>
+  <div class="home-scroll">
+    <!-- 공지 배너 -->
+    <div class="notice-banner" onclick="openNoticeModal()">
+      <span>📢</span>
+      <span>[공지] 비움마켓 베타 오픈 안내</span>
+      <span class="nb-arrow">›</span>
+    </div>
+    <!-- 카테고리 칩 -->
+    <div class="home-cats" id="home-cats"></div>
+    <!-- 프리미엄 배너 -->
+    <div class="premium-banner" onclick="showView('form')">
+      <div class="premium-badge">★ PREMIUM</div>
+      <div class="premium-title">동대문 재고원단 프리미엄 거래</div>
+      <div class="premium-sub">검증된 셀러의 고품질 원단을 만나보세요</div>
+    </div>
+    <!-- AI 추천 섹션 -->
+    <div class="ai-section">
+      <div class="ai-section-hd">
+        <span class="ai-section-title">✨ AI 추천 원단</span>
+        <span class="ai-section-more" onclick="showView('ai')">AI 분석하기 →</span>
+      </div>
+      <div class="ai-scroll" id="ai-rec-scroll"></div>
+    </div>
+    <!-- 카테고리별 상품 섹션 -->
+    <div id="home-category-sections"></div>
+    <!-- 레거시 호환용 숨김 요소 -->
+    <ul class="plist" id="product-list" style="display:none"></ul>
+    <div id="list-sentinel"></div>
+    <div class="empty" id="empty-state" style="display:none">
+      <div class="ei">🧵</div>
+      <p id="empty-msg">검색 결과가 없어요</p>
     </div>
   </div>
-  <div style="padding:8px 14px;background:#0a0a0f;border-bottom:1px solid #1e1e2e">
-    <input type="text" id="search-input" data-i18n-ph="search_placeholder" placeholder="원단 종류, 색상, 업체명 검색" autocomplete="off" style="display:none"/>
-    <div class="chips" id="filter-chips"></div>
-  </div>
-  <ul class="plist" id="product-list"></ul>
-  <div id="list-sentinel"></div>
-  <div class="empty" id="empty-state" style="display:none">
-    <div class="ei">🧵</div>
-    <p id="empty-msg">검색 결과가 없어요</p>
-  </div>
   <nav class="tabbar">
-    <button class="tab on" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
-    <button class="tab" onclick="showView('search-view')"><span class="ti">🔍</span><span data-i18n="tab_search">검색</span></button>
-    <button class="tab-fab" onclick="showView('form')">＋</button>
-    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
-    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
+    <button class="tab on" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
+    <button class="tab" onclick="openCategorySheet()"><span class="ti">📋</span><span>카테고리</span></button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
   </nav>
 </div>
 
@@ -1086,6 +1155,41 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   </div>
 </div>
 
+<!-- MODAL: NOTICE -->
+<div class="mover" id="modal-notice" onclick="closeModal('modal-notice',event)">
+  <div class="msheet" style="max-height:70vh">
+    <div class="mhandle"></div>
+    <div class="mtitle">📢 공지사항</div>
+    <div style="padding:0 20px 24px;overflow-y:auto">
+      <div style="font-size:15px;font-weight:700;color:#ffffff;margin-bottom:10px">비움마켓 베타 오픈 안내</div>
+      <div style="font-size:13px;color:#aaaacc;line-height:1.7;margin-bottom:14px">
+        안녕하세요, 비움마켓입니다.<br><br>
+        국내 최초 B2B 재고원단 전문 플랫폼 <strong style="color:#6c63ff">비움마켓</strong>이 베타 서비스를 시작합니다.<br><br>
+        베타 기간 동안 모든 서비스는 <strong style="color:#ff6584">무료</strong>로 이용하실 수 있으며, 여러분의 소중한 피드백을 기다립니다.
+      </div>
+      <div style="background:#1e1e2e;border-radius:12px;padding:14px 16px;margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:#aaaacc;margin-bottom:8px">주요 기능</div>
+        <div style="font-size:13px;color:#ffffff;line-height:2">
+          ✅ 재고원단 판매/구매<br>
+          ✅ AI 원단 가격 분석<br>
+          ✅ 실시간 채팅 문의<br>
+          ✅ 방문감별/스와치 예약
+        </div>
+      </div>
+      <button onclick="closeModal('modal-notice')" style="width:100%;padding:14px;background:linear-gradient(135deg,#6c63ff,#ff6584);color:#fff;border-radius:14px;font-size:14px;font-weight:700">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CATEGORY SHEET -->
+<div class="mover" id="modal-category" onclick="closeModal('modal-category',event)">
+  <div class="msheet">
+    <div class="mhandle"></div>
+    <div class="mtitle">📋 카테고리</div>
+    <div id="category-sheet-content" style="padding:0 16px 24px;display:grid;grid-template-columns:1fr 1fr;gap:10px"></div>
+  </div>
+</div>
+
 <!-- MODAL: RESERVATION -->
 <div class="mover" id="modal-res" onclick="closeModal('modal-res',event)">
   <div class="msheet">
@@ -1374,6 +1478,7 @@ function renderLangButtons(){
 }
 function toggleLangPanel(){
   const p=document.getElementById('lang-panel');
+  if(!p)return;
   p.style.display=p.style.display==='none'?'block':'none';
   renderLangButtons();
 }
@@ -1747,6 +1852,7 @@ function selectType(type,el){
 const FILTERS=['전체','면','폴리','울','린넨','실크','혼방','기타'];
 function renderChips(){
   const el=document.getElementById('filter-chips');
+  if(!el)return;
   el.innerHTML=FILTERS.map(f=>`<button class="chip ${f===curFilter?'on':''}" onclick="setFilter('${f}')">${t('filter_'+f)||f}</button>`).join('');
 }
 function setFilter(f){curFilter=f;renderChips();renderList()}
@@ -1756,33 +1862,132 @@ const PAGE_SIZE=20;
 let listPage=0,listFiltered=[],listObserver=null;
 
 function showListSkeleton(){
-  const list=document.getElementById('product-list');
-  const empty=document.getElementById('empty-state');
-  if(!list||!empty)return;
-  empty.style.display='none';list.style.display='grid';
-  list.innerHTML=Array(6).fill(0).map(()=>`<li class="skel-card"><div class="skel-thumb skeleton"></div><div style="padding:9px 6px"><div class="skel-line skeleton"></div><div class="skel-line sm skeleton"></div><div class="skel-line xs skeleton" style="margin-top:5px"></div></div></li>`).join('');
+  const sec=document.getElementById('home-category-sections');
+  if(sec){sec.innerHTML=Array(3).fill(0).map(()=>`<div class="cat-section"><div class="cat-section-hd"><div class="skel-line skeleton" style="width:100px;height:14px;margin:0"></div></div>${Array(3).fill(0).map(()=>`<div class="h-product-card"><div class="h-product-img skeleton"></div><div class="h-product-body"><div class="skel-line skeleton" style="margin:0 0 6px"></div><div class="skel-line sm skeleton" style="margin:0 0 6px"></div><div class="skel-line xs skeleton" style="margin:0"></div></div></div>`).join('')}</div>`).join('');}
+}
+
+/* ===== HOME REDESIGN JS ===== */
+const HOME_CATS=[
+  {key:'전체',label:'전체'},
+  {key:'면/린넨',label:'면/린넨'},
+  {key:'폴리/합섬',label:'폴리/합섬'},
+  {key:'울/모직',label:'울/모직'},
+  {key:'니트/저지',label:'니트/저지'},
+  {key:'실크/새틴',label:'실크/새틴'},
+  {key:'데님/청',label:'데님/청'},
+  {key:'기능성',label:'기능성'},
+];
+const HOME_SECTIONS=[
+  {key:'면/린넨',label:'🌿 면/린넨'},
+  {key:'울/모직',label:'🐑 울/모직'},
+  {key:'니트/저지',label:'🧶 니트/저지'},
+  {key:'실크/새틴',label:'✨ 실크/새틴'},
+  {key:'데님/청',label:'👖 데님/청'},
+  {key:'기능성',label:'⚡ 기능성'},
+  {key:'폴리/합섬',label:'🔷 폴리/합섬'},
+];
+let homeCurCat='전체';
+
+function getProductsByHomeCat(cat){
+  if(cat==='전체')return products;
+  return products.filter(p=>p.type===cat||(p.tags||[]).includes(cat));
+}
+
+function renderHomeCats(){
+  const el=document.getElementById('home-cats');
+  if(!el)return;
+  el.innerHTML=HOME_CATS.map(c=>`<button class="home-cat${homeCurCat===c.key?' on':''}" onclick="setHomeCat('${c.key}')">${c.label}</button>`).join('');
+}
+
+function setHomeCat(key){
+  homeCurCat=key;
+  renderHomeCats();
+  renderHomeSections();
+}
+
+function renderAiRecs(){
+  const el=document.getElementById('ai-rec-scroll');
+  if(!el)return;
+  const pool=products.slice(0,Math.min(8,products.length));
+  if(!pool.length){el.innerHTML='<div style="padding:20px;color:#8888aa;font-size:13px">상품을 불러오는 중...</div>';return;}
+  el.innerHTML=pool.map(p=>{
+    const bg=getFColor(p.type,p.color);
+    const disc=Math.floor(Math.random()*25)+5;
+    return `<div class="ai-card" onclick="openDetail(${p.id})">
+      <div class="ai-card-thumb" style="background:${bg}">
+        ${p.image_url?`<img src="${p.image_url}" alt="">`:''}
+        <span class="ai-badge-gold">AI추천</span>
+      </div>
+      <div class="ai-card-info">
+        <div class="ai-card-name">${p.title}</div>
+        <div><span class="ai-card-price">${fmtPrice(p.price)}/m</span><span class="ai-card-disc">-${disc}%</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderHomeProduct(p){
+  const urgent=p.qty<100;
+  const bg=getFColor(p.type,p.color);
+  return `<div class="h-product-card" onclick="openDetail(${p.id})">
+    <div class="h-product-img" style="background:${bg}">
+      ${p.image_url?`<img src="${p.image_url}" alt="">`:'' }
+    </div>
+    <div class="h-product-body">
+      ${urgent?'<span class="h-badge-urgent">⚡ 급처</span>':''}
+      <div class="h-product-name">${p.title}</div>
+      <div class="h-badges">
+        <span class="h-fabric-badge">${p.type}</span>
+        ${p.width?`<span class="h-weight-badge">${p.width}cm</span>`:''}
+      </div>
+      <div class="h-price">${fmtPrice(p.price)}<span class="h-pu">/m</span></div>
+      <div class="h-bottom">
+        <span class="h-seller">📍${p.loc?p.loc.split(' ').slice(-1)[0]:'위치 미상'}</span>
+        <span class="h-counts"><span>🤍${p.likes||0}</span><span>💬${p.chats||0}</span></span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderHomeSections(){
+  const el=document.getElementById('home-category-sections');
+  if(!el)return;
+  const sections=homeCurCat==='전체'?HOME_SECTIONS:[{key:homeCurCat,label:HOME_CATS.find(c=>c.key===homeCurCat)?.label||homeCurCat}];
+  el.innerHTML=sections.map(sec=>{
+    const items=products.filter(p=>p.type===sec.key||(p.tags||[]).includes(sec.key)).slice(0,5);
+    if(!items.length)return '';
+    return `<div class="cat-section">
+      <div class="cat-section-hd">
+        <span class="cat-section-title">${sec.label}</span>
+        <span class="cat-section-more" onclick="goSearchCat('${sec.key}')">더보기 →</span>
+      </div>
+      ${items.map(p=>renderHomeProduct(p)).join('')}
+    </div>`;
+  }).filter(Boolean).join('');
+  if(!el.innerHTML){
+    el.innerHTML=`<div style="padding:40px 14px;text-align:center;color:#8888aa;font-size:13px">해당 카테고리에 상품이 없어요</div>`;
+  }
+}
+
+function goSearchCat(cat){
+  curFilter=cat;
+  showView('search-view');
+}
+
+function openNoticeModal(){openModal('modal-notice')}
+
+function openCategorySheet(){
+  const el=document.getElementById('category-sheet-content');
+  if(el){
+    el.innerHTML=HOME_CATS.map(c=>`<button onclick="setHomeCat('${c.key}');closeModal('modal-category')" style="padding:16px 12px;background:${homeCurCat===c.key?'rgba(108,99,255,.15)':'#1e1e2e'};border:1.5px solid ${homeCurCat===c.key?'#6c63ff':'#2a2a3e'};border-radius:14px;color:${homeCurCat===c.key?'#6c63ff':'#aaaacc'};font-size:13px;font-weight:600;text-align:center">${c.label}</button>`).join('');
+  }
+  openModal('modal-category');
 }
 
 function renderList(){
-  renderChips();
-  if(listObserver){listObserver.disconnect();listObserver=null;}
-  const q=curSearch.trim().toLowerCase();
-  listFiltered=products.filter(p=>{
-    const mf=curFilter==='전체'||p.type===curFilter;
-    const ms=!q||p.title.toLowerCase().includes(q)||p.type.includes(q)||p.color.toLowerCase().includes(q)||(p.tags||[]).some(tg=>tg.toLowerCase().includes(q))||(p.seller&&p.seller.name.toLowerCase().includes(q));
-    return mf&&ms;
-  });
-  const list=document.getElementById('product-list');
-  const empty=document.getElementById('empty-state');
-  if(!listFiltered.length){
-    list.innerHTML='';list.style.display='none';
-    empty.style.display='flex';
-    document.getElementById('empty-msg').textContent=t('empty_msg');
-    return;
-  }
-  empty.style.display='none';list.style.display='grid';
-  list.innerHTML='';listPage=0;
-  appendListPage();
+  renderHomeCats();
+  renderAiRecs();
+  renderHomeSections();
 }
 
 function appendListPage(){
@@ -2135,7 +2340,7 @@ document.getElementById('sv-input').addEventListener('input',e=>{
   if(q.length>=2)addRecentSearch(q);
   renderSearchView();
 });
-document.getElementById('btn-loc').addEventListener('click',()=>showToast('지역 설정 기능 준비중이에요'));
+const _btnLoc=document.getElementById('btn-loc');if(_btnLoc)_btnLoc.addEventListener('click',()=>showToast('지역 설정 기능 준비중이에요'));
 document.getElementById('btn-alert').addEventListener('click',()=>showToast('새로운 알림이 없어요'));
 
 /* ==================== SEARCH VIEW ==================== */

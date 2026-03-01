@@ -901,13 +901,6 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div class="fg"><label><span data-i18n="form_type_label">원단 종류</span> <span class="req">*</span></label>
       <select class="fi" id="f-type">
         <option value="">선택해주세요</option>
-        <option value="면">면</option>
-        <option value="폴리">폴리</option>
-        <option value="울">울</option>
-        <option value="린넨">린넨</option>
-        <option value="실크">실크</option>
-        <option value="혼방">혼방</option>
-        <option value="기타">기타</option>
       </select>
     </div>
     <div class="form-row">
@@ -2187,6 +2180,27 @@ function showListSkeleton(){
   if(sec){sec.innerHTML=Array(3).fill(0).map(()=>`<div class="cat-section"><div class="cat-section-hd"><div class="skel-line skeleton" style="width:100px;height:14px;margin:0"></div></div>${Array(3).fill(0).map(()=>`<div class="h-product-card"><div class="h-product-img skeleton"></div><div class="h-product-body"><div class="skel-line skeleton" style="margin:0 0 6px"></div><div class="skel-line sm skeleton" style="margin:0 0 6px"></div><div class="skel-line xs skeleton" style="margin:0"></div></div></div>`).join('')}</div>`).join('');}
 }
 
+/* ===== SHARED CATEGORY MAP (단일 진실 소스) ===== */
+const CATEGORY_MAP={
+  '면/린넨':  ['면','린넨'],
+  '폴리/합섬': ['폴리','합섬'],
+  '울/모직':  ['울','모직'],
+  '니트/저지': ['니트','저지'],
+  '실크/새틴': ['실크','새틴'],
+  '데님/청':  ['데님','청'],
+  '기능성':   ['기능성'],
+};
+// 카테고리 키 → 상품 배열 필터링 공통 함수
+function filterByCategory(prods,key){
+  if(key==='전체')return prods;
+  const types=CATEGORY_MAP[key];
+  if(!types){
+    const allTypes=Object.values(CATEGORY_MAP).flat();
+    return prods.filter(p=>!allTypes.includes(p.type));
+  }
+  return prods.filter(p=>types.includes(p.type));
+}
+
 /* ===== CATEGORY VIEW JS ===== */
 const CAT_DEFS=[
   {key:'면/린넨',icon:'🧵',label:'면/린넨'},
@@ -2204,9 +2218,7 @@ function renderCategoryView(){
   const el=document.getElementById('cat-grid');
   if(!el)return;
   el.innerHTML=CAT_DEFS.map(c=>{
-    const cnt=c.key==='기타'
-      ?products.filter(p=>!CAT_DEFS.slice(0,-1).some(d=>p.type===d.key||(p.tags||[]).includes(d.key))).length
-      :products.filter(p=>p.type===c.key||(p.tags||[]).includes(c.key)).length;
+    const cnt=filterByCategory(products,c.key).length;
     return `<div class="cat-grid-item" onclick="openCatProducts('${c.key}','${c.label}')">
       <span class="cat-icon">${c.icon}</span>
       <span class="cat-name">${c.label}</span>
@@ -2238,9 +2250,7 @@ function setCatSort(sort){
 function renderCatProducts(){
   const el=document.getElementById('cp-list');
   if(!el)return;
-  let items=curCatKey==='기타'
-    ?products.filter(p=>!CAT_DEFS.slice(0,-1).some(d=>p.type===d.key||(p.tags||[]).includes(d.key)))
-    :products.filter(p=>p.type===curCatKey||(p.tags||[]).includes(curCatKey));
+  let items=filterByCategory(products,curCatKey);
   if(curCatSort==='price')items=[...items].sort((a,b)=>a.price-b.price);
   else if(curCatSort==='popular')items=[...items].sort((a,b)=>(b.likes||0)-(a.likes||0));
   else items=[...items].sort((a,b)=>b.id-a.id);
@@ -2249,39 +2259,22 @@ function renderCatProducts(){
 }
 
 /* ===== HOME REDESIGN JS ===== */
+// HOME_CATS: CATEGORY_MAP 키에서 자동 생성
 const HOME_CATS=[
   {key:'전체',label:'전체'},
-  {key:'면/린넨',label:'면/린넨'},
-  {key:'폴리/합섬',label:'폴리/합섬'},
-  {key:'울/모직',label:'울/모직'},
-  {key:'니트/저지',label:'니트/저지'},
-  {key:'실크/새틴',label:'실크/새틴'},
-  {key:'데님/청',label:'데님/청'},
-  {key:'기능성',label:'기능성'},
+  ...Object.keys(CATEGORY_MAP).map(k=>({key:k,label:k})),
   {key:'기타',label:'기타'},
 ];
+// HOME_SECTIONS: 아이콘만 별도 관리, 나머지는 CATEGORY_MAP에서
+const _SEC_ICONS={'면/린넨':'🌿','울/모직':'🐑','니트/저지':'🧶','실크/새틴':'✨','데님/청':'👖','폴리/합섬':'🔷','기능성':'⚡','기타':'📦'};
 const HOME_SECTIONS=[
-  {key:'면/린넨',  label:'🌿 면/린넨',  types:['면','린넨']},
-  {key:'울/모직',  label:'🐑 울/모직',  types:['울','모직']},
-  {key:'니트/저지', label:'🧶 니트/저지', types:['니트','저지']},
-  {key:'실크/새틴', label:'✨ 실크/새틴', types:['실크','새틴']},
-  {key:'데님/청',  label:'👖 데님/청',  types:['데님','청']},
-  {key:'폴리/합섬', label:'🔷 폴리/합섬', types:['폴리','합섬']},
-  {key:'기능성',   label:'⚡ 기능성',   types:['기능성']},
-  {key:'기타',    label:'📦 기타',    types:null},
+  ...Object.keys(CATEGORY_MAP).map(k=>({key:k,label:`${_SEC_ICONS[k]||'📦'} ${k}`})),
+  {key:'기타',label:'📦 기타'},
 ];
 let homeCurCat='전체';
 
 function getProductsByHomeCat(cat){
-  if(cat==='전체')return products;
-  const sec=HOME_SECTIONS.find(s=>s.key===cat);
-  if(!sec)return[];
-  if(!sec.types){
-    // 기타: 어떤 정의된 섹션에도 속하지 않는 상품
-    const allTypes=HOME_SECTIONS.filter(s=>s.types).flatMap(s=>s.types);
-    return products.filter(p=>!allTypes.includes(p.type));
-  }
-  return products.filter(p=>sec.types.includes(p.type));
+  return filterByCategory(products,cat);
 }
 
 function renderHomeCats(){
@@ -3297,6 +3290,20 @@ function renderAnalytics(){
     showView('login');
   }
   renderChips();
+  // 상품 등록 폼 원단종류 옵션 → CATEGORY_MAP에서 동적 생성
+  (function populateTypeSelect(){
+    const sel=document.getElementById('f-type');
+    if(!sel)return;
+    Object.entries(CATEGORY_MAP).forEach(([cat,types])=>{
+      const grp=document.createElement('optgroup');
+      grp.label=cat;
+      types.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;grp.appendChild(o);});
+      sel.appendChild(grp);
+    });
+    const other=document.createElement('option');
+    other.value='기타';other.textContent='기타';
+    sel.appendChild(other);
+  })();
 })();
 </script>
 </body>

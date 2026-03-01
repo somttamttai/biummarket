@@ -466,7 +466,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .notice-banner{margin:12px 14px 0;background:linear-gradient(135deg,#1f1c38,#1a1a2e);border:1px solid rgba(108,99,255,.25);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:600;color:#aaaacc}
 .notice-banner:hover{border-color:rgba(108,99,255,.5)}
 .notice-banner .nb-arrow{margin-left:auto;color:#6c63ff;font-size:14px}
-.home-cats{display:flex;gap:8px;overflow-x:auto;padding:12px 14px 4px;scrollbar-width:none}
+.home-cats{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;overflow-y:visible;padding:12px 14px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .home-cats::-webkit-scrollbar{display:none}
 .home-cat{flex-shrink:0;padding:7px 15px;border-radius:20px;font-size:12px;font-weight:600;background:#1e1e2e;color:#8888aa;border:1.5px solid #1e1e2e;cursor:pointer;transition:all .15s;white-space:nowrap}
 .home-cat.on{background:#6c63ff;color:#ffffff;border-color:#6c63ff}
@@ -747,10 +747,10 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     </div>
   </div>
   <nav class="tabbar">
-    <button class="tab on" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
-    <button class="tab" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
-    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
-    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
+    <button class="tab on" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
+    <button class="tab" onclick="showView('category')"><span class="ti">📋</span><span data-i18n="tab_category">카테고리</span></button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
   </nav>
 </div>
 
@@ -761,10 +761,10 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   </header>
   <div class="cat-grid" id="cat-grid"></div>
   <nav class="tabbar">
-    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
-    <button class="tab on" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
-    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
-    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
+    <button class="tab on" onclick="showView('category')"><span class="ti">📋</span><span data-i18n="tab_category">카테고리</span></button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
   </nav>
 </div>
 
@@ -784,10 +784,10 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div class="cp-list" id="cp-list"></div>
   </div>
   <nav class="tabbar">
-    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
-    <button class="tab on" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
-    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
-    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
+    <button class="tab on" onclick="showView('category')"><span class="ti">📋</span><span data-i18n="tab_category">카테고리</span></button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
   </nav>
 </div>
 
@@ -1068,7 +1068,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <!-- 커뮤니티 섹션 -->
     <div class="my-section-wrap">
       <div class="my-section-title">커뮤니티</div>
-      <div class="my-menu-item" onclick="showComingSoon('TOP 판매자 랭킹')">
+      <div class="my-menu-item" onclick="openTopSellers()">
         <div class="my-icon-box ib-yellow">🏆</div>
         <div class="my-menu-info">
           <div class="my-menu-title">TOP 판매자 랭킹</div>
@@ -1076,7 +1076,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
-      <div class="my-menu-item" onclick="showComingSoon('업계 게시판')">
+      <div class="my-menu-item" onclick="openBoard()">
         <div class="my-icon-box ib-teal">💬</div>
         <div class="my-menu-info">
           <div class="my-menu-title">업계 게시판</div>
@@ -1092,7 +1092,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
-      <div class="my-menu-item" onclick="showComingSoon('AI 트렌드 리포트')">
+      <div class="my-menu-item" onclick="openTrendReport()">
         <div class="my-icon-box ib-pink">📊</div>
         <div class="my-menu-info">
           <div class="my-menu-title">AI 트렌드 리포트</div>
@@ -1112,7 +1112,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
-      <div class="my-menu-item" onclick="showComingSoon('시장 가격 히트맵')">
+      <div class="my-menu-item" onclick="openPriceHeatmap()">
         <div class="my-icon-box ib-blue">🗺️</div>
         <div class="my-menu-info">
           <div class="my-menu-title">시장 가격 히트맵</div>
@@ -1128,7 +1128,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
-      <div class="my-menu-item" onclick="showComingSoon('내 활동 분석')">
+      <div class="my-menu-item" onclick="openMyActivity()">
         <div class="my-icon-box ib-purple">👤</div>
         <div class="my-menu-info">
           <div class="my-menu-title">내 활동 분석</div>
@@ -1144,7 +1144,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
         </div>
         <span class="my-menu-arrow">›</span>
       </div>
-      <div class="my-menu-item" onclick="showComingSoon('거래 통계 리포트')">
+      <div class="my-menu-item" onclick="openTradeStats()">
         <div class="my-icon-box ib-yellow">📋</div>
         <div class="my-menu-info">
           <div class="my-menu-title">거래 통계 리포트</div>
@@ -1169,10 +1169,10 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <button class="my-logout-btn" onclick="doLogout()">🚪 로그아웃</button>
   </div>
   <nav class="tabbar">
-    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
-    <button class="tab" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
-    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
-    <button class="tab on" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
+    <button class="tab" onclick="showView('category')"><span class="ti">📋</span><span data-i18n="tab_category">카테고리</span></button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab on" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
   </nav>
 </div>
 
@@ -1346,10 +1346,10 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <p style="text-align:center">채팅 내역이 없어요<br><small style="font-size:12px;color:#8888aa">상품 상세에서 채팅하기를 눌러보세요</small></p>
   </div>
   <nav class="tabbar">
-    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
-    <button class="tab" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
-    <button class="tab on" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
-    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
+    <button class="tab" onclick="showView('category')"><span class="ti">📋</span><span data-i18n="tab_category">카테고리</span></button>
+    <button class="tab on" onclick="showView('chat')"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
   </nav>
 </div>
 
@@ -1551,6 +1551,83 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   </div>
 </div>
 
+<!-- MODAL: KEYWORD ALERT -->
+<div class="mover" id="modal-keyword" onclick="closeModal('modal-keyword',event)">
+  <div class="msheet" style="max-height:80vh">
+    <div class="mhandle"></div>
+    <div class="mtitle">🔍 키워드 알림</div>
+    <div style="display:flex;gap:8px;margin:0 0 16px">
+      <input id="kw-input" class="fi" style="flex:1;margin:0" placeholder="예) 울 코트감, 아이보리 면" onkeydown="if(event.key==='Enter')addKeyword()"/>
+      <button onclick="addKeyword()" style="padding:0 16px;background:#6c63ff;color:#fff;border-radius:12px;font-size:13px;font-weight:700;white-space:nowrap">추가</button>
+    </div>
+    <div style="font-size:11px;color:#8888aa;margin-bottom:10px">저장된 키워드 (최대 10개)</div>
+    <div id="kw-list" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto"></div>
+    <button class="mclose" onclick="closeModal('modal-keyword')" style="margin-top:16px">닫기</button>
+  </div>
+</div>
+
+<!-- MODAL: TOP SELLERS -->
+<div class="mover" id="modal-top-sellers" onclick="closeModal('modal-top-sellers',event)">
+  <div class="msheet" style="max-height:80vh">
+    <div class="mhandle"></div>
+    <div class="mtitle">🏆 TOP 판매자 랭킹</div>
+    <div style="font-size:11px;color:#8888aa;margin-bottom:12px">거래완료·좋아요 기준 상위 판매자</div>
+    <div id="top-sellers-list" style="display:flex;flex-direction:column;gap:10px;max-height:400px;overflow-y:auto"></div>
+    <button class="mclose" onclick="closeModal('modal-top-sellers')" style="margin-top:16px">닫기</button>
+  </div>
+</div>
+
+<!-- MODAL: BOARD -->
+<div class="mover" id="modal-board" onclick="closeModal('modal-board',event)">
+  <div class="msheet" style="max-height:85vh">
+    <div class="mhandle"></div>
+    <div class="mtitle">💬 업계 게시판</div>
+    <div id="board-list" style="display:flex;flex-direction:column;gap:0;max-height:450px;overflow-y:auto"></div>
+    <button class="mclose" onclick="closeModal('modal-board')" style="margin-top:16px">닫기</button>
+  </div>
+</div>
+
+<!-- MODAL: TREND REPORT -->
+<div class="mover" id="modal-trend" onclick="closeModal('modal-trend',event)">
+  <div class="msheet" style="max-height:85vh">
+    <div class="mhandle"></div>
+    <div class="mtitle">📊 AI 트렌드 리포트</div>
+    <div id="trend-content" style="max-height:450px;overflow-y:auto"></div>
+    <button class="mclose" onclick="closeModal('modal-trend')" style="margin-top:16px">닫기</button>
+  </div>
+</div>
+
+<!-- MODAL: PRICE HEATMAP -->
+<div class="mover" id="modal-heatmap" onclick="closeModal('modal-heatmap',event)">
+  <div class="msheet" style="max-height:80vh">
+    <div class="mhandle"></div>
+    <div class="mtitle">🗺️ 시장 가격 히트맵</div>
+    <div style="font-size:11px;color:#8888aa;margin-bottom:12px">카테고리별 평균 시장가격 (현재 등록 상품 기준)</div>
+    <div id="heatmap-content" style="max-height:400px;overflow-y:auto"></div>
+    <button class="mclose" onclick="closeModal('modal-heatmap')" style="margin-top:16px">닫기</button>
+  </div>
+</div>
+
+<!-- MODAL: MY ACTIVITY -->
+<div class="mover" id="modal-activity" onclick="closeModal('modal-activity',event)">
+  <div class="msheet" style="max-height:85vh">
+    <div class="mhandle"></div>
+    <div class="mtitle">👤 내 활동 분석</div>
+    <div id="activity-content" style="max-height:450px;overflow-y:auto"></div>
+    <button class="mclose" onclick="closeModal('modal-activity')" style="margin-top:16px">닫기</button>
+  </div>
+</div>
+
+<!-- MODAL: TRADE STATS -->
+<div class="mover" id="modal-trade-stats" onclick="closeModal('modal-trade-stats',event)">
+  <div class="msheet" style="max-height:85vh">
+    <div class="mhandle"></div>
+    <div class="mtitle">📋 거래 통계 리포트</div>
+    <div id="trade-stats-content" style="max-height:450px;overflow-y:auto"></div>
+    <button class="mclose" onclick="closeModal('modal-trade-stats')" style="margin-top:16px">닫기</button>
+  </div>
+</div>
+
 <!-- MODAL: SHARE -->
 <div class="mover" id="modal-share" onclick="closeModal('modal-share',event)">
   <div class="msheet">
@@ -1571,7 +1648,7 @@ const CLAUDE_API_KEY=''; // 사용하지 않음 — API 키는 Vercel 환경변�
 /* ==================== I18N ==================== */
 const LANGS={
   ko:{code:'ko',name:'한국어',flag:'🇰🇷',
-    tab_home:'홈',tab_search:'검색',tab_chat:'채팅',tab_me:'MY',
+    tab_home:'홈',tab_category:'카테고리',tab_search:'검색',tab_chat:'채팅',tab_me:'MY',
     signup_title:'회원가입',form_title:'원단 판매 등록',
     fabric_info:'원단 정보',product_desc:'상품 설명',
     chat_coming:'채팅 기능 준비중이에요',
@@ -1609,7 +1686,7 @@ const LANGS={
     like_add:'관심 목록에 추가됐어요 ❤️',like_remove:'관심 목록에서 제거됐어요',
   },
   en:{code:'en',name:'English',flag:'🇺🇸',
-    tab_home:'Home',tab_search:'Search',tab_chat:'Chat',tab_me:'My',
+    tab_home:'Home',tab_category:'Category',tab_search:'Search',tab_chat:'Chat',tab_me:'My',
     signup_title:'Sign Up',form_title:'Register Fabric',
     fabric_info:'Fabric Info',product_desc:'Description',
     chat_coming:'Chat coming soon',
@@ -1647,7 +1724,7 @@ const LANGS={
     like_add:'Added to wishlist ❤️',like_remove:'Removed from wishlist',
   },
   ja:{code:'ja',name:'日本語',flag:'🇯🇵',
-    tab_home:'ホーム',tab_search:'検索',tab_chat:'チャット',tab_me:'MY',
+    tab_home:'ホーム',tab_category:'カテゴリ',tab_search:'検索',tab_chat:'チャット',tab_me:'MY',
     signup_title:'会員登録',form_title:'生地登録',
     fabric_info:'生地情報',product_desc:'商品説明',
     chat_coming:'チャット機能は準備中です',
@@ -1685,7 +1762,7 @@ const LANGS={
     like_add:'お気に入りに追加しました ❤️',like_remove:'お気に入りから削除しました',
   },
   zh:{code:'zh',name:'中文',flag:'🇨🇳',
-    tab_home:'首页',tab_search:'搜索',tab_chat:'聊天',tab_me:'我的',
+    tab_home:'首页',tab_category:'分类',tab_search:'搜索',tab_chat:'聊天',tab_me:'我的',
     signup_title:'注册',form_title:'注册面料',
     fabric_info:'面料信息',product_desc:'商品描述',
     chat_coming:'聊天功能准备中',
@@ -1723,7 +1800,7 @@ const LANGS={
     like_add:'已加入收藏 ❤️',like_remove:'已取消收藏',
   },
   vi:{code:'vi',name:'Tiếng Việt',flag:'🇻🇳',
-    tab_home:'Trang chủ',tab_search:'Tìm kiếm',tab_chat:'Chat',tab_me:'Tôi',
+    tab_home:'Trang chủ',tab_category:'Danh mục',tab_search:'Tìm kiếm',tab_chat:'Chat',tab_me:'Tôi',
     signup_title:'Đăng ký',form_title:'Đăng ký vải',
     fabric_info:'Thông tin vải',product_desc:'Mô tả sản phẩm',
     chat_coming:'Chức năng chat đang chuẩn bị',
@@ -1761,10 +1838,10 @@ const LANGS={
     like_add:'Đã thêm vào yêu thích ❤️',like_remove:'Đã xóa khỏi yêu thích',
   },
 };
-let curLang='ko';
+let curLang=lsGet('lang','ko');
 function t(k){return(LANGS[curLang]||LANGS.ko)[k]||k}
 function setLang(code){
-  curLang=code;
+  curLang=code;lsSet('lang',code);
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k=el.dataset.i18n;const v=t(k);if(v)el.textContent=v;
   });
@@ -3133,8 +3210,206 @@ function openMySellerPage(){
   if(!curUser){showToast('로그인이 필요해요');return;}
   renderSellerPage({id:curUser.id,name:curUser.name,temp:curUser.temp,loc:curUser.loc});
 }
+/* ===== MY MENU FEATURES ===== */
 function openKeywordAlert(){
-  showToast('키워드 알림 기능 준비중이에요 🔔');
+  renderKeywords();
+  openModal('modal-keyword');
+}
+function renderKeywords(){
+  const kws=lsGet('alertKeywords',[]);
+  const el=document.getElementById('kw-list');if(!el)return;
+  if(!kws.length){el.innerHTML='<div style="color:#8888aa;font-size:13px;text-align:center;padding:20px">저장된 키워드가 없어요</div>';return;}
+  el.innerHTML=kws.map((k,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;background:#1e1e2e;border-radius:12px;padding:12px 14px">
+      <span style="font-size:14px;font-weight:600;color:#e0e0f0">🔔 ${k}</span>
+      <button onclick="removeKeyword(${i})" style="color:#ff6584;font-size:18px;background:none;border:none;padding:0 4px;cursor:pointer">×</button>
+    </div>`).join('');
+}
+function addKeyword(){
+  const input=document.getElementById('kw-input');
+  const kw=(input.value||'').trim();
+  if(!kw)return;
+  const kws=lsGet('alertKeywords',[]);
+  if(kws.includes(kw)){showToast('이미 등록된 키워드예요');return;}
+  if(kws.length>=10){showToast('키워드는 최대 10개까지 저장할 수 있어요');return;}
+  kws.push(kw);lsSet('alertKeywords',kws);
+  input.value='';renderKeywords();
+  showToast(`"${kw}" 키워드 알림이 등록됐어요 🔔`);
+}
+function removeKeyword(i){
+  const kws=lsGet('alertKeywords',[]);
+  kws.splice(i,1);lsSet('alertKeywords',kws);renderKeywords();
+}
+
+function openTopSellers(){
+  const sellerMap={};
+  products.forEach(p=>{
+    const name=(p.seller?.name)||'알수없음';
+    if(!sellerMap[name])sellerMap[name]={name,temp:p.seller?.temp||36.5,loc:p.seller?.loc||'',likes:0,chats:0,cnt:0};
+    sellerMap[name].likes+=(p.likes||0);
+    sellerMap[name].chats+=(p.chats||0);
+    sellerMap[name].cnt++;
+  });
+  const sorted=Object.values(sellerMap).sort((a,b)=>(b.likes+b.chats)-(a.likes+a.chats)).slice(0,10);
+  const MEDALS=['🥇','🥈','🥉'];
+  document.getElementById('top-sellers-list').innerHTML=sorted.map((s,i)=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#1e1e2e;border-radius:14px">
+      <div style="font-size:22px;width:28px;text-align:center">${MEDALS[i]||`${i+1}`}</div>
+      <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0">${s.name[0]}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:14px;font-weight:700;color:#e0e0f0">${s.name}</div>
+        <div style="font-size:11px;color:#8888aa">${s.loc||'위치 미상'}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:13px;font-weight:700;color:#6c63ff">❤️ ${s.likes}</div>
+        <div style="font-size:11px;color:#8888aa">상품 ${s.cnt}개</div>
+      </div>
+    </div>`).join('');
+  openModal('modal-top-sellers');
+}
+
+function openBoard(){
+  const POSTS=[
+    {title:'2025 봄 트렌드 원단 추천',author:'에코텍스코리아',date:'2025-02-28',views:142,cat:'트렌드'},
+    {title:'동대문 원단 시장 최근 동향 공유',author:'광장섬유',date:'2025-02-25',views:89,cat:'정보'},
+    {title:'린넨 소재 여름 가공법 Q&A',author:'명성모직',date:'2025-02-20',views:213,cat:'Q&A'},
+    {title:'고급 울 원단 취급 시 주의사항',author:'고려모직',date:'2025-02-15',views:67,cat:'정보'},
+    {title:'나일론 스판덱스 혼방 비율별 특성 비교',author:'JS스트레치',date:'2025-02-10',views:178,cat:'정보'},
+  ];
+  const catColor={'트렌드':'#ff6584','정보':'#6c63ff','Q&A':'#3ec6b8'};
+  document.getElementById('board-list').innerHTML=POSTS.map(p=>`
+    <div style="padding:14px 16px;border-bottom:1px solid #1e1e2e;cursor:pointer" onclick="showToast('게시글 기능 준비중이에요')">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;background:${catColor[p.cat]||'#6c63ff'}22;color:${catColor[p.cat]||'#6c63ff'}">${p.cat}</span>
+      </div>
+      <div style="font-size:14px;font-weight:600;color:#e0e0f0;margin-bottom:4px">${p.title}</div>
+      <div style="font-size:11px;color:#8888aa">${p.author} · ${p.date} · 조회 ${p.views}</div>
+    </div>`).join('');
+  openModal('modal-board');
+}
+
+function openTrendReport(){
+  const TREND=[
+    {season:'🌸 봄 (3~5월)',hot:['린넨','면 트윌','오가닉 코튼'],note:'가볍고 통기성 좋은 소재 수요 급증. 세이지·테라코타 등 자연 컬러 인기.'},
+    {season:'☀️ 여름 (6~8월)',hot:['폴리 쉬폰','나일론 저지','기능성 소재'],note:'흡습속건·UV차단 기능성 원단 문의 집중. 화이트·아이보리 최강세.'},
+    {season:'🍂 가을 (9~11월)',hot:['울 서지','데님','코듀로이'],note:'두께 280~350g 헤비웨이트 수요 상승. 차콜·버건디·네이비 인기 컬러.'},
+    {season:'❄️ 겨울 (12~2월)',hot:['캐시미어 혼방','기모 원단','소프트쉘'],note:'보온성 위주 수요. 프리미엄 소재 프리미엄 가격 수용도 높음.'},
+  ];
+  document.getElementById('trend-content').innerHTML=`
+    <div style="padding:4px 0">
+      ${TREND.map(t=>`
+        <div style="background:#1e1e2e;border-radius:14px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:14px;font-weight:700;color:#e0e0f0;margin-bottom:8px">${t.season}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+            ${t.hot.map(h=>`<span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(108,99,255,.2);color:#a89dff">${h}</span>`).join('')}
+          </div>
+          <div style="font-size:12px;color:#aaaacc;line-height:1.6">${t.note}</div>
+        </div>`).join('')}
+      <div style="background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.3);border-radius:14px;padding:14px 16px;font-size:12px;color:#a89dff;line-height:1.7">
+        📌 <b>2025 연간 트렌드:</b> 친환경·오가닉 소재 수요 전년 대비 38% 증가. 기능성 소재도 지속 성장세. 프리미엄 소재와 가성비 소재 양극화 심화.
+      </div>
+    </div>`;
+  openModal('modal-trend');
+}
+
+function openPriceHeatmap(){
+  const catKeys=Object.keys(CATEGORY_MAP);
+  const rows=catKeys.map(cat=>{
+    const items=filterByCategory(products,cat);
+    if(!items.length)return null;
+    const avg=Math.round(items.reduce((s,p)=>s+(p.price||0),0)/items.length);
+    const max=Math.max(...catKeys.map(k=>{const it=filterByCategory(products,k);return it.length?Math.round(it.reduce((s,p)=>s+(p.price||0),0)/it.length):0;}));
+    const ratio=max>0?avg/max:0;
+    const hue=Math.round((1-ratio)*120); // green(120)→red(0)
+    return {cat,avg,cnt:items.length,ratio,hue};
+  }).filter(Boolean).sort((a,b)=>b.avg-a.avg);
+  document.getElementById('heatmap-content').innerHTML=`
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${rows.map(r=>`
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:80px;font-size:12px;font-weight:600;color:#aaaacc;flex-shrink:0">${r.cat}</div>
+          <div style="flex:1;background:#12121a;border-radius:8px;overflow:hidden;height:28px">
+            <div style="height:100%;width:${Math.round(r.ratio*100)}%;background:hsl(${r.hue},65%,50%);border-radius:8px;transition:width .4s;display:flex;align-items:center;padding:0 8px">
+              <span style="font-size:11px;font-weight:700;color:#fff;white-space:nowrap">${r.avg.toLocaleString()}원</span>
+            </div>
+          </div>
+          <div style="width:28px;font-size:11px;color:#8888aa;text-align:right">${r.cnt}개</div>
+        </div>`).join('')}
+    </div>`;
+  openModal('modal-heatmap');
+}
+
+function openMyActivity(){
+  const likedMap=lsGet('likedMap',{});
+  const liked=products.filter(p=>likedMap[p.id]||p.liked);
+  const catCount={};
+  liked.forEach(p=>{
+    const cat=Object.keys(CATEGORY_MAP).find(k=>CATEGORY_MAP[k].includes(p.type))||'기타';
+    catCount[cat]=(catCount[cat]||0)+1;
+  });
+  const searches=lsGet('recentSearches',[]);
+  const total=liked.length||1;
+  const catRows=Object.entries(catCount).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('activity-content').innerHTML=`
+    <div style="padding:4px 0">
+      <div style="font-size:13px;font-weight:700;color:#e0e0f0;margin-bottom:10px">❤️ 찜한 카테고리 비중 (${liked.length}개)</div>
+      ${catRows.length?catRows.map(([cat,cnt])=>`
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div style="width:72px;font-size:12px;color:#aaaacc;flex-shrink:0">${cat}</div>
+          <div style="flex:1;background:#12121a;border-radius:6px;overflow:hidden;height:22px">
+            <div style="height:100%;width:${Math.round(cnt/total*100)}%;background:linear-gradient(90deg,#6c63ff,#ff6584);border-radius:6px"></div>
+          </div>
+          <div style="font-size:12px;font-weight:700;color:#6c63ff;width:28px;text-align:right">${cnt}</div>
+        </div>`).join('')
+      :'<div style="color:#8888aa;font-size:13px;padding:16px 0">찜한 상품이 없어요. 상품을 둘러보고 관심 상품을 찜해보세요!</div>'}
+      <div style="font-size:13px;font-weight:700;color:#e0e0f0;margin:18px 0 10px">🔍 최근 검색어 (${searches.length}개)</div>
+      ${searches.length
+        ?`<div style="display:flex;flex-wrap:wrap;gap:8px">${searches.map(s=>`<span style="padding:6px 12px;background:#1e1e2e;border-radius:20px;font-size:12px;color:#aaaacc">${s}</span>`).join('')}</div>`
+        :'<div style="color:#8888aa;font-size:13px">최근 검색 기록이 없어요</div>'}
+    </div>`;
+  openModal('modal-activity');
+}
+
+function openTradeStats(){
+  const MONTHLY=[
+    {m:'2024-09',cnt:12,cat:'울/모직'},
+    {m:'2024-10',cnt:19,cat:'면/린넨'},
+    {m:'2024-11',cnt:15,cat:'니트/저지'},
+    {m:'2024-12',cnt:28,cat:'울/모직'},
+    {m:'2025-01',cnt:21,cat:'기능성'},
+    {m:'2025-02',cnt:34,cat:'면/린넨'},
+  ];
+  const max=Math.max(...MONTHLY.map(m=>m.cnt));
+  const catColors={'면/린넨':'#6c63ff','울/모직':'#8B4513','니트/저지':'#ff6584','기능성':'#3ec6b8','기타':'#aaaacc'};
+  const catTally={};
+  products.forEach(p=>{
+    const cat=Object.keys(CATEGORY_MAP).find(k=>CATEGORY_MAP[k].includes(p.type))||'기타';
+    catTally[cat]=(catTally[cat]||0)+1;
+  });
+  const totalP=Object.values(catTally).reduce((s,v)=>s+v,0)||1;
+  document.getElementById('trade-stats-content').innerHTML=`
+    <div style="padding:4px 0">
+      <div style="font-size:13px;font-weight:700;color:#e0e0f0;margin-bottom:10px">📈 월별 거래 건수</div>
+      ${MONTHLY.map(m=>`
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:64px;font-size:11px;color:#8888aa;flex-shrink:0">${m.m}</div>
+          <div style="flex:1;background:#12121a;border-radius:6px;overflow:hidden;height:24px">
+            <div style="height:100%;width:${Math.round(m.cnt/max*100)}%;background:${catColors[m.cat]||'#6c63ff'};border-radius:6px;display:flex;align-items:center;padding:0 8px">
+              <span style="font-size:11px;font-weight:700;color:#fff">${m.cnt}건</span>
+            </div>
+          </div>
+        </div>`).join('')}
+      <div style="font-size:13px;font-weight:700;color:#e0e0f0;margin:18px 0 10px">🗂️ 카테고리 비중 (등록 상품 기준)</div>
+      ${Object.entries(catTally).sort((a,b)=>b[1]-a[1]).map(([cat,cnt])=>`
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:72px;font-size:11px;color:#aaaacc;flex-shrink:0">${cat}</div>
+          <div style="flex:1;background:#12121a;border-radius:6px;overflow:hidden;height:22px">
+            <div style="height:100%;width:${Math.round(cnt/totalP*100)}%;background:${catColors[cat]||'#aaaacc'};border-radius:6px"></div>
+          </div>
+          <div style="font-size:11px;color:#8888aa;width:36px;text-align:right">${Math.round(cnt/totalP*100)}%</div>
+        </div>`).join('')}
+    </div>`;
+  openModal('modal-trade-stats');
 }
 function openCart(){
   const cart=lsGet('cart',[]);
@@ -3289,6 +3564,8 @@ function renderAnalytics(){
   }else{
     showView('login');
   }
+  // 저장된 언어 자동 적용
+  if(curLang!=='ko')setLang(curLang);
   renderChips();
   // 상품 등록 폼 원단종류 옵션 → CATEGORY_MAP에서 동적 생성
   (function populateTypeSelect(){

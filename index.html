@@ -348,6 +348,39 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .pe-av-wrap{text-align:center;padding:24px 0 8px;background:#0a0a0f}
 .pe-av-circle{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;color:#fff;margin:0 auto 8px}
 .pe-av-hint{font-size:11px;color:#8888aa}
+
+/* ===================== SEARCH VIEW ===================== */
+.sv-top{padding:12px 14px 10px;background:#12121a;border-bottom:1px solid #1e1e2e;position:sticky;top:56px;z-index:50}
+.sv-bar{display:flex;align-items:center;gap:10px;background:#1e1e2e;border-radius:14px;padding:10px 14px;border:1.5px solid #2a2a3e;transition:border-color .2s}
+.sv-bar:focus-within{border-color:#6c63ff}
+.sv-bar input{flex:1;border:none;background:transparent;font-size:15px;outline:none;color:#ffffff}
+.sv-bar input::placeholder{color:#8888aa}
+.sv-clear{font-size:13px;color:#8888aa;padding:2px 6px;border-radius:6px}
+.sv-filter-row{display:flex;gap:8px;padding:10px 14px;background:#0a0a0f;border-bottom:1px solid #1e1e2e;overflow-x:auto;scrollbar-width:none}
+.sv-filter-row::-webkit-scrollbar{display:none}
+.sv-filter-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid #2a2a3e;color:#8888aa;background:#12121a;transition:all .15s}
+.sv-filter-btn.on{border-color:#6c63ff;color:#6c63ff;background:rgba(108,99,255,.1)}
+.sv-section{padding:16px 14px 8px}
+.sv-section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sv-section-title{font-size:11px;font-weight:700;color:#8888aa;letter-spacing:.6px;text-transform:uppercase}
+.sv-section-clear{font-size:11px;color:#6c63ff;font-weight:600}
+.sv-recent-row{display:flex;flex-wrap:wrap;gap:7px;padding:0 14px 14px}
+.sv-recent-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 10px 6px 12px;border-radius:20px;background:#12121a;border:1px solid #1e1e2e;font-size:12px;color:#aaaacc;cursor:pointer;transition:border-color .15s}
+.sv-recent-chip:hover{border-color:#6c63ff;color:#6c63ff}
+.sv-recent-del{font-size:11px;color:#555577;line-height:1;padding:1px 3px;border-radius:4px}
+.sv-recent-del:hover{color:#ff6584}
+.sv-result-hd{padding:10px 14px 4px;font-size:12px;color:#8888aa;font-weight:600}
+
+/* ===================== FORM SECTIONS ===================== */
+.form-sec-hd{display:flex;align-items:center;gap:10px;padding:18px 0 10px}
+.form-sec-hd::after{content:'';flex:1;height:1px;background:#1e1e2e}
+.form-sec-label{font-size:10px;font-weight:800;color:#6c63ff;letter-spacing:1px;white-space:nowrap}
+.img-upload-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;height:140px;border:2px dashed #2a2a3e;border-radius:16px;background:#12121a;cursor:pointer;transition:all .2s;margin-bottom:12px}
+.img-upload-box:hover{border-color:#6c63ff;background:rgba(108,99,255,.04)}
+.img-upload-icon{font-size:30px;opacity:.55}
+.img-upload-text{font-size:13px;font-weight:600;color:#aaaacc}
+.img-upload-sub{font-size:11px;color:#8888aa}
+.ai-price-box{background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.2);border-radius:12px;padding:10px 12px;font-size:12px;color:#66bb6a;line-height:1.6}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -554,21 +587,33 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div style="width:38px"></div>
   </header>
   <div class="f-scroll">
+
+    <!-- AI 힌트 배너 -->
     <div class="ai-hint">
       <span class="ai-icon">🤖</span>
       <span id="ai-hint-text">AI 자동 입력: 사진을 첨부하면 소재·색상·중량을 자동으로 인식해드려요!</span>
     </div>
-    <div style="margin-bottom:16px">
-      <div style="font-size:13px;font-weight:600;color:var(--g700);margin-bottom:8px"><span data-i18n="form_photo">사진 첨부</span> <span style="color:var(--g500);font-weight:400">(최대 5장)</span></div>
-      <div class="img-scroll" id="img-scroll">
-        <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
-        <button class="img-add" onclick="document.getElementById('file-input').click()">
-          <span style="font-size:22px">＋</span><span data-i18n="form_photo_add">사진추가</span>
-        </button>
-      </div>
+
+    <!-- ── 기본 정보 ── -->
+    <div class="form-sec-hd"><span class="form-sec-label">기본 정보</span></div>
+
+    <input type="file" id="file-input" accept="image/*" multiple style="display:none"/>
+    <div class="img-upload-box" id="img-upload-box" onclick="document.getElementById('file-input').click()">
+      <div class="img-upload-icon">📷</div>
+      <div class="img-upload-text">사진 추가</div>
+      <div class="img-upload-sub">최대 5장 · JPG / PNG</div>
     </div>
-    <div class="form-divider"></div>
+    <div class="img-scroll" id="img-scroll" style="display:none;margin-bottom:14px">
+      <button class="img-add" onclick="document.getElementById('file-input').click()">
+        <span style="font-size:20px">＋</span><span>추가</span>
+      </button>
+    </div>
+
     <div class="fg"><label><span data-i18n="form_name_label">상품명</span> <span class="req">*</span></label><input type="text" class="fi" id="f-title" placeholder="예) 아이보리 면 원단 재고 45m"/></div>
+
+    <!-- ── 원단 정보 ── -->
+    <div class="form-sec-hd"><span class="form-sec-label">원단 정보</span></div>
+
     <div class="fg"><label data-i18n="form_cat_label">카테고리 (대분류)</label>
       <select class="fi" id="f-cat1" onchange="updateCat2()">
         <option value="">선택</option>
@@ -594,19 +639,23 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
       <div class="fg"><label><span data-i18n="form_color_label">색상</span> <span class="req">*</span></label><input type="text" class="fi" id="f-color" placeholder="예) 아이보리"/></div>
       <div class="fg"><label data-i18n="form_width_label">폭 (cm)</label><input type="number" class="fi" id="f-width" placeholder="예) 150" min="0"/></div>
     </div>
+    <div class="fg"><label data-i18n="form_weight_label">중량 (g/㎡)</label><input type="number" class="fi" id="f-weight" placeholder="예) 180"/></div>
+
+    <!-- ── 판매 정보 ── -->
+    <div class="form-sec-hd"><span class="form-sec-label">판매 정보</span></div>
+
     <div class="form-row">
-      <div class="fg"><label data-i18n="form_weight_label">중량 (g/㎡)</label><input type="number" class="fi" id="f-weight" placeholder="예) 180"/></div>
-      <div class="fg"><label><span data-i18n="form_qty_label">수량 (m)</span> <span class="req">*</span></label><input type="number" class="fi" id="f-qty" placeholder="예) 30" min="0" step="0.1" oninput="calcTotal()"/></div>
+      <div class="fg"><label><span data-i18n="form_qty_label">재고 (m)</span> <span class="req">*</span></label><input type="number" class="fi" id="f-qty" placeholder="예) 30" min="0" step="0.1" oninput="calcTotal()"/></div>
+      <div class="fg"><label><span data-i18n="form_price_label">가격 (원/m)</span> <span class="req">*</span></label><input type="number" class="fi" id="f-price" placeholder="예) 5000" min="0" oninput="calcTotal()"/></div>
     </div>
-    <div class="fg"><label><span data-i18n="form_price_label">단가 (원/m)</span> <span class="req">*</span></label><input type="number" class="fi" id="f-price" placeholder="예) 5000" min="0" oninput="calcTotal()"/></div>
     <div class="fg"><label data-i18n="form_total_label">총 금액 (자동 계산)</label><div class="total-disp" id="f-total">수량과 단가를 입력하면 자동 계산돼요</div></div>
     <div class="fg"><label><span data-i18n="form_loc_label">거래 지역</span> <span class="req">*</span></label><input type="text" class="fi" id="f-loc" placeholder="예) 서울 동대문구 신설동"/></div>
-    <div class="form-divider"></div>
     <div class="fg"><label data-i18n="form_desc_label">상세 설명</label><textarea class="fi" id="f-desc" placeholder="원단 상태, 구매 경위, 거래 방법 등을 자유롭게 적어주세요."></textarea></div>
-    <div class="fg"><label><span data-i18n="form_tags_label">해시태그</span> <span style="color:var(--g500);font-weight:400">(쉼표 구분)</span></label><input type="text" class="fi" id="f-tags" placeholder="재고원단, 할인, 소량가능"/></div>
+    <div class="fg"><label><span data-i18n="form_tags_label">해시태그</span> <span style="color:#8888aa;font-weight:400">(쉼표 구분)</span></label><input type="text" class="fi" id="f-tags" placeholder="재고원단, 할인, 소량가능"/></div>
     <div class="fg"><label data-i18n="form_ai_label">AI 가격 예측</label>
-      <div style="background:#f8fff8;border:1px solid #c0e0c0;border-radius:var(--rs);padding:10px 12px;font-size:12px;color:#2e7d32" id="ai-price-hint">원단 정보를 입력하면 AI가 적정 가격을 예측해드려요 📊</div>
+      <div class="ai-price-box" id="ai-price-hint">원단 정보를 입력하면 AI가 적정 가격을 예측해드려요 📊</div>
     </div>
+
     <button class="submit-btn" data-i18n="btn_register" onclick="submitForm()">등록하기</button>
   </div>
 </div>
@@ -777,15 +826,41 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 <!-- ========== SEARCH VIEW ========== -->
 <div id="view-search-view" class="view">
   <header class="hdr">
-    <div class="hdr-logo">비움마켓 <small>BIUM MARKET</small></div>
+    <div class="hdr-logo">BIUM</div>
   </header>
-  <div class="srch-wrap">
-    <div class="srch-bar">
-      <span style="font-size:15px;color:var(--g500)">🔍</span>
-      <input type="text" id="sv-input" data-i18n-ph="search_placeholder" placeholder="원단 종류, 색상, 업체명 검색" autocomplete="off"/>
+  <!-- 검색바 (sticky) -->
+  <div class="sv-top">
+    <div class="sv-bar">
+      <span style="font-size:16px;color:#8888aa">🔍</span>
+      <input type="text" id="sv-input" placeholder="원단명, 색상, 종류 검색..." autocomplete="off"/>
+      <button class="sv-clear" id="sv-clear-btn" onclick="clearSvInput()" style="display:none">✕</button>
     </div>
-    <div class="chips" id="sv-chips"></div>
   </div>
+  <!-- 필터 버튼 행 -->
+  <div class="sv-filter-row">
+    <button class="sv-filter-btn on" id="svf-all" onclick="setSvFilter('전체');updateSvFilterBtns('전체')">전체</button>
+    <button class="sv-filter-btn" id="svf-면" onclick="setSvFilter('면');updateSvFilterBtns('면')">면</button>
+    <button class="sv-filter-btn" id="svf-폴리" onclick="setSvFilter('폴리');updateSvFilterBtns('폴리')">폴리</button>
+    <button class="sv-filter-btn" id="svf-울" onclick="setSvFilter('울');updateSvFilterBtns('울')">울</button>
+    <button class="sv-filter-btn" id="svf-린넨" onclick="setSvFilter('린넨');updateSvFilterBtns('린넨')">린넨</button>
+    <button class="sv-filter-btn" id="svf-실크" onclick="setSvFilter('실크');updateSvFilterBtns('실크')">실크</button>
+    <button class="sv-filter-btn" id="svf-혼방" onclick="setSvFilter('혼방');updateSvFilterBtns('혼방')">혼방</button>
+    <button class="sv-filter-btn" id="svf-가격" onclick="showToast('가격 필터 준비중이에요')">가격 ▾</button>
+    <button class="sv-filter-btn" id="svf-지역" onclick="showToast('지역 필터 준비중이에요')">지역 ▾</button>
+  </div>
+  <!-- 최근 검색어 -->
+  <div id="sv-recent-section" style="display:none">
+    <div class="sv-section">
+      <div class="sv-section-hd">
+        <span class="sv-section-title">최근 검색어</span>
+        <button class="sv-section-clear" onclick="clearAllRecent()">전체 삭제</button>
+      </div>
+    </div>
+    <div class="sv-recent-row" id="sv-recent-chips"></div>
+  </div>
+  <!-- 결과 카운트 -->
+  <div id="sv-result-hd" class="sv-result-hd" style="display:none"></div>
+  <!-- 결과 목록 -->
   <ul class="plist" id="sv-list"></ul>
   <div class="empty" id="sv-empty" style="display:none">
     <div class="ei">🔍</div>
@@ -1306,6 +1381,7 @@ let curSellerData=null;
 let selectedUserType='seller';
 let svSearch='';
 let svFilter='전체';
+let recentSearches=lsGet('recentSearches',[]);
 let chatRooms=lsGet('chatRooms',{});
 let curChatRoomId=null;
 let notifSettings=lsGet('notifSettings',{newMsg:true,reservation:true,priceChange:false,event:false});
@@ -1669,12 +1745,15 @@ document.getElementById('file-input').addEventListener('change',e=>{
 function renderImgPreviews(){
   const scroll=document.getElementById('img-scroll');
   const add=scroll.querySelector('.img-add');
+  const box=document.getElementById('img-upload-box');
   scroll.querySelectorAll('.img-prev').forEach(e=>e.remove());
   uploadedImgs.forEach((src,i)=>{
     const d=document.createElement('div');d.className='img-prev';
     d.innerHTML=`<img src="${src}" alt="preview"/><button class="img-rm" onclick="removeImg(${i})">✕</button>`;
     scroll.insertBefore(d,add);
   });
+  if(box)box.style.display=uploadedImgs.length>0?'none':'flex';
+  scroll.style.display=uploadedImgs.length>0?'flex':'none';
   add.style.display=uploadedImgs.length>=5?'none':'flex';
 }
 function removeImg(i){uploadedImgs.splice(i,1);renderImgPreviews()}
@@ -1728,7 +1807,8 @@ async function submitForm(){
     ['f-title','f-color','f-width','f-weight','f-qty','f-price','f-loc','f-desc','f-tags'].forEach(id=>{document.getElementById(id).value=''});
     document.getElementById('f-type').value='';document.getElementById('f-cat1').value='';
     document.getElementById('f-total').textContent=t('form_total_hint');
-    document.getElementById('ai-price-hint').textContent='원단 정보를 입력하면 AI가 적정 가격을 예측해드려요 📊';
+    const ph=document.getElementById('ai-price-hint');
+    if(ph)ph.textContent='원단 정보를 입력하면 AI가 적정 가격을 예측해드려요 📊';
     uploadedImgs=[];renderImgPreviews();
   }
   // Supabase에 상품 저장
@@ -1766,21 +1846,34 @@ async function submitForm(){
   }
 }
 document.getElementById('search-input').addEventListener('input',e=>{curSearch=e.target.value;renderList()});
-document.getElementById('sv-input').addEventListener('input',e=>{svSearch=e.target.value;renderSearchView()});
+document.getElementById('sv-input').addEventListener('input',e=>{
+  svSearch=e.target.value;
+  const q=svSearch.trim();
+  if(q.length>=2)addRecentSearch(q);
+  renderSearchView();
+});
 document.getElementById('btn-loc').addEventListener('click',()=>showToast('지역 설정 기능 준비중이에요'));
 document.getElementById('btn-alert').addEventListener('click',()=>showToast('새로운 알림이 없어요'));
 
 /* ==================== SEARCH VIEW ==================== */
 function renderSearchView(){
   renderSvChips();
+  renderRecentSearches();
   const list=document.getElementById('sv-list');
   const empty=document.getElementById('sv-empty');
+  const resultHd=document.getElementById('sv-result-hd');
+  const clearBtn=document.getElementById('sv-clear-btn');
   const q=svSearch.trim().toLowerCase();
+  if(clearBtn)clearBtn.style.display=q?'inline':'none';
   const filtered=products.filter(p=>{
     const mf=svFilter==='전체'||p.type===svFilter;
     const ms=!q||p.title.toLowerCase().includes(q)||p.type.includes(q)||p.color.toLowerCase().includes(q)||(p.tags||[]).some(tg=>tg.toLowerCase().includes(q))||(p.seller&&p.seller.name.toLowerCase().includes(q));
     return mf&&ms;
   });
+  if(resultHd){
+    resultHd.style.display=q?'block':'none';
+    if(q)resultHd.textContent=`"${svSearch.trim()}" 검색 결과 ${filtered.length}건`;
+  }
   if(!filtered.length){
     list.innerHTML='';list.style.display='none';empty.style.display='flex';
     document.getElementById('sv-empty-msg').textContent=q||svFilter!=='전체'?t('empty_msg'):'검색어를 입력하거나 카테고리를 선택하세요';
@@ -1795,6 +1888,58 @@ function renderSvChips(){
   el.innerHTML=FILTERS.map(f=>`<button class="chip ${f===svFilter?'on':''}" onclick="setSvFilter('${f}')">${t('filter_'+f)||f}</button>`).join('');
 }
 function setSvFilter(f){svFilter=f;renderSvChips();renderSearchView();}
+function updateSvFilterBtns(active){
+  const ids=['전체','면','폴리','울','린넨','실크','혼방'];
+  ids.forEach(id=>{
+    const btn=document.getElementById('svf-'+(id==='전체'?'all':id));
+    if(btn)btn.className='sv-filter-btn'+(id===active?' on':'');
+  });
+}
+
+/* ==================== RECENT SEARCHES ==================== */
+function addRecentSearch(q){
+  if(!q||q.length<2)return;
+  recentSearches=recentSearches.filter(s=>s!==q);
+  recentSearches.unshift(q);
+  if(recentSearches.length>8)recentSearches=recentSearches.slice(0,8);
+  lsSet('recentSearches',recentSearches);
+}
+function removeRecentSearch(q){
+  recentSearches=recentSearches.filter(s=>s!==q);
+  lsSet('recentSearches',recentSearches);
+  renderRecentSearches();
+}
+function clearAllRecent(){
+  recentSearches=[];
+  lsSet('recentSearches',recentSearches);
+  renderRecentSearches();
+}
+function applySvSearch(q){
+  const el=document.getElementById('sv-input');
+  if(el){el.value=q;}
+  svSearch=q;
+  renderSearchView();
+}
+function clearSvInput(){
+  const el=document.getElementById('sv-input');
+  if(el)el.value='';
+  svSearch='';
+  renderSearchView();
+}
+function renderRecentSearches(){
+  const section=document.getElementById('sv-recent-section');
+  const chips=document.getElementById('sv-recent-chips');
+  if(!section||!chips)return;
+  const q=svSearch.trim();
+  if(!recentSearches.length||q){section.style.display='none';return;}
+  section.style.display='block';
+  chips.innerHTML=recentSearches.map(s=>`
+    <div class="sv-recent-chip" onclick="applySvSearch('${s.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">
+      <span style="font-size:12px;opacity:.5">🕐</span>
+      <span>${s}</span>
+      <button class="sv-recent-del" onclick="event.stopPropagation();removeRecentSearch('${s.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">✕</button>
+    </div>`).join('');
+}
 
 /* ==================== WISHLIST ==================== */
 function renderWishlist(){

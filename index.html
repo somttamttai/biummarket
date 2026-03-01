@@ -2258,21 +2258,30 @@ const HOME_CATS=[
   {key:'실크/새틴',label:'실크/새틴'},
   {key:'데님/청',label:'데님/청'},
   {key:'기능성',label:'기능성'},
+  {key:'기타',label:'기타'},
 ];
 const HOME_SECTIONS=[
-  {key:'면/린넨',label:'🌿 면/린넨'},
-  {key:'울/모직',label:'🐑 울/모직'},
-  {key:'니트/저지',label:'🧶 니트/저지'},
-  {key:'실크/새틴',label:'✨ 실크/새틴'},
-  {key:'데님/청',label:'👖 데님/청'},
-  {key:'기능성',label:'⚡ 기능성'},
-  {key:'폴리/합섬',label:'🔷 폴리/합섬'},
+  {key:'면/린넨',  label:'🌿 면/린넨',  types:['면','린넨']},
+  {key:'울/모직',  label:'🐑 울/모직',  types:['울','모직']},
+  {key:'니트/저지', label:'🧶 니트/저지', types:['니트','저지']},
+  {key:'실크/새틴', label:'✨ 실크/새틴', types:['실크','새틴']},
+  {key:'데님/청',  label:'👖 데님/청',  types:['데님','청']},
+  {key:'폴리/합섬', label:'🔷 폴리/합섬', types:['폴리','합섬']},
+  {key:'기능성',   label:'⚡ 기능성',   types:['기능성']},
+  {key:'기타',    label:'📦 기타',    types:null},
 ];
 let homeCurCat='전체';
 
 function getProductsByHomeCat(cat){
   if(cat==='전체')return products;
-  return products.filter(p=>p.type===cat||(p.tags||[]).includes(cat));
+  const sec=HOME_SECTIONS.find(s=>s.key===cat);
+  if(!sec)return[];
+  if(!sec.types){
+    // 기타: 어떤 정의된 섹션에도 속하지 않는 상품
+    const allTypes=HOME_SECTIONS.filter(s=>s.types).flatMap(s=>s.types);
+    return products.filter(p=>!allTypes.includes(p.type));
+  }
+  return products.filter(p=>sec.types.includes(p.type));
 }
 
 function renderHomeCats(){
@@ -2338,7 +2347,7 @@ function renderHomeSections(){
   if(!el)return;
   const sections=homeCurCat==='전체'?HOME_SECTIONS:[{key:homeCurCat,label:HOME_CATS.find(c=>c.key===homeCurCat)?.label||homeCurCat}];
   el.innerHTML=sections.map(sec=>{
-    const items=products.filter(p=>p.type===sec.key||(p.tags||[]).includes(sec.key)).slice(0,5);
+    const items=getProductsByHomeCat(sec.key).slice(0,5);
     if(!items.length)return '';
     return `<div class="cat-section">
       <div class="cat-section-hd">

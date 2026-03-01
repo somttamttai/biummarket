@@ -220,12 +220,24 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .sstat .sl{font-size:11px;color:#8888aa;margin-top:2px}
 
 /* MYPAGE */
-.mp-user{padding:20px 14px;display:flex;align-items:center;gap:14px;border-bottom:8px solid #0d0d14;background:#12121a}
-.mp-av{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0}
-.mp-info{}
-.mp-name{font-size:17px;font-weight:700;margin-bottom:2px;color:#ffffff}
-.mp-type{font-size:12px;color:#8888aa}
-.mp-temp{font-size:13px;color:#6c63ff;font-weight:600;margin-top:2px}
+.mp-profile-card{margin:16px 14px;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#1a1a2e 100%);border:1px solid rgba(108,99,255,.2);border-radius:20px;padding:24px 20px;position:relative;overflow:hidden}
+.mp-profile-card::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:rgba(108,99,255,.12);pointer-events:none}
+.mp-card-top{display:flex;align-items:center;gap:14px}
+.mp-av{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#fff;flex-shrink:0;box-shadow:0 4px 16px rgba(108,99,255,.4)}
+.mp-card-info{}
+.mp-name{font-size:17px;font-weight:800;margin-bottom:4px;color:#ffffff}
+.mp-type-badge{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(108,99,255,.15);border-radius:20px;font-size:11px;font-weight:600;color:#6c63ff;margin-bottom:4px}
+.mp-email{font-size:12px;color:#8888aa}
+.mp-temp-row{display:flex;align-items:center;gap:8px;margin-top:14px}
+.mp-temp-label{font-size:12px;color:#8888aa;flex-shrink:0}
+.mp-temp-gauge{flex:1;height:6px;background:#1e1e2e;border-radius:3px;overflow:hidden}
+.mp-temp-fill{height:100%;background:linear-gradient(90deg,#6c63ff,#ff6584);border-radius:3px;transition:width .5s}
+.mp-temp-val{font-size:13px;font-weight:700;color:#6c63ff;flex-shrink:0}
+.mp-stats{display:flex;margin:0 14px 16px;background:#12121a;border-radius:16px;border:1px solid #1e1e2e;overflow:hidden}
+.mp-stat{flex:1;padding:16px 8px;text-align:center;border-right:1px solid #1e1e2e}
+.mp-stat:last-child{border-right:none}
+.mp-stat-val{font-size:18px;font-weight:700;color:#ffffff;margin-bottom:2px}
+.mp-stat-lbl{font-size:11px;color:#8888aa}
 .menu-list{padding:0 0 80px;background:#0a0a0f}
 .menu-item{display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid #1e1e2e;cursor:pointer;background:#0a0a0f}
 .menu-item:hover{background:#12121a}
@@ -288,7 +300,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .chat-list-wrap{flex:1;overflow-y:auto;padding-bottom:72px;background:#0a0a0f}
 .chat-room-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid #1e1e2e;cursor:pointer;transition:background .15s;background:#0a0a0f}
 .chat-room-item:active,.chat-room-item:hover{background:#12121a}
-.cr-av{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0}
+.cr-av{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0}
 .cr-info{flex:1;min-width:0}
 .cr-name{font-size:13px;font-weight:600;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#ffffff}
 .cr-preview{font-size:12px;color:#8888aa;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -314,7 +326,9 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .chat-send{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .chat-product-bar{padding:10px 14px;background:rgba(108,99,255,.08);border-bottom:1px solid rgba(108,99,255,.15);display:flex;align-items:center;gap:10px;cursor:pointer}
 .cpb-thumb{width:36px;height:36px;border-radius:8px;flex-shrink:0}
-.cpb-title{font-size:12px;font-weight:600;color:#6c63ff;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cpb-info{flex:1;min-width:0}
+.cpb-title{font-size:12px;font-weight:600;color:#6c63ff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cpb-price{font-size:11px;color:#8888aa;margin-top:1px}
 
 /* TOGGLE SWITCH */
 .toggle-row{display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid #1e1e2e;background:#0a0a0f}
@@ -712,13 +726,25 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <button class="hdr-btn" onclick="doLogout()">🚪</button>
   </header>
   <div style="flex:1;overflow-y:auto">
-    <div class="mp-user">
-      <div class="mp-av" id="mp-av"></div>
-      <div class="mp-info">
-        <div class="mp-name" id="mp-name"></div>
-        <div class="mp-type" id="mp-type"></div>
-        <div class="mp-temp" id="mp-temp"></div>
+    <div class="mp-profile-card">
+      <div class="mp-card-top">
+        <div class="mp-av" id="mp-av"></div>
+        <div class="mp-card-info">
+          <div class="mp-name" id="mp-name"></div>
+          <div class="mp-type-badge" id="mp-type"></div>
+          <div class="mp-email" id="mp-email"></div>
+        </div>
       </div>
+      <div class="mp-temp-row">
+        <span class="mp-temp-label">매너온도</span>
+        <div class="mp-temp-gauge"><div class="mp-temp-fill" id="mp-temp-fill"></div></div>
+        <span class="mp-temp-val" id="mp-temp"></span>
+      </div>
+    </div>
+    <div class="mp-stats">
+      <div class="mp-stat"><div class="mp-stat-val" id="mp-stat-sell">0</div><div class="mp-stat-lbl">판매</div></div>
+      <div class="mp-stat"><div class="mp-stat-val" id="mp-stat-buy">0</div><div class="mp-stat-lbl">구매</div></div>
+      <div class="mp-stat"><div class="mp-stat-val" id="mp-stat-wish">0</div><div class="mp-stat-lbl">찜</div></div>
     </div>
     <div class="menu-list" id="menu-list"></div>
   </div>
@@ -919,7 +945,10 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   </header>
   <div class="chat-product-bar" id="cr-product-bar" onclick="goChatProduct()">
     <div class="cpb-thumb" id="cr-thumb"></div>
-    <div class="cpb-title" id="cr-prod-title">상품 정보</div>
+    <div class="cpb-info">
+      <div class="cpb-title" id="cr-prod-title">상품 정보</div>
+      <div class="cpb-price" id="cr-prod-price"></div>
+    </div>
     <span style="color:var(--P);font-size:14px">›</span>
   </div>
   <div class="croom-body" id="cr-body"></div>
@@ -1960,7 +1989,7 @@ function openChatRoom(productId){
     const p=products.find(x=>x.id===productId);
     if(!p)return;
     chatRooms[roomId]={
-      id:roomId,productId,productTitle:p.title,
+      id:roomId,productId,productTitle:p.title,productPrice:p.price,
       sellerName:p.seller?.name||'판매자',
       bgColor:getFColor(p.type,p.color),
       messages:[{from:'seller',text:'안녕하세요! 관심 가져주셔서 감사합니다 😊 궁금한 점 있으시면 편하게 물어보세요!',time:formatChatTime(new Date())}],
@@ -1999,6 +2028,8 @@ function renderChatRoom(roomId){
   const room=chatRooms[roomId];if(!room)return;
   document.getElementById('cr-hdr-title').textContent=room.sellerName;
   document.getElementById('cr-prod-title').textContent=room.productTitle;
+  const priceEl=document.getElementById('cr-prod-price');
+  if(priceEl)priceEl.textContent=room.productPrice?room.productPrice.toLocaleString()+'원/m':'';
   const thumb=document.getElementById('cr-thumb');
   thumb.style.cssText=`background:${room.bgColor||'#ccc'};border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;`;
   thumb.textContent='🧵';
@@ -2144,8 +2175,19 @@ function renderMypage(){
   const av=document.getElementById('mp-av');av.textContent=u.name[0];
   document.getElementById('mp-name').textContent=u.name;
   const types={seller:'판매자',buyer:'구매자',brand:'브랜드',both:'겸업',admin:'관리자',guest:'게스트'};
-  document.getElementById('mp-type').textContent=(types[u.type]||'회원')+' · '+(u.loc||'위치 미설정');
-  document.getElementById('mp-temp').textContent='매너온도 '+u.temp.toFixed(1)+'°C 🌡️';
+  document.getElementById('mp-type').textContent=types[u.type]||'회원';
+  const emailEl=document.getElementById('mp-email');
+  if(emailEl)emailEl.textContent=u.email||u.loc||'위치 미설정';
+  const temp=u.temp||36.5;
+  document.getElementById('mp-temp').textContent=temp.toFixed(1)+'°C';
+  const fillEl=document.getElementById('mp-temp-fill');
+  if(fillEl)fillEl.style.width=Math.min(Math.max((temp-30)/30*100,0),100)+'%';
+  const sells=products.filter(p=>p.seller&&(p.seller.id===u.id||p.seller.name===u.name)).length;
+  const wishes=lsGet('wishlist',[]).length||Object.values(lsGet('likedMap',{})).filter(Boolean).length;
+  const sellEl=document.getElementById('mp-stat-sell');
+  const wishEl=document.getElementById('mp-stat-wish');
+  if(sellEl)sellEl.textContent=sells;
+  if(wishEl)wishEl.textContent=wishes;
   const isSeller=u.type==='seller'||u.type==='both'||u.type==='brand';
   const menus=[
     {section:'내 거래'},

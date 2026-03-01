@@ -480,6 +480,22 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .h-seller{font-size:11px;color:#8888aa}
 .h-counts{display:flex;gap:8px;font-size:10px;color:#8888aa}
 
+/* CATEGORY VIEW */
+#view-category,#view-cat-products{background:#0a0a0f}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 14px 80px}
+.cat-grid-item{background:#12121a;border:1px solid #1e1e2e;border-radius:18px;padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.cat-grid-item::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(108,99,255,.06),transparent);opacity:0;transition:opacity .2s}
+.cat-grid-item:hover{border-color:rgba(108,99,255,.4);transform:translateY(-2px)}.cat-grid-item:hover::before{opacity:1}
+.cat-icon{font-size:36px;line-height:1}
+.cat-name{font-size:14px;font-weight:700;color:#ffffff}
+.cat-count{font-size:11px;color:#8888aa;font-weight:500}
+.cp-scroll{flex:1;overflow-y:auto;padding-bottom:72px}
+.cp-sort-bar{display:flex;gap:8px;padding:10px 14px 6px;background:#0a0a0f;border-bottom:1px solid #1e1e2e;position:sticky;top:56px;z-index:50}
+.cp-sort-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;background:#1e1e2e;color:#8888aa;border:1.5px solid #1e1e2e;cursor:pointer;transition:all .15s}
+.cp-sort-btn.on{background:rgba(108,99,255,.15);color:#6c63ff;border-color:#6c63ff}
+.cp-list{padding:0 0 8px}
+.cp-empty{padding:60px 20px;text-align:center;color:#8888aa;font-size:13px}
+
 /* AI VIEW */
 #view-ai{background:#0a0a0f}
 .ai-view-scroll{flex:1;overflow-y:auto;padding:16px 14px 80px}
@@ -650,7 +666,44 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   </div>
   <nav class="tabbar">
     <button class="tab on" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
-    <button class="tab" onclick="openCategorySheet()"><span class="ti">📋</span><span>카테고리</span></button>
+    <button class="tab" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
+  </nav>
+</div>
+
+<!-- ========== CATEGORY ========== -->
+<div id="view-category" class="view">
+  <header class="hdr">
+    <div class="hdr-logo">카테고리</div>
+  </header>
+  <div class="cat-grid" id="cat-grid"></div>
+  <nav class="tabbar">
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
+    <button class="tab on" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
+  </nav>
+</div>
+
+<!-- ========== CATEGORY PRODUCTS ========== -->
+<div id="view-cat-products" class="view">
+  <header class="hdr">
+    <button class="hdr-back" onclick="goBack()">←</button>
+    <div class="hdr-title" id="cp-hdr-title">카테고리</div>
+    <div style="width:38px"></div>
+  </header>
+  <div class="cp-scroll">
+    <div class="cp-sort-bar">
+      <button class="cp-sort-btn on" id="cpSort-latest" onclick="setCatSort('latest')">최신순</button>
+      <button class="cp-sort-btn" id="cpSort-price" onclick="setCatSort('price')">가격순</button>
+      <button class="cp-sort-btn" id="cpSort-popular" onclick="setCatSort('popular')">인기순</button>
+    </div>
+    <div class="cp-list" id="cp-list"></div>
+  </div>
+  <nav class="tabbar">
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
+    <button class="tab on" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
     <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
     <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
   </nav>
@@ -1783,6 +1836,7 @@ function showView(name){
   if(name==='notif-settings')renderNotifSettings();
   if(name==='profile-edit')renderProfileEdit();
   if(name==='ai')resetAiView();
+  if(name==='category')renderCategoryView();
 }
 function goBack(){showView(prevView||'list')}
 
@@ -1864,6 +1918,67 @@ let listPage=0,listFiltered=[],listObserver=null;
 function showListSkeleton(){
   const sec=document.getElementById('home-category-sections');
   if(sec){sec.innerHTML=Array(3).fill(0).map(()=>`<div class="cat-section"><div class="cat-section-hd"><div class="skel-line skeleton" style="width:100px;height:14px;margin:0"></div></div>${Array(3).fill(0).map(()=>`<div class="h-product-card"><div class="h-product-img skeleton"></div><div class="h-product-body"><div class="skel-line skeleton" style="margin:0 0 6px"></div><div class="skel-line sm skeleton" style="margin:0 0 6px"></div><div class="skel-line xs skeleton" style="margin:0"></div></div></div>`).join('')}</div>`).join('');}
+}
+
+/* ===== CATEGORY VIEW JS ===== */
+const CAT_DEFS=[
+  {key:'면/린넨',icon:'🧵',label:'면/린넨'},
+  {key:'폴리/합섬',icon:'🔷',label:'폴리/합섬'},
+  {key:'울/모직',icon:'🐑',label:'울/모직'},
+  {key:'니트/저지',icon:'🧶',label:'니트/저지'},
+  {key:'실크/새틴',icon:'✨',label:'실크/새틴'},
+  {key:'데님/청',icon:'👖',label:'데님/청'},
+  {key:'기능성',icon:'⚡',label:'기능성'},
+  {key:'기타',icon:'📦',label:'기타'},
+];
+let curCatKey='',curCatSort='latest';
+
+function renderCategoryView(){
+  const el=document.getElementById('cat-grid');
+  if(!el)return;
+  el.innerHTML=CAT_DEFS.map(c=>{
+    const cnt=c.key==='기타'
+      ?products.filter(p=>!CAT_DEFS.slice(0,-1).some(d=>p.type===d.key||(p.tags||[]).includes(d.key))).length
+      :products.filter(p=>p.type===c.key||(p.tags||[]).includes(c.key)).length;
+    return `<div class="cat-grid-item" onclick="openCatProducts('${c.key}','${c.label}')">
+      <span class="cat-icon">${c.icon}</span>
+      <span class="cat-name">${c.label}</span>
+      <span class="cat-count">${cnt}개</span>
+    </div>`;
+  }).join('');
+}
+
+function openCatProducts(key,label){
+  curCatKey=key;curCatSort='latest';
+  document.getElementById('cp-hdr-title').textContent=label;
+  ['latest','price','popular'].forEach(s=>{
+    const btn=document.getElementById('cpSort-'+s);
+    if(btn)btn.classList.toggle('on',s==='latest');
+  });
+  renderCatProducts();
+  showView('cat-products');
+}
+
+function setCatSort(sort){
+  curCatSort=sort;
+  ['latest','price','popular'].forEach(s=>{
+    const btn=document.getElementById('cpSort-'+s);
+    if(btn)btn.classList.toggle('on',s===sort);
+  });
+  renderCatProducts();
+}
+
+function renderCatProducts(){
+  const el=document.getElementById('cp-list');
+  if(!el)return;
+  let items=curCatKey==='기타'
+    ?products.filter(p=>!CAT_DEFS.slice(0,-1).some(d=>p.type===d.key||(p.tags||[]).includes(d.key)))
+    :products.filter(p=>p.type===curCatKey||(p.tags||[]).includes(curCatKey));
+  if(curCatSort==='price')items=[...items].sort((a,b)=>a.price-b.price);
+  else if(curCatSort==='popular')items=[...items].sort((a,b)=>(b.likes||0)-(a.likes||0));
+  else items=[...items].sort((a,b)=>b.id-a.id);
+  if(!items.length){el.innerHTML=`<div class="cp-empty">📭<br>해당 카테고리에 상품이 없어요</div>`;return;}
+  el.innerHTML=items.map(p=>renderHomeProduct(p)).join('');
 }
 
 /* ===== HOME REDESIGN JS ===== */

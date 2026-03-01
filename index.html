@@ -1860,23 +1860,28 @@ function findUser(email,pw){return users.find(u=>u.email===email&&u.pw===pw)}
 
 /* ==================== PRODUCTS ==================== */
 const SELLERS_SAMPLE=[
-  {id:'s1',name:'에이원원단',temp:38.2,loc:'서울 성동구 성수동'},
-  {id:'s2',name:'직물나라',temp:36.5,loc:'서울 종로구 창신동'},
-  {id:'s3',name:'패션팩토리',temp:42.1,loc:'부산 중구 광복동'},
-  {id:'s4',name:'실과바늘',temp:35.0,loc:'대구 중구 동성로'},
-  {id:'s5',name:'텍스타일랩',temp:44.7,loc:'서울 마포구 망원동'},
+  {id:'s1',name:'광장섬유',temp:37.2,loc:'서울 중구 동대문'},
+  {id:'s2',name:'에코텍스코리아',temp:36.8,loc:'서울 성동구 성수동'},
+  {id:'s3',name:'명성모직',temp:38.0,loc:'서울 중구 동대문'},
+  {id:'s4',name:'대한니트',temp:37.5,loc:'서울 중구 신당동'},
+  {id:'s5',name:'JS스트레치',temp:36.5,loc:'서울 동대문구 답십리'},
+  {id:'s6',name:'금성실크',temp:37.8,loc:'서울 중구 동대문'},
+  {id:'s7',name:'청일직물',temp:37.1,loc:'서울 종로구 창신동'},
+  {id:'s8',name:'한일섬유',temp:36.9,loc:'서울 중구 동대문'},
+  {id:'s9',name:'고려모직',temp:37.6,loc:'서울 중구 을지로'},
+  {id:'s10',name:'스포텍',temp:38.0,loc:'서울 성동구 성수동'},
 ];
 const DEFAULT_PRODUCTS=[
-  {id:1,title:'소프트 아이보리 면 원단 재고 처분',type:'면',color:'아이보리',width:150,weight:120,qty:45,price:4500,loc:'서울 성동구 성수동',cat:'천연섬유',description:'국내 대형 의류 브랜드 OEM 생산 후 남은 재고 원단입니다. 40수 면 소재로 부드럽고 내구성이 좋습니다. 여름 의류, 속옷, 침구류 등 다양하게 활용 가능합니다.',tags:['재고원단','면원단','아이보리','소량가능','직거래'],seller:SELLERS_SAMPLE[0],imgs:3,likes:12,chats:5,time:'3시간 전',liked:false},
-  {id:2,title:'시원한 네이비 폴리 쉬폰 원단 50m',type:'폴리',color:'네이비',width:110,weight:80,qty:50,price:2800,loc:'서울 종로구 창신동',cat:'합성섬유',description:'여름 블라우스 생산에 사용하려다 남은 재고입니다. 통기성이 좋고 가벼운 쉬폰 소재로 드레스, 스카프, 커튼 등에 적합합니다.',tags:['폴리쉬폰','네이비','여름원단','50m'],seller:SELLERS_SAMPLE[1],imgs:2,likes:8,chats:3,time:'5시간 전',liked:false},
-  {id:3,title:'고급 버건디 울 원단 20m 특가',type:'울',color:'버건디',width:150,weight:320,qty:20,price:18000,loc:'부산 중구 광복동',cat:'천연섬유',description:'이탈리아산 울 원단 수입 후 남은 재고입니다. 최고급 메리노 울 소재로 가을·겨울 코트, 재킷 제작에 최적입니다.',tags:['울원단','버건디','고급원단','이탈리아산','코트감'],seller:SELLERS_SAMPLE[2],imgs:4,likes:24,chats:11,time:'어제',liked:false},
-  {id:4,title:'내추럴 베이지 린넨 원단 세일',type:'린넨',color:'베이지',width:140,weight:160,qty:35,price:6000,loc:'대구 중구 동성로',cat:'천연섬유',description:'봄·여름 시즌 준비로 들여온 린넨 원단입니다. 천연 소재 특유의 질감과 시원함이 특징이며, 의류뿐 아니라 홈 인테리어 패브릭으로도 인기가 많은 소재입니다.',tags:['린넨','베이지','내추럴','봄여름'],seller:SELLERS_SAMPLE[3],imgs:2,likes:18,chats:7,time:'1일 전',liked:false},
-  {id:5,title:'광택 샴페인 실크 새틴 15m',type:'실크',color:'샴페인골드',width:114,weight:90,qty:15,price:35000,loc:'서울 마포구 망원동',cat:'천연섬유',description:'웨딩드레스 제작 후 남은 고급 실크 새틴 원단입니다. 광택이 우수하고 드레이프성이 뛰어납니다.',tags:['실크새틴','샴페인','웨딩원단','고급','이브닝'],seller:SELLERS_SAMPLE[4],imgs:5,likes:31,chats:15,time:'2일 전',liked:false},
-  {id:6,title:'모달 혼방 차콜 기모 원단 60m',type:'혼방',color:'차콜그레이',width:160,weight:280,qty:60,price:5500,loc:'인천 남동구 구월동',cat:'혼방',description:'모달 60% + 폴리 40% 혼방 기모 원단입니다. 부드러운 촉감과 보온성이 뛰어나 겨울용 내의, 트레이닝복에 적합합니다.',tags:['혼방','기모','모달','겨울원단','대량할인'],seller:SELLERS_SAMPLE[0],imgs:3,likes:9,chats:4,time:'2일 전',liked:false},
-  {id:7,title:'빈티지 인디고 데님 원단 25m',type:'면',color:'인디고블루',width:150,weight:340,qty:25,price:8500,loc:'서울 동대문구 신설동',cat:'천연섬유',description:'셀비지 데님 느낌의 인디고 블루 면 원단입니다. 청바지, 재킷, 가방 등 데님 아이템 제작에 적합합니다.',tags:['데님','인디고','면원단','청바지감'],seller:SELLERS_SAMPLE[1],imgs:2,likes:22,chats:9,time:'3일 전',liked:false},
-  {id:8,title:'파스텔 민트 기능성 폴리 에어로 80m',type:'폴리',color:'민트',width:155,weight:100,qty:80,price:3200,loc:'경기 안양시 만안구',cat:'합성섬유',description:'스포츠웨어 브랜드 생산 후 남은 에어로 기능성 원단입니다. 흡습속건 기능이 있어 운동복, 아웃도어 의류에 적합합니다.',tags:['폴리','기능성원단','흡습속건','스포츠','대량'],seller:SELLERS_SAMPLE[2],imgs:3,likes:6,chats:2,time:'3일 전',liked:false},
-  {id:9,title:'로즈 울 헤링본 원단 소량 10m',type:'울',color:'로즈핑크',width:150,weight:290,qty:10,price:22000,loc:'서울 강남구 역삼동',cat:'천연섬유',description:'영국산 울 헤링본 패턴 원단입니다. 클래식한 헤링본 패턴으로 코트, 블레이저, 스커트에 활용하기 좋습니다.',tags:['울헤링본','로즈','영국산','코트감','소량'],seller:SELLERS_SAMPLE[3],imgs:4,likes:27,chats:13,time:'4일 전',liked:false},
-  {id:10,title:'내추럴 그레이 린넨 혼방 40m',type:'린넨',color:'라이트그레이',width:135,weight:175,qty:40,price:7500,loc:'부산 동래구 온천동',cat:'혼방',description:'린넨 55% + 면 45% 혼방 원단입니다. 린넨의 시원함과 면의 부드러움을 함께 느낄 수 있으며 홈웨어, 여름 셔츠에 적합합니다.',tags:['린넨혼방','그레이','홈웨어','여름'],seller:SELLERS_SAMPLE[4],imgs:2,likes:14,chats:6,time:'5일 전',liked:false},
+  {id:1,title:'코마 면 트윌 60수 오트밀',type:'면',color:'베이지',width:150,weight:185,qty:500,price:2800,loc:'서울 중구 동대문',cat:'천연섬유',description:'60수 코마 면 트윌 소재입니다. 세밀한 조직감과 부드러운 손감이 특징이며 여름 셔츠, 블라우스, 홈웨어에 적합합니다. 대량 구매 시 협의 가능합니다.',tags:['면트윌','60수','오트밀','코마면','대량가능'],seller:SELLERS_SAMPLE[0],imgs:2,likes:8,chats:3,time:'1시간 전',liked:false},
+  {id:2,title:'GOTS 오가닉 린넨 워싱 세이지그린',type:'린넨',color:'그린',width:140,weight:165,qty:300,price:9800,loc:'서울 성동구 성수동',cat:'천연섬유',description:'GOTS 국제 인증 오가닉 린넨 원단입니다. 워싱 가공으로 부드러운 손감과 자연스러운 빈티지 느낌이 특징이며 친환경 패션 브랜드에 최적입니다.',tags:['GOTS','오가닉린넨','세이지그린','친환경','워싱'],seller:SELLERS_SAMPLE[1],imgs:3,likes:15,chats:6,time:'2시간 전',liked:false},
+  {id:3,title:'이태리 까발리 울 서지 차콜 280g',type:'울',color:'차콜',width:150,weight:280,qty:200,price:12000,loc:'서울 중구 동대문',cat:'천연섬유',description:'이탈리아 까발리社 울 서지 원단입니다. 고급 정장·코트 제작에 적합하며 내구성과 드레이프성이 우수합니다.',tags:['울서지','이태리산','차콜','정장감','까발리'],seller:SELLERS_SAMPLE[2],imgs:4,likes:22,chats:9,time:'3시간 전',liked:false},
+  {id:4,title:'C/R 기모 스웨트 쉬링크 로즈핑크',type:'니트',color:'핑크',width:160,weight:320,qty:1000,price:1400,loc:'서울 중구 신당동',cat:'합성섬유',description:'면/레이온 혼방 기모 스웨트 원단입니다. 쉬링크 처리로 표면이 부드럽고 보온성이 뛰어납니다. 트레이닝복, 후드, 맨투맨에 적합합니다.',tags:['기모스웨트','C/R','로즈핑크','트레이닝','대량'],seller:SELLERS_SAMPLE[3],imgs:2,likes:11,chats:5,time:'4시간 전',liked:false},
+  {id:5,title:'4WAY 나일론 스판 저지 더스티모브',type:'기능성',color:'보라',width:160,weight:210,qty:500,price:3500,loc:'서울 동대문구 답십리',cat:'합성섬유',description:'4방향 신축성 나일론 스판덱스 저지 원단입니다. 애슬레저, 수영복, 요가복 등 활동적인 의류 제작에 최적의 소재입니다.',tags:['나일론스판','4WAY','더스티모브','애슬레저','요가복'],seller:SELLERS_SAMPLE[4],imgs:3,likes:18,chats:7,time:'5시간 전',liked:false},
+  {id:6,title:'하부타이 실크 새틴 16mm 샴페인골드',type:'실크',color:'골드',width:140,weight:95,qty:50,price:20000,loc:'서울 중구 동대문',cat:'천연섬유',description:'16mm 하부타이 실크 새틴 원단입니다. 은은한 광택과 뛰어난 드레이프성으로 웨딩드레스, 이브닝웨어, 스카프 제작에 적합합니다.',tags:['하부타이실크','새틴','샴페인골드','16mm','웨딩'],seller:SELLERS_SAMPLE[5],imgs:5,likes:31,chats:14,time:'어제',liked:false},
+  {id:7,title:'셀비지 데님 14oz 인디고 원워시',type:'데님',color:'인디고',width:150,weight:420,qty:100,price:7500,loc:'서울 종로구 창신동',cat:'천연섬유',description:'14온스 셀비지 데님 원단입니다. 인디고 원워시 처리로 깔끔한 빈티지 느낌이 나며 청바지, 재킷, 데님 가방 제작에 적합합니다.',tags:['셀비지데님','14oz','인디고','원워시','청바지감'],seller:SELLERS_SAMPLE[6],imgs:3,likes:26,chats:11,time:'1일 전',liked:false},
+  {id:8,title:'폴리 조젯 쉬폰 아이보리 75D',type:'폴리',color:'아이보리',width:150,weight:55,qty:800,price:1200,loc:'서울 중구 동대문',cat:'합성섬유',description:'75D 폴리 조젯 쉬폰 원단입니다. 가볍고 통기성이 좋아 여름 블라우스, 원피스, 스카프에 적합합니다. 대량 재고 보유 중입니다.',tags:['조젯쉬폰','폴리','아이보리','75D','대량재고'],seller:SELLERS_SAMPLE[7],imgs:2,likes:9,chats:4,time:'1일 전',liked:false},
+  {id:9,title:'울 캐시미어 혼방 헤링본 네이비',type:'울',color:'네이비',width:150,weight:310,qty:150,price:18000,loc:'서울 중구 을지로',cat:'천연섬유',description:'울 80% + 캐시미어 20% 혼방 헤링본 원단입니다. 클래식한 패턴과 부드러운 캐시미어 텍스처가 특징인 프리미엄 소재입니다.',tags:['울캐시미어','헤링본','네이비','프리미엄','혼방'],seller:SELLERS_SAMPLE[8],imgs:4,likes:35,chats:16,time:'2일 전',liked:false},
+  {id:10,title:'테크니컬 소프트쉘 올리브 방수',type:'기능성',color:'올리브',width:150,weight:285,qty:400,price:8500,loc:'서울 성동구 성수동',cat:'기능성',description:'방수·방풍 기능의 소프트쉘 원단입니다. 3레이어 구조로 내구성과 기능성을 모두 갖춘 아웃도어 의류 제작에 최적화된 소재입니다.',tags:['소프트쉘','방수','올리브','아웃도어','테크니컬'],seller:SELLERS_SAMPLE[9],imgs:3,likes:19,chats:8,time:'2일 전',liked:false},
 ];
 let products=lsGet('products',DEFAULT_PRODUCTS);
 function saveProducts(){lsSet('products',products)}

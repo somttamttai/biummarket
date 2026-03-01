@@ -1894,8 +1894,8 @@ async function loadProductsFromSupabase(){
     const{data,error}=await _sb.from('products').select('*').order('created_at',{ascending:false});
     if(error){console.error('[loadProducts] 오류:',error);return;}
     const likedMap=lsGet('likedMap',{});
-    if(!data||data.length===0){
-      // Supabase 비어있으면 샘플 데이터를 Supabase에 자동 insert
+    if(!data||data.length<5){
+      // Supabase 상품이 5개 미만이면 샘플 데이터를 Supabase에 자동 insert
       try{
         const samplePayloads=DEFAULT_PRODUCTS.map(p=>({
           title:p.title,type:p.type,color:p.color,width:p.width,weight:p.weight,

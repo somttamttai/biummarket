@@ -231,24 +231,44 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .seller-intro{padding:14px 16px;font-size:13px;color:#aaaacc;line-height:1.7;background:#12121a;border-bottom:6px solid #0d0d14}
 
 /* MYPAGE */
-.mp-profile-card{margin:16px 14px;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#1a1a2e 100%);border:1px solid rgba(108,99,255,.2);border-radius:20px;padding:24px 20px;position:relative;overflow:hidden}
-.mp-profile-card::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:rgba(108,99,255,.12);pointer-events:none}
-.mp-card-top{display:flex;align-items:center;gap:14px}
-.mp-av{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#fff;flex-shrink:0;box-shadow:0 4px 16px rgba(108,99,255,.4)}
-.mp-card-info{}
-.mp-name{font-size:17px;font-weight:800;margin-bottom:4px;color:#ffffff}
-.mp-type-badge{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(108,99,255,.15);border-radius:20px;font-size:11px;font-weight:600;color:#6c63ff;margin-bottom:4px}
-.mp-email{font-size:12px;color:#8888aa}
-.mp-temp-row{display:flex;align-items:center;gap:8px;margin-top:14px}
-.mp-temp-label{font-size:12px;color:#8888aa;flex-shrink:0}
-.mp-temp-gauge{flex:1;height:6px;background:#1e1e2e;border-radius:3px;overflow:hidden}
-.mp-temp-fill{height:100%;background:linear-gradient(90deg,#6c63ff,#ff6584);border-radius:3px;transition:width .5s}
-.mp-temp-val{font-size:13px;font-weight:700;color:#6c63ff;flex-shrink:0}
-.mp-stats{display:flex;margin:0 14px 16px;background:#12121a;border-radius:16px;border:1px solid #1e1e2e;overflow:hidden}
-.mp-stat{flex:1;padding:16px 8px;text-align:center;border-right:1px solid #1e1e2e}
-.mp-stat:last-child{border-right:none}
-.mp-stat-val{font-size:18px;font-weight:700;color:#ffffff;margin-bottom:2px}
-.mp-stat-lbl{font-size:11px;color:#8888aa}
+/* MY PAGE — 재구성 */
+.my-scroll{flex:1;overflow-y:auto;padding-bottom:80px}
+.my-profile-card{margin:14px 14px 0;background:linear-gradient(135deg,#0f0c29 0%,#1a1a38 50%,#0f0c29 100%);border:1px solid rgba(108,99,255,.22);border-radius:22px;padding:22px 20px;position:relative;overflow:hidden}
+.my-profile-card::before{content:'';position:absolute;top:-50px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(180,150,80,.08);pointer-events:none}
+.my-profile-card::after{content:'';position:absolute;bottom:-30px;left:-30px;width:110px;height:110px;border-radius:50%;background:rgba(108,99,255,.08);pointer-events:none}
+.my-card-top{display:flex;align-items:center;gap:16px;position:relative;z-index:1}
+.my-av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#b49650,#e8c97e);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#0a0a0f;flex-shrink:0;box-shadow:0 4px 18px rgba(180,150,80,.4)}
+.my-card-info{flex:1;min-width:0}
+.my-name{font-size:17px;font-weight:800;color:#ffffff;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.my-badge-row{display:flex;gap:6px;flex-wrap:wrap}
+.my-type-badge{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(108,99,255,.18);border:1px solid rgba(108,99,255,.35);border-radius:20px;font-size:11px;font-weight:700;color:#9b94ff}
+.my-loc-badge{display:inline-flex;align-items:center;gap:3px;padding:3px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;font-size:11px;font-weight:600;color:#aaaacc}
+.my-edit-btn{margin-top:12px;position:relative;z-index:1;display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;font-size:12px;font-weight:600;color:#aaaacc;cursor:pointer;transition:all .15s;width:fit-content}
+.my-edit-btn:hover{background:rgba(108,99,255,.12);border-color:rgba(108,99,255,.3);color:#9b94ff}
+.my-stats{display:flex;margin:14px 14px 0;background:#12121a;border-radius:16px;border:1px solid #1e1e2e;overflow:hidden}
+.my-stat{flex:1;padding:16px 8px;text-align:center;border-right:1px solid #1e1e2e;cursor:pointer;transition:background .15s}
+.my-stat:last-child{border-right:none}
+.my-stat:hover{background:#1e1e2e}
+.my-stat-val{font-size:20px;font-weight:800;color:#ffffff;margin-bottom:2px}
+.my-stat-lbl{font-size:11px;color:#8888aa;font-weight:500}
+.my-section-wrap{margin:18px 0 0}
+.my-section-title{padding:6px 16px 8px;font-size:11px;font-weight:700;color:#8888aa;letter-spacing:.6px;text-transform:uppercase}
+.my-menu-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #1e1e2e;cursor:pointer;background:#0a0a0f;transition:background .15s}
+.my-menu-item:first-of-type{border-top:1px solid #1e1e2e}
+.my-menu-item:hover{background:#12121a}
+.my-icon-box{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.my-menu-info{flex:1;min-width:0}
+.my-menu-title{font-size:14px;font-weight:600;color:#ffffff;margin-bottom:2px}
+.my-menu-sub{font-size:11px;color:#8888aa}
+.my-menu-arrow{color:#3a3a5e;font-size:16px;font-weight:300;flex-shrink:0}
+/* 아이콘 박스 색상 */
+.ib-purple{background:rgba(108,99,255,.15)}
+.ib-green{background:rgba(72,199,142,.12)}
+.ib-pink{background:rgba(255,101,132,.12)}
+.ib-blue{background:rgba(59,130,246,.12)}
+.ib-yellow{background:rgba(234,179,8,.12)}
+.ib-teal{background:rgba(20,184,166,.12)}
+/* 레거시 호환 (다른 뷰에서 사용) */
 .menu-list{padding:0 0 80px;background:#0a0a0f}
 .menu-item{display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid #1e1e2e;cursor:pointer;background:#0a0a0f}
 .menu-item:hover{background:#12121a}
@@ -914,38 +934,129 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 <!-- ========== MYPAGE ========== -->
 <div id="view-mypage" class="view">
   <header class="hdr">
-    <div class="hdr-logo">비움마켓</div>
-    <button class="hdr-btn" onclick="doLogout()">🚪</button>
+    <div class="hdr-title" style="flex:1;text-align:left;font-size:20px;font-weight:900;background:linear-gradient(135deg,#6c63ff,#ff6584);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">MY</div>
+    <button class="hdr-btn" onclick="showView('notif-settings')" title="설정">⚙️</button>
   </header>
-  <div style="flex:1;overflow-y:auto">
-    <div class="mp-profile-card">
-      <div class="mp-card-top">
-        <div class="mp-av" id="mp-av"></div>
-        <div class="mp-card-info">
-          <div class="mp-name" id="mp-name"></div>
-          <div class="mp-type-badge" id="mp-type"></div>
-          <div class="mp-email" id="mp-email"></div>
+  <div class="my-scroll">
+    <!-- 프로필 카드 -->
+    <div class="my-profile-card">
+      <div class="my-card-top">
+        <div class="my-av" id="my-av">?</div>
+        <div class="my-card-info">
+          <div class="my-name" id="my-name">로그인이 필요해요</div>
+          <div class="my-badge-row">
+            <span class="my-type-badge" id="my-type-badge">게스트</span>
+            <span class="my-loc-badge" id="my-loc-badge">📍 위치 미설정</span>
+          </div>
         </div>
       </div>
-      <div class="mp-temp-row">
-        <span class="mp-temp-label">매너온도</span>
-        <div class="mp-temp-gauge"><div class="mp-temp-fill" id="mp-temp-fill"></div></div>
-        <span class="mp-temp-val" id="mp-temp"></span>
+      <div class="my-edit-btn" onclick="showView('profile-edit')">✏️ 프로필 수정</div>
+    </div>
+    <!-- 통계 카드 -->
+    <div class="my-stats">
+      <div class="my-stat" onclick="showMySales()">
+        <div class="my-stat-val" id="my-stat-products">0</div>
+        <div class="my-stat-lbl">등록상품</div>
+      </div>
+      <div class="my-stat" onclick="showView('wishlist')">
+        <div class="my-stat-val" id="my-stat-wish">0</div>
+        <div class="my-stat-lbl">관심목록</div>
+      </div>
+      <div class="my-stat" onclick="showView('reservations')">
+        <div class="my-stat-val" id="my-stat-done">0</div>
+        <div class="my-stat-lbl">거래완료</div>
       </div>
     </div>
-    <div class="mp-stats">
-      <div class="mp-stat"><div class="mp-stat-val" id="mp-stat-sell">0</div><div class="mp-stat-lbl">판매</div></div>
-      <div class="mp-stat"><div class="mp-stat-val" id="mp-stat-buy">0</div><div class="mp-stat-lbl">구매</div></div>
-      <div class="mp-stat"><div class="mp-stat-val" id="mp-stat-wish">0</div><div class="mp-stat-lbl">찜</div></div>
+    <!-- 상품 관리 섹션 -->
+    <div class="my-section-wrap">
+      <div class="my-section-title">상품 관리</div>
+      <div class="my-menu-item" onclick="showView('form')">
+        <div class="my-icon-box ib-purple">➕</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">상품 등록</div>
+          <div class="my-menu-sub">새 원단 등록하기</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="showMySales()">
+        <div class="my-icon-box ib-green">📦</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">내 상품 관리</div>
+          <div class="my-menu-sub" id="my-sub-products">0개 등록</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="showView('wishlist')">
+        <div class="my-icon-box ib-pink">❤️</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">관심 목록</div>
+          <div class="my-menu-sub" id="my-sub-wish">0개 저장</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
     </div>
-    <div class="menu-list" id="menu-list"></div>
+    <!-- 서비스 섹션 -->
+    <div class="my-section-wrap">
+      <div class="my-section-title">서비스</div>
+      <div class="my-menu-item" onclick="showView('notif-settings')">
+        <div class="my-icon-box ib-yellow">🔔</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">알림</div>
+          <div class="my-menu-sub">새 상품·가격변동·거래</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="openKeywordAlert()">
+        <div class="my-icon-box ib-teal">🔍</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">키워드 알림</div>
+          <div class="my-menu-sub">원하는 원단 등록시 알림</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="openCart()">
+        <div class="my-icon-box ib-blue">🛒</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">묶음 장바구니</div>
+          <div class="my-menu-sub" id="my-sub-cart">0건 담김</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+    </div>
+    <!-- 계정 섹션 -->
+    <div class="my-section-wrap">
+      <div class="my-section-title">계정</div>
+      <div class="my-menu-item" onclick="showView('analytics')">
+        <div class="my-icon-box ib-purple">📊</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">매출 대시보드</div>
+          <div class="my-menu-sub">월별 매출 · 인기 원단</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="openLangSettings()">
+        <div class="my-icon-box ib-green">🌐</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title">언어 설정</div>
+          <div class="my-menu-sub">한국어 · English · 日本語 외</div>
+        </div>
+        <span class="my-menu-arrow">›</span>
+      </div>
+      <div class="my-menu-item" onclick="doLogout()">
+        <div class="my-icon-box" style="background:rgba(255,101,132,.1)">🚪</div>
+        <div class="my-menu-info">
+          <div class="my-menu-title" style="color:#ff6584">로그아웃</div>
+          <div class="my-menu-sub">계정에서 로그아웃</div>
+        </div>
+        <span class="my-menu-arrow" style="color:#ff6584">›</span>
+      </div>
+    </div>
   </div>
   <nav class="tabbar">
-    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
-    <button class="tab" onclick="showView('search-view')"><span class="ti">🔍</span><span data-i18n="tab_search">검색</span></button>
-    <button class="tab-fab" onclick="showView('form')">＋</button>
-    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
-    <button class="tab on" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
+    <button class="tab" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
+    <button class="tab" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
+    <button class="tab on" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
   </nav>
 </div>
 
@@ -2745,55 +2856,75 @@ async function saveProfile(){
 
 /* ==================== MYPAGE ==================== */
 function renderMypage(){
-  const u=curUser||{name:'게스트',type:'guest',temp:36.5};
-  const av=document.getElementById('mp-av');av.textContent=u.name[0];
-  document.getElementById('mp-name').textContent=u.name;
+  const u=curUser||{name:'게스트',type:'guest',loc:''};
   const types={seller:'판매자',buyer:'구매자',brand:'브랜드',both:'겸업',admin:'관리자',guest:'게스트'};
-  document.getElementById('mp-type').textContent=types[u.type]||'회원';
-  const emailEl=document.getElementById('mp-email');
-  if(emailEl)emailEl.textContent=u.email||u.loc||'위치 미설정';
-  const temp=u.temp||36.5;
-  document.getElementById('mp-temp').textContent=temp.toFixed(1)+'°C';
-  const fillEl=document.getElementById('mp-temp-fill');
-  if(fillEl)fillEl.style.width=Math.min(Math.max((temp-30)/30*100,0),100)+'%';
-  const sells=products.filter(p=>p.seller&&(p.seller.id===u.id||p.seller.name===u.name)).length;
+
+  // 아바타
+  const avEl=document.getElementById('my-av');
+  if(avEl)avEl.textContent=u.name?u.name[0].toUpperCase():'?';
+
+  // 이름
+  const nameEl=document.getElementById('my-name');
+  if(nameEl)nameEl.textContent=u.name||'로그인이 필요해요';
+
+  // 업종 뱃지
+  const typeEl=document.getElementById('my-type-badge');
+  if(typeEl)typeEl.textContent=types[u.type]||'회원';
+
+  // 위치 뱃지
+  const locEl=document.getElementById('my-loc-badge');
+  if(locEl){
+    const loc=u.loc||u.location||'';
+    locEl.textContent=loc?`📍 ${loc.split(' ').slice(-1)[0]}`:'📍 위치 미설정';
+  }
+
+  // 통계 계산
+  const myProducts=products.filter(p=>p.seller&&(p.seller.id===u.id||p.seller.name===u.name));
   const wishes=lsGet('wishlist',[]).length||Object.values(lsGet('likedMap',{})).filter(Boolean).length;
-  const sellEl=document.getElementById('mp-stat-sell');
-  const wishEl=document.getElementById('mp-stat-wish');
-  if(sellEl)sellEl.textContent=sells;
-  if(wishEl)wishEl.textContent=wishes;
-  const isSeller=u.type==='seller'||u.type==='both'||u.type==='brand';
-  const menus=[
-    {section:'내 거래'},
-    {icon:'❤️',label:'관심 목록',action:"showView('wishlist')"},
-    {icon:'💬',label:'채팅 목록',action:"showView('chat')"},
-    {icon:'📅',label:'예약 내역',action:"showView('reservations')"},
-    {icon:'✨',label:'AI 가격 분석',action:"showView('ai')"},
-    ...(isSeller?[
-      {section:'판매자 메뉴'},
-      {icon:'📦',label:'내 상품 관리',action:'showMySales()'},
-      {icon:'📊',label:'매출 대시보드',action:"showView('analytics')"},
-      {icon:'🏠',label:'내 미니홈피',action:'openMySellerPage()'},
-    ]:[]),
-    {section:'설정'},
-    {icon:'🌐',label:'언어 설정',action:'openLangSettings()'},
-    {icon:'🔔',label:'알림 설정',action:"showView('notif-settings')"},
-    {icon:'👤',label:'프로필 수정',action:"showView('profile-edit')"},
-    {icon:'🚪',label:'로그아웃',action:'doLogout()'},
-  ];
-  document.getElementById('menu-list').innerHTML=menus.map(m=>{
-    if(m.section)return`<div class="menu-section">${m.section}</div>`;
-    return`<div class="menu-item" onclick="${m.action}"><span class="menu-icon">${m.icon}</span><span class="menu-label">${m.label}</span><span class="menu-arrow">›</span></div>`;
-  }).join('');
+  const reservations=lsGet('reservations',[]);
+  const done=reservations.filter(r=>r.status==='confirmed'||r.status==='done').length;
+  const cartCnt=lsGet('cart',[]).length;
+
+  // 통계 렌더
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  set('my-stat-products',myProducts.length);
+  set('my-stat-wish',wishes);
+  set('my-stat-done',done);
+
+  // 메뉴 부제 업데이트
+  set('my-sub-products',myProducts.length+'개 등록');
+  set('my-sub-wish',wishes+'개 저장');
+  set('my-sub-cart',cartCnt+'건 담김');
+
+  // Supabase 실시간 카운트 (연결 시)
+  if(_sb&&u.id){
+    _sb.from('products').select('id',{count:'exact',head:true}).eq('seller_id',u.id)
+      .then(({count})=>{if(count!=null){set('my-stat-products',count);set('my-sub-products',count+'개 등록');}});
+  }
 }
 function showMySales(){
-  const u=curUser;if(!u){showToast('로그인이 필요해요');return}
+  const u=curUser;
+  if(!u){showToast('로그인이 필요해요');return;}
   const myP=products.filter(p=>p.seller&&(p.seller.id===u.id||p.seller.name===u.name));
-  showToast('내 상품 '+myP.length+'개');
+  if(!myP.length){showToast('등록한 상품이 없어요');return;}
+  // 내 상품을 카테고리 검색 화면으로 — curFilter 이용
+  curCatKey='';
+  const el=document.getElementById('cp-list');
+  if(el)el.innerHTML=myP.map(p=>renderHomeProduct(p)).join('');
+  document.getElementById('cp-hdr-title').textContent='내 상품 ('+myP.length+'개)';
+  showView('cat-products');
 }
 function openMySellerPage(){
-  if(!curUser){showToast('로그인이 필요해요');return}
+  if(!curUser){showToast('로그인이 필요해요');return;}
   renderSellerPage({id:curUser.id,name:curUser.name,temp:curUser.temp,loc:curUser.loc});
+}
+function openKeywordAlert(){
+  showToast('키워드 알림 기능 준비중이에요 🔔');
+}
+function openCart(){
+  const cart=lsGet('cart',[]);
+  if(!cart.length){showToast('장바구니가 비어있어요 🛒');return;}
+  showToast('장바구니 기능 준비중이에요 🛒');
 }
 
 /* ==================== ADMIN ==================== */

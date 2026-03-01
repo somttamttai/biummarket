@@ -510,6 +510,58 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .h-seller{font-size:11px;color:#8888aa}
 .h-counts{display:flex;gap:8px;font-size:10px;color:#8888aa}
 
+/* PRODUCT DETAIL v2 */
+#view-detail{background:#0a0a0f}
+.pd-hdr{position:sticky;top:0;z-index:100;height:56px;display:flex;align-items:center;gap:4px;padding:0 10px;background:transparent;transition:background .3s}
+.pd-hdr.scrolled{background:rgba(18,18,26,.95);backdrop-filter:blur(8px);border-bottom:1px solid #1e1e2e}
+.pd-scroll{flex:1;overflow-y:auto;padding-bottom:80px}
+.pd-info{padding:18px 14px 0}
+.pd-name{font-size:20px;font-weight:800;color:#ffffff;line-height:1.4;margin-bottom:12px}
+.pd-badge-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.pd-mat-badge{padding:5px 12px;background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.28);border-radius:20px;font-size:12px;font-weight:700;color:#9b94ff}
+.pd-wt-badge{padding:5px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;font-size:12px;font-weight:600;color:#aaaacc}
+.pd-urgent-badge{padding:5px 12px;background:rgba(255,101,132,.12);border:1px solid rgba(255,101,132,.25);border-radius:20px;font-size:12px;font-weight:700;color:#ff6584}
+.pd-price-block{margin-bottom:10px}
+.pd-price-main{font-size:28px;font-weight:900;color:#ffffff;margin-bottom:4px}
+.pd-price-range{font-size:13px;color:#8888aa}
+.pd-moq-row{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid #1e1e2e;margin-top:10px}
+.pd-moq-tag{padding:5px 12px;background:#1e1e2e;border-radius:10px;font-size:12px;color:#aaaacc;font-weight:500}
+.pd-disc-tag{padding:5px 12px;background:rgba(255,101,132,.12);border-radius:10px;font-size:12px;color:#ff6584;font-weight:700}
+.pd-seller-card{margin:14px 14px 0;background:#12121a;border:1px solid #1e1e2e;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .15s}
+.pd-seller-card:hover{background:#1e1e2e}
+.pd-seller-av{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0}
+.pd-seller-info{flex:1;min-width:0}
+.pd-seller-name{font-size:14px;font-weight:700;color:#ffffff;margin-bottom:3px}
+.pd-seller-meta{font-size:12px;color:#8888aa}
+.pd-seller-trades{font-size:12px;color:#6c63ff;font-weight:700;flex-shrink:0;text-align:right;white-space:nowrap}
+.pd-section{padding:16px 14px;border-top:1px solid #1e1e2e;margin-top:10px}
+.pd-section-title{font-size:11px;font-weight:700;color:#8888aa;margin-bottom:12px;letter-spacing:.6px;text-transform:uppercase}
+.pd-desc{font-size:14px;color:#aaaacc;line-height:1.8;white-space:pre-wrap}
+.pd-spec-row{display:flex;padding:10px 0;border-bottom:1px solid #1e1e2e}
+.pd-spec-row:last-child{border-bottom:none}
+.pd-spec-key{font-size:13px;color:#8888aa;width:72px;flex-shrink:0}
+.pd-spec-val{font-size:13px;font-weight:600;color:#ffffff;flex:1}
+.pd-tag-row{display:flex;flex-wrap:wrap;gap:6px;padding:14px;border-top:1px solid #1e1e2e}
+.pd-stats{padding:10px 14px 14px;font-size:12px;color:#8888aa;border-top:1px solid #1e1e2e;display:flex;gap:16px;flex-wrap:wrap}
+.pd-action-bar{position:sticky;bottom:0;background:#12121a;border-top:1px solid #1e1e2e;padding:10px 14px;display:flex;gap:8px;align-items:center;z-index:100}
+.pd-like-btn{width:52px;height:52px;border-radius:14px;background:#1e1e2e;border:1.5px solid #2a2a3e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex-shrink:0;cursor:pointer;transition:all .2s}
+.pd-like-btn .pd-hicon{font-size:20px;line-height:1}
+.pd-like-btn .pd-lcnt{font-size:10px;color:#8888aa}
+.pd-like-btn.on{background:rgba(255,101,132,.12);border-color:rgba(255,101,132,.4)}
+.pd-like-btn.on .pd-lcnt{color:#ff6584}
+.pd-chat-btn{flex:1;padding:14px;background:linear-gradient(135deg,#6c63ff,#8b84ff);color:#fff;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;transition:transform .15s}
+.pd-chat-btn:hover{transform:scale(1.02)}
+.pd-res-btn{flex:1;padding:14px;background:#1e1e2e;border:1.5px solid rgba(108,99,255,.5);color:#9b94ff;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s}
+.pd-res-btn:hover{background:rgba(108,99,255,.1)}
+
+/* CHAT LIST v2 */
+#view-chat{background:#0a0a0f}
+.cr-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:3px}
+.cr-sub-preview{font-size:11px;color:#6c63ff;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cr-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.cr-thumb-right{width:50px;height:50px;border-radius:10px;overflow:hidden;background:#1e1e2e;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;position:relative}
+.cr-thumb-right img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
 /* CATEGORY VIEW */
 #view-category,#view-cat-products{background:#0a0a0f}
 .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 14px 80px}
@@ -742,76 +794,63 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 <!-- ========== DETAIL ========== -->
 
 <div id="view-detail" class="view">
-  <header class="hdr">
+  <header class="pd-hdr" id="pd-hdr">
     <button class="hdr-back" onclick="goBack()">←</button>
-    <div class="hdr-title" id="d-hdr-title">상품 상세</div>
-    <button class="hdr-btn" onclick="shareProduct()">⋯</button>
+    <div style="flex:1"></div>
+    <button class="pd-like-btn" id="d-heart" onclick="toggleDetailLike()" style="width:38px;height:38px;border-radius:50%;background:rgba(18,18,26,.7);border:none;flex-direction:row;gap:0">
+      <span class="pd-hicon" id="d-hicon" style="font-size:18px">🤍</span>
+    </button>
+    <button class="hdr-btn" onclick="shareProduct()">⤴</button>
   </header>
-  <div class="d-scroll" id="d-scroll">
+  <div class="pd-scroll" id="d-scroll">
+    <!-- 이미지 슬라이더 -->
     <div class="d-slider" id="d-slider">
       <div class="s-track" id="s-track"></div>
       <div class="s-dots" id="s-dots"></div>
       <button class="s-nav s-prev" id="s-prev" onclick="slideMove(-1)">‹</button>
       <button class="s-nav s-next" id="s-next" onclick="slideMove(1)">›</button>
     </div>
-    <div class="sel-sec">
-      <div class="sel-av" id="d-av"></div>
-      <div class="sel-info">
-        <div class="sel-name" id="d-sname"></div>
-        <div class="sel-loc" id="d-sloc"></div>
+    <!-- 상품 정보 -->
+    <div class="pd-info">
+      <div class="pd-name" id="pd-name"></div>
+      <div class="pd-badge-row" id="pd-badges"></div>
+      <div class="pd-price-block">
+        <div class="pd-price-main" id="pd-price-main"></div>
+        <div class="pd-price-range" id="pd-price-range"></div>
       </div>
-      <div class="temp-box">
-        <div class="temp-val" id="d-temp"></div>
-        <div class="temp-lbl" data-i18n="manner_temp">매너온도</div>
-        <button style="font-size:11px;color:var(--P);margin-top:3px" onclick="openSellerPage()">미니홈피 →</button>
+      <div class="pd-moq-row" id="pd-moq-row"></div>
+    </div>
+    <!-- 판매자 카드 -->
+    <div class="pd-seller-card" onclick="openSellerPage()">
+      <div class="pd-seller-av" id="pd-sel-av"></div>
+      <div class="pd-seller-info">
+        <div class="pd-seller-name" id="pd-sel-name"></div>
+        <div class="pd-seller-meta" id="pd-sel-meta"></div>
       </div>
+      <div class="pd-seller-trades" id="pd-sel-trades">미니홈피 →</div>
     </div>
-    <div class="d-sec">
-      <h3 data-i18n="fabric_info">원단 정보</h3>
-      <table class="ftbl" id="d-ftbl"></table>
+    <!-- 상세 설명 -->
+    <div class="pd-section">
+      <div class="pd-section-title">상품 설명</div>
+      <div class="pd-desc" id="pd-desc"></div>
     </div>
-    <div class="d-sec d-desc">
-      <h3 data-i18n="product_desc">상품 설명</h3>
-      <p id="d-desc"></p>
+    <!-- 원단 스펙 -->
+    <div class="pd-section">
+      <div class="pd-section-title">원단 스펙</div>
+      <div id="pd-spec"></div>
     </div>
-    <div class="d-sec">
-      <div class="tag-row" id="d-tags"></div>
-    </div>
-    <div class="d-stats" id="d-stats"></div>
-    <!-- 예약 섹션 -->
-    <div class="d-sec">
-      <h3 data-i18n="res_title">예약 신청</h3>
-      <div class="res-type-row">
-        <div class="res-card sel" onclick="selectRes('visit',this)">
-          <div class="ri">🏭</div>
-          <div class="rn">방문 감별</div>
-          <div class="rd">공장 직접 방문</div>
-        </div>
-        <div class="res-card" onclick="selectRes('swatch',this)">
-          <div class="ri">📦</div>
-          <div class="rn">스와치 요청</div>
-          <div class="rd">샘플 받기</div>
-        </div>
-        <div class="res-card" onclick="selectRes('inspect',this)">
-          <div class="ri">🚗</div>
-          <div class="rn">출장 감별</div>
-          <div class="rd">전문가 파견</div>
-        </div>
-      </div>
-      <button class="btn-secondary" data-i18n="btn_reserve" style="font-size:13px;padding:10px" onclick="openResModal()">예약하기</button>
-    </div>
+    <!-- 태그 -->
+    <div class="pd-tag-row" id="pd-tags"></div>
+    <!-- 통계 -->
+    <div class="pd-stats" id="pd-stats"></div>
+    <!-- 레거시 JS 호환용 숨김 요소 -->
+    <input type="date" id="res-date" style="display:none"/>
+    <span id="d-lcnt" style="display:none">0</span>
   </div>
-  <div class="d-action">
-    <button class="heart-btn" id="d-heart" onclick="toggleDetailLike()">
-      <span class="hicon" id="d-hicon">🤍</span>
-      <span id="d-lcnt">0</span>
-    </button>
-    <div class="price-area">
-      <div class="tp" id="d-tp"></div>
-      <div class="pp" id="d-pp"></div>
-    </div>
-    <button class="suggest-btn" data-i18n="btn_suggest" onclick="openSuggestModal()">가격제안</button>
-    <button class="chat-btn" data-i18n="btn_chat" onclick="openChatModal()">채팅</button>
+  <!-- 하단 고정 버튼 2개 -->
+  <div class="pd-action-bar">
+    <button class="pd-chat-btn" onclick="openChatModal()">💬 채팅하기</button>
+    <button class="pd-res-btn" onclick="openResModal()">📅 예약하기</button>
   </div>
 </div>
 
@@ -1305,21 +1344,19 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 <!-- ========== CHAT LIST ========== -->
 <div id="view-chat" class="view">
   <header class="hdr">
-    <button class="hdr-back" onclick="goBack()">←</button>
-    <div class="hdr-title">채팅</div>
-    <div style="width:38px"></div>
+    <div class="hdr-title" style="flex:1;text-align:left;font-size:18px;font-weight:800">채팅</div>
+    <button class="hdr-btn" onclick="showToast('채팅 검색 준비중이에요')">🔍</button>
   </header>
-  <div class="chat-list-wrap" id="chat-list-wrap"></div>
+  <div class="chat-list-wrap" id="chat-list-wrap" style="flex:1;overflow-y:auto;padding-bottom:72px"></div>
   <div class="empty" id="chat-list-empty" style="display:none">
     <div class="ei">💬</div>
-    <p style="text-align:center">채팅 내역이 없어요<br><small style="font-size:12px;color:var(--g500)">상품 상세에서 채팅 버튼을 눌러보세요</small></p>
+    <p style="text-align:center">채팅 내역이 없어요<br><small style="font-size:12px;color:#8888aa">상품 상세에서 채팅하기를 눌러보세요</small></p>
   </div>
   <nav class="tabbar">
-    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span data-i18n="tab_home">홈</span></button>
-    <button class="tab" onclick="showView('search-view')"><span class="ti">🔍</span><span data-i18n="tab_search">검색</span></button>
-    <button class="tab-fab" onclick="showView('form')">＋</button>
-    <button class="tab on"><span class="ti">💬</span><span data-i18n="tab_chat">채팅</span></button>
-    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span data-i18n="tab_me">MY</span></button>
+    <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
+    <button class="tab" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
+    <button class="tab on"><span class="ti">💬</span><span>채팅</span></button>
+    <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
   </nav>
 </div>
 
@@ -1331,14 +1368,14 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
     <div style="width:38px"></div>
   </header>
   <div class="chat-product-bar" id="cr-product-bar" onclick="goChatProduct()">
-    <div class="cpb-thumb" id="cr-thumb"></div>
+    <div class="cpb-thumb" id="cr-thumb" style="position:relative;overflow:hidden;border-radius:8px;width:40px;height:40px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px"></div>
     <div class="cpb-info">
       <div class="cpb-title" id="cr-prod-title">상품 정보</div>
       <div class="cpb-price" id="cr-prod-price"></div>
     </div>
-    <span style="color:var(--P);font-size:14px">›</span>
+    <span style="color:#6c63ff;font-size:16px">›</span>
   </div>
-  <div class="croom-body" id="cr-body"></div>
+  <div class="croom-body" id="cr-body" style="flex:1;overflow-y:auto;padding:14px 14px 10px;display:flex;flex-direction:column;gap:12px;background:#0a0a0f"></div>
   <div class="chat-input-bar">
     <input type="text" id="cr-input" placeholder="메시지를 입력하세요" onkeydown="if(event.key==='Enter')sendChatMsg()"/>
     <button class="chat-send" onclick="sendChatMsg()">↑</button>
@@ -2388,21 +2425,22 @@ function openDetail(id){
   prevView='list';
   curProductId=id;sliderIdx=0;
   const p=products.find(x=>x.id===id);if(!p)return;
-  document.getElementById('d-hdr-title').textContent=p.title;
+  const set=(eid,v)=>{const el=document.getElementById(eid);if(el)el.textContent=v;};
   document.getElementById('d-scroll').scrollTop=0;
-  // slider
+
+  // 슬라이더
   sliderTotal=p.imgs||1;
-  const bg=getFColor(p.type,p.color);const tex=getTexture(p.type);
+  const bg=getFColor(p.type,p.color);
+  const tex=getTexture(p.type);
   const track=document.getElementById('s-track');
   const dots=document.getElementById('s-dots');
   const vs=['','filter:brightness(1.1)','filter:brightness(.9)','filter:saturate(1.3)','filter:hue-rotate(15deg)'];
   track.innerHTML=Array.from({length:sliderTotal},(_,i)=>{
     const showImg=i===0&&p.image_url;
     return `<div class="s-slide" style="background:${bg};background-image:${showImg?'none':tex};${showImg?'':vs[i]||''};flex-shrink:0;width:${100/sliderTotal}%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column">
-      ${showImg?`<img src="${p.image_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>`:'' }
+      ${showImg?`<img src="${p.image_url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"/>`:''}
       <div style="position:relative;z-index:1;font-size:36px">${showImg?'':'🧵'}</div>
-      <div style="position:relative;z-index:1;font-size:13px;font-weight:600;background:rgba(0,0,0,.3);padding:5px 14px;border-radius:20px;color:rgba(255,255,255,.95)">${p.color} ${p.type}</div>
-      <div style="position:relative;z-index:1;font-size:11px;margin-top:4px;opacity:.8">${i+1}/${sliderTotal}</div>
+      <div style="position:relative;z-index:1;font-size:13px;font-weight:600;background:rgba(0,0,0,.35);padding:5px 14px;border-radius:20px;color:#fff">${p.color} ${p.type}</div>
     </div>`;
   }).join('');
   track.style.width=(sliderTotal*100)+'%';
@@ -2410,36 +2448,78 @@ function openDetail(id){
   document.getElementById('s-prev').style.display=sliderTotal>1?'flex':'none';
   document.getElementById('s-next').style.display=sliderTotal>1?'flex':'none';
   updateSlider();
-  // seller
-  const av=document.getElementById('d-av');
-  av.textContent=p.seller.name[0];av.style.background=bg;
-  document.getElementById('d-sname').textContent=p.seller.name;
-  document.getElementById('d-sloc').textContent='📍 '+p.loc;
-  document.getElementById('d-temp').textContent=p.seller.temp.toFixed(1)+'°C';
-  // fabric table
-  document.getElementById('d-ftbl').innerHTML=[
-    [t('lbl_type'),p.type],[t('lbl_color'),p.color],[t('lbl_width'),p.width+'cm'],
-    [t('lbl_weight'),p.weight?(p.weight+'g/㎡'):t('lbl_unknown')],
-    [t('lbl_qty'),p.qty+'m'],[t('lbl_price'),fmtPrice(p.price)+'/m'],
-  ].map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
-  document.getElementById('d-desc').textContent=p.description;
-  document.getElementById('d-tags').innerHTML=(p.tags||[]).map(tg=>`<span class="tagc">#${tg}</span>`).join('');
-  document.getElementById('d-stats').innerHTML=`${t('stats_interest')} ${p.likes} &nbsp;·&nbsp; ${t('stats_chat')} ${p.chats} &nbsp;·&nbsp; ${p.time}`;
-  // action bar
-  document.getElementById('d-tp').textContent=fmtPrice(p.qty*p.price);
-  document.getElementById('d-pp').textContent=fmtPrice(p.price)+'/m · '+p.qty+'m';
+
+  // 상품명 + 뱃지
+  set('pd-name',p.title);
+  const badgeEl=document.getElementById('pd-badges');
+  if(badgeEl){
+    const urgent=p.qty<100;
+    badgeEl.innerHTML=`
+      <span class="pd-mat-badge">${p.type}</span>
+      ${p.weight?`<span class="pd-wt-badge">⚖ ${p.weight}g/㎡</span>`:''}
+      ${urgent?'<span class="pd-urgent-badge">⚡ 급처</span>':''}`;
+  }
+
+  // 가격
+  set('pd-price-main',fmtPrice(p.price)+'/m');
+  set('pd-price-range',`총 ${fmtPrice(p.qty*p.price)} (재고 ${p.qty}m 기준)`);
+
+  // MOQ + 할인
+  const moqEl=document.getElementById('pd-moq-row');
+  if(moqEl){
+    const minQty=p.moq||50;
+    moqEl.innerHTML=`<span class="pd-moq-tag">MOQ ${minQty}m · ${fmtPrice(minQty*p.price)}</span>${p.discount?`<span class="pd-disc-tag">-${p.discount}% 할인</span>`:''}`;
+  }
+
+  // 판매자
+  const selAv=document.getElementById('pd-sel-av');
+  if(selAv){selAv.textContent=p.seller.name[0];selAv.style.background=bg;}
+  set('pd-sel-name',p.seller.name);
+  set('pd-sel-meta',`📍 ${p.loc} · 매너온도 ${p.seller.temp.toFixed(1)}°C`);
+  set('pd-sel-trades',`거래완료 ${p.seller.trades||0}건 →`);
+
+  // 설명
+  set('pd-desc',p.description);
+
+  // 스펙
+  const specEl=document.getElementById('pd-spec');
+  if(specEl){
+    const specs=[['폭',p.width+'cm'],['중량',p.weight?p.weight+'g/㎡':'미기재'],['소재',p.type],['색상',p.color],['재고',p.qty+'m'],['최소수량',p.moq?p.moq+'m':'협의']];
+    specEl.innerHTML=specs.map(([k,v])=>`<div class="pd-spec-row"><span class="pd-spec-key">${k}</span><span class="pd-spec-val">${v}</span></div>`).join('');
+  }
+
+  // 태그
+  const tagsEl=document.getElementById('pd-tags');
+  if(tagsEl)tagsEl.innerHTML=(p.tags||[]).map(tg=>`<span class="tagc">#${tg}</span>`).join('');
+
+  // 통계
+  const statsEl=document.getElementById('pd-stats');
+  if(statsEl)statsEl.innerHTML=`<span>🤍 관심 ${p.likes}</span><span>💬 문의 ${p.chats}</span><span style="margin-left:auto;font-size:11px">${p.time}</span>`;
+
+  // 찜
   updateDetailHeart(p);
-  // res date default
-  document.getElementById('res-date').valueAsDate=new Date();
+
+  // 예약일 기본값
+  const rdEl=document.getElementById('res-date');
+  if(rdEl)rdEl.valueAsDate=new Date();
+
   curSellerData=p.seller;
   showView('detail');
+
+  // pd-hdr 스크롤 감지
+  const scroll=document.getElementById('d-scroll');
+  const hdr=document.getElementById('pd-hdr');
+  if(scroll&&hdr){
+    scroll.onscroll=()=>hdr.classList.toggle('scrolled',scroll.scrollTop>20);
+  }
 }
 function updateDetailHeart(p){
   const btn=document.getElementById('d-heart');
   const icon=document.getElementById('d-hicon');
-  btn.className='heart-btn'+(p.liked?' on':'');
-  icon.textContent=p.liked?'❤️':'🤍';
-  document.getElementById('d-lcnt').textContent=p.likes;
+  if(btn)btn.className=(btn.className.split(' on')[0])+(p.liked?' on':'');
+  if(icon)icon.textContent=p.liked?'❤️':'🤍';
+  const cnt=document.getElementById('d-lcnt');
+  if(cnt)cnt.textContent=p.likes;
 }
 function toggleDetailLike(){
   const p=products.find(x=>x.id===curProductId);if(!p)return;
@@ -2786,7 +2866,10 @@ function openChatRoom(productId){
     const p=products.find(x=>x.id===productId);
     if(!p)return;
     chatRooms[roomId]={
-      id:roomId,productId,productTitle:p.title,productPrice:p.price,
+      id:roomId,productId,
+      productTitle:p.title,
+      productPrice:p.price,
+      productImg:p.image_url||'',
       sellerName:p.seller?.name||'판매자',
       bgColor:getFColor(p.type,p.color),
       messages:[{from:'seller',text:'안녕하세요! 관심 가져주셔서 감사합니다 😊 궁금한 점 있으시면 편하게 물어보세요!',time:formatChatTime(new Date())}],
@@ -2810,13 +2893,19 @@ function renderChatList(){
   empty.style.display='none';wrap.style.display='block';
   wrap.innerHTML=rooms.slice().reverse().map(r=>`
     <div class="chat-room-item" onclick="openChatRoomById('${r.id}')">
-      <div class="cr-av" style="background:${r.bgColor||'#999'}">${(r.sellerName||'?')[0]}</div>
+      <div class="cr-av" style="background:${r.bgColor||'#6c63ff'}">${(r.sellerName||'?')[0]}</div>
       <div class="cr-info">
-        <div class="cr-name">${r.sellerName} · ${r.productTitle}</div>
+        <div class="cr-top">
+          <span class="cr-name">${r.sellerName||'판매자'}</span>
+          <span class="cr-time">${r.lastTime||''}</span>
+        </div>
         <div class="cr-preview">${r.lastMsg||'채팅을 시작해보세요'}</div>
+        <div class="cr-sub-preview">${r.productTitle||''}</div>
       </div>
-      <div class="cr-meta">
-        <div class="cr-time">${r.lastTime||''}</div>
+      <div class="cr-right">
+        <div class="cr-thumb-right" style="background:${r.bgColor||'#1e1e2e'}">
+          ${r.productImg?`<img src="${r.productImg}" alt="">`:'🧵'}
+        </div>
         ${r.unread?`<div class="cr-unread">${r.unread}</div>`:''}
       </div>
     </div>`).join('');
@@ -2828,13 +2917,15 @@ function renderChatRoom(roomId){
   const priceEl=document.getElementById('cr-prod-price');
   if(priceEl)priceEl.textContent=room.productPrice?room.productPrice.toLocaleString()+'원/m':'';
   const thumb=document.getElementById('cr-thumb');
-  thumb.style.cssText=`background:${room.bgColor||'#ccc'};border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;`;
-  thumb.textContent='🧵';
+  thumb.style.background=room.bgColor||'#1e1e2e';
+  thumb.innerHTML=room.productImg
+    ?`<img src="${room.productImg}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:8px">`
+    :'🧵';
   const body=document.getElementById('cr-body');
   body.innerHTML=room.messages.map(m=>{
     const isMe=m.from==='me';
     return `<div class="msg-row ${isMe?'me':'other'}">
-      ${!isMe?`<div class="msg-av" style="background:${room.bgColor||'#999'}">${(room.sellerName||'?')[0]}</div>`:''}
+      ${!isMe?`<div class="msg-av" style="background:${room.bgColor||'#6c63ff'}">${(room.sellerName||'?')[0]}</div>`:''}
       <div class="msg-col">
         <div class="msg-bubble">${m.text}</div>
         <div class="msg-time">${m.time}</div>

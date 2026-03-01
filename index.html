@@ -469,7 +469,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
 .home-cats{display:flex;gap:8px;overflow-x:auto;padding:12px 14px 4px;scrollbar-width:none}
 .home-cats::-webkit-scrollbar{display:none}
 .home-cat{flex-shrink:0;padding:7px 15px;border-radius:20px;font-size:12px;font-weight:600;background:#1e1e2e;color:#8888aa;border:1.5px solid #1e1e2e;cursor:pointer;transition:all .15s;white-space:nowrap}
-.home-cat.on{background:#ffffff;color:#0a0a0f;border-color:#ffffff}
+.home-cat.on{background:#6c63ff;color:#ffffff;border-color:#6c63ff}
 .premium-banner{margin:14px 14px 0;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);border:1px solid rgba(180,150,80,.3);border-radius:18px;padding:18px 20px;position:relative;overflow:hidden;cursor:pointer}
 .premium-banner::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(180,150,80,.08)}
 .premium-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#b49650,#e8c97e);color:#0a0a0f;font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:0.5px;margin-bottom:8px}
@@ -1355,7 +1355,7 @@ textarea.fi{resize:vertical;min-height:90px;line-height:1.6}
   <nav class="tabbar">
     <button class="tab" onclick="showView('list')"><span class="ti">🏠</span><span>홈</span></button>
     <button class="tab" onclick="showView('category')"><span class="ti">📋</span><span>카테고리</span></button>
-    <button class="tab on"><span class="ti">💬</span><span>채팅</span></button>
+    <button class="tab on" onclick="showView('chat')"><span class="ti">💬</span><span>채팅</span></button>
     <button class="tab" onclick="showView('mypage')"><span class="ti">👤</span><span>MY</span></button>
   </nav>
 </div>
@@ -2079,6 +2079,8 @@ function showToast(msg){
 
 /* ==================== VIEW ==================== */
 function showView(name){
+  const PROTECTED=['chat','form','mypage','wishlist','reservations','notif-settings','profile-edit','analytics'];
+  if(PROTECTED.includes(name)&&!curUser){showToast('로그인 후 이용해주세요');name='login';}
   const prev=document.querySelector('.view.active');
   if(prev)prevView=prev.id.replace('view-','');
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
@@ -2278,6 +2280,8 @@ function setHomeCat(key){
   homeCurCat=key;
   renderHomeCats();
   renderHomeSections();
+  const sec=document.getElementById('home-category-sections');
+  if(sec)sec.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function renderAiRecs(){
@@ -2860,6 +2864,7 @@ function renderWishlist(){
 /* ==================== CHAT ==================== */
 function formatChatTime(d){return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');}
 function openChatRoom(productId){
+  if(!curUser){showToast('로그인 후 채팅할 수 있어요');showView('login');return;}
   const roomId='prod_'+productId;
   curChatRoomId=roomId;
   if(!chatRooms[roomId]){
